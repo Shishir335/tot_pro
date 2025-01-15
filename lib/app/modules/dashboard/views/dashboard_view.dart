@@ -21,110 +21,113 @@ class DashboardView extends GetView<DashboardController> {
     print('DashboardView.build register:: $register');
 
     return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-          backgroundColor: Colors.black,
-          actions: [
-            Obx(() {
-              print('DashboardView.build ${controller.count.value.toString()}');
-              return controller.checkAccountFlag.value == true
-                  ? PopupMenuButton<String>(
-                      iconColor: Colors.white,
-                      iconSize: 20,
-                      onSelected: choiceAction,
-                      itemBuilder: (BuildContext context) {
-                        return Constants.choices.map((String choice) {
-                          return PopupMenuItem<String>(
-                            value: choice,
-                            child: choice == 'LogOut'
-                                ? const Text('Logout')
-                                : Text(choice),
-                          );
-                        }).toList();
-                      })
-                  : Container();
-            })
-          ],
-          title: const Text('Dashboard', style: TextStyle(color: Colors.white)),
-          centerTitle: true),
-      body: Obx(() {
-        print('checkAccount ${controller.checkAccountFlag.value}');
-        if (controller.checkAccountFlag.value == false) {
-          return Container(
-              color: Colors.white,
-              child: Card(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Center(
-                        child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Text(
-                        controller.checkAccountMessage.value,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                            fontSize: 20),
-                      ),
-                    )),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          //backgroundColor: Colors.red,
-                          //minimumSize: const Size(80, 20),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                          textStyle: const TextStyle(
-                            fontSize: 30,
-                            // color: Colors.red
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0)),
-                        ),
-                        onPressed: () {
-                          print('SignOut');
-                          print(localStoreSRF.getString('token'));
-                          print('SignOut clear');
-                          localStoreSRF.clear();
-                          print(localStoreSRF.getString('token'));
-                          Get.offAllNamed(Routes.LOGIN);
-                        },
-                        child: const Text('Retry'))
-                  ],
-                ),
-              ));
-        } else {
-          return Container(
-            color: Colors.grey.shade300,
-            margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-            child: Stack(
-              children: [
-                Container(
-                  height: 150,
-                  padding: const EdgeInsets.only(top: 0, bottom: 40),
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20.0),
-                      bottom: Radius.circular(5.0),
-                    ),
-                  ),
-                  width: double.infinity,
-                  child: const Row(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+            backgroundColor: Colors.black,
+            actions: [
+              Obx(() {
+                print(
+                    'DashboardView.build ${controller.count.value.toString()}');
+                return controller.checkAccountFlag.value == true
+                    ? PopupMenuButton<String>(
+                        iconColor: Colors.white,
+                        iconSize: 20,
+                        onSelected: choiceAction,
+                        itemBuilder: (BuildContext context) {
+                          return Constants.choices.map((String choice) {
+                            return PopupMenuItem<String>(
+                              value: choice,
+                              child: choice == 'LogOut'
+                                  ? const Text('Logout')
+                                  : Text(choice),
+                            );
+                          }).toList();
+                        })
+                    : Container();
+              })
+            ],
+            title:
+                const Text('Dashboard', style: TextStyle(color: Colors.white)),
+            centerTitle: true),
+        body: Obx(() {
+          print('checkAccount ${controller.checkAccountFlag.value}');
+          if (controller.checkAccountFlag.value == false) {
+            return Container(
+                color: Colors.white,
+                child: Card(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        'Welcome to EDGE',
-                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      Center(
+                          child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text(
+                          controller.checkAccountMessage.value,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                              fontSize: 20),
+                        ),
+                      )),
+                      const SizedBox(
+                        height: 20,
                       ),
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            //backgroundColor: Colors.red,
+                            //minimumSize: const Size(80, 20),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 20),
+                            textStyle: const TextStyle(
+                              fontSize: 30,
+                              // color: Colors.red
+                            ),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0)),
+                          ),
+                          onPressed: () {
+                            print('SignOut');
+                            print(localStoreSRF.getString('token'));
+                            print('SignOut clear');
+                            localStoreSRF.clear();
+                            print(localStoreSRF.getString('token'));
+                            Get.offAllNamed(Routes.LOGIN);
+                          },
+                          child: const Text('Retry'))
+                    ],
+                  ),
+                ));
+          } else {
+            return Container(
+                color: Colors.grey.shade300,
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                child: Stack(children: [
+                  Container(
+                      height: 150,
+                      padding: const EdgeInsets.only(top: 0, bottom: 40),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20.0),
+                          bottom: Radius.circular(5.0),
+                        ),
+                      ),
+                      width: double.infinity,
+                      child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'Welcome to EDGE',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 20),
+                            ),
 
-                      /* Column(
+                            /* Column(
                     children: [
                       CircleAvatar(
                           backgroundColor: Colors.white,
@@ -141,57 +144,43 @@ class DashboardView extends GetView<DashboardController> {
                       )
                     ],
                   )*/
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 100, left: 5, right: 5),
-                  //   color: Colors.red,
-                  width: double.infinity,
-                  child: menuCartFetchData(context),
-                ),
-                Positioned(
-                  bottom: 150,
-                  right: Get.size.width / 2.6,
-                  child: Image.asset(
-                    "assets/images/splogo.png",
-                    fit: BoxFit.cover,
-                    height: 100,
-                    width: 100,
-                  ),
-                ),
-              ],
-            ),
-          );
-        }
-      }),
-    );
+                          ])),
+                  menuCartFetchData(context)
+                ]));
+          }
+        }));
   }
 
   Widget menuCartFetchData(BuildContext context) {
-    return Obx(() => AnimationLimiter(
-          child: GridView.builder(
-              itemCount: controller.menuList.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 0.0,
-                  mainAxisSpacing: 0.0),
-              itemBuilder: (BuildContext ctx, int index) {
-                MenuModel menu = controller.menuList[index];
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 500),
-                  delay: const Duration(milliseconds: 200),
-                  child: SlideAnimation(
-                    horizontalOffset: 30.0,
-                    curve: Curves.easeInBack,
-                    child: FadeInAnimation(
-                      child: // Icon(Icons.add)
-                          dashboardCardUI(menu, context),
-                    ),
-                  ),
-                );
-              }),
+    return Obx(() => SingleChildScrollView(
+          child: Column(children: [
+            AnimationLimiter(
+                child: GridView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.menuList.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: const EdgeInsets.only(
+                        top: 100, left: 5, right: 5, bottom: 0),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 0.0,
+                            mainAxisSpacing: 0.0),
+                    itemBuilder: (BuildContext ctx, int index) {
+                      MenuModel menu = controller.menuList[index];
+                      return AnimationConfiguration.staggeredList(
+                          position: index,
+                          duration: const Duration(milliseconds: 500),
+                          delay: const Duration(milliseconds: 200),
+                          child: SlideAnimation(
+                              horizontalOffset: 30.0,
+                              curve: Curves.easeInBack,
+                              child: FadeInAnimation(
+                                  child: dashboardCardUI(menu, context))));
+                    })),
+            Image.asset("assets/images/splogo.png",
+                fit: BoxFit.cover, height: 90, width: 100)
+          ]),
         ));
   }
 
@@ -204,8 +193,16 @@ class DashboardView extends GetView<DashboardController> {
           Get.toNamed(Routes.JOBHISTORY);
         } else if (menu.menuId == 3) {
           Get.toNamed(Routes.REQUESTCALL);
-        } else {
+        } else if (menu.menuId == 4) {
           Get.toNamed(Routes.PAYMENTTRANSACTION);
+        } else if (menu.menuId == 5) {
+          Get.toNamed(Routes.Category);
+        } else if (menu.menuId == 6) {
+          Get.toNamed(Routes.Review);
+        } else if (menu.menuId == 7) {
+          Get.toNamed(Routes.JoinUs);
+        } else if (menu.menuId == 8) {
+          Get.toNamed(Routes.Quote);
         }
       },
       child: Container(

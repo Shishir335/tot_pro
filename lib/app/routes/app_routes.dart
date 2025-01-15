@@ -7,6 +7,7 @@ abstract class Routes {
   static const SPLASH = _Paths.SPLASH;
   static const DASHBOARD = _Paths.DASHBOARD;
   static const GET_TUCH = _Paths.GET_TUCH;
+
   /// --------------
   static const LOGIN = _Paths.LOGIN;
   static const REGISTER = _Paths.REGISTER;
@@ -18,6 +19,10 @@ abstract class Routes {
   static const PAYMENTTRANSACTION = _Paths.PAYMENTTRANSACTION;
   static const Invoice = _Paths.Invoice;
   static const Transaction = _Paths.Transaction;
+  static const Category = _Paths.category;
+  static const Review = _Paths.review;
+  static const JoinUs = _Paths.joinUs;
+  static const Quote = _Paths.quote;
   static const accountDeleteRequest = _Paths.accountDeleteRequest;
   static const workCompleteDetails = _Paths.workCompleteDetails;
 
@@ -33,8 +38,7 @@ abstract class _Paths {
   static const DASHBOARD = '/dashboard';
   static const GET_TUCH = '/get-tuch';
   //static const GET_TUCH = '/get-tuch';
-/// ---------------
-
+  /// ---------------
 
   static const LOGIN = '/login';
   static const REGISTER = '/register';
@@ -50,5 +54,8 @@ abstract class _Paths {
   static const Transaction = '/Transaction';
   static const faceIdAuth = '/faceIdAuth';
   static const settings = '/settings';
-
+  static const category = '/category';
+  static const review = '/review';
+  static const joinUs = '/joinUs';
+  static const quote = '/quote';
 }
