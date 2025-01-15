@@ -1,5 +1,7 @@
 import 'package:tot_pro/app/modules/account_delete_request/bindings/account_delete_request_binding.dart';
 import 'package:tot_pro/app/modules/account_delete_request/views/account_delete_request_view.dart';
+import 'package:tot_pro/app/modules/category/bindings/edge_submit_binding.dart';
+import 'package:tot_pro/app/modules/category/views/category.dart';
 import 'package:tot_pro/app/modules/change_password/bindings/dashboard_binding.dart';
 import 'package:tot_pro/app/modules/change_password/views/change_password_view.dart';
 import 'package:tot_pro/app/modules/dashboard/bindings/dashboard_binding.dart';
@@ -11,13 +13,19 @@ import 'package:tot_pro/app/modules/job_history/bindings/job_history_binding.dar
 import 'package:tot_pro/app/modules/job_history/views/job_history_view.dart';
 import 'package:tot_pro/app/modules/job_hsitory_details/bindings/job_history_details_binding.dart';
 import 'package:tot_pro/app/modules/job_hsitory_details/views/job_history_details_view.dart';
+import 'package:tot_pro/app/modules/join_us/bindings/join_binding.dart';
+import 'package:tot_pro/app/modules/join_us/views/join.dart';
 import 'package:tot_pro/app/modules/login/bindings/dashboard_binding.dart';
 import 'package:tot_pro/app/modules/login/views/login_view.dart';
 import 'package:tot_pro/app/modules/payment_transaction/bindings/payment_transaction_binding.dart';
 import 'package:tot_pro/app/modules/payment_transaction/views/payment_transction_view.dart';
+import 'package:tot_pro/app/modules/quote/bindings/quote_binding.dart';
+import 'package:tot_pro/app/modules/quote/views/quote.dart';
 import 'package:tot_pro/app/modules/register/bindings/register_binding.dart';
 import 'package:tot_pro/app/modules/register/views/register_view.dart';
 import 'package:tot_pro/app/modules/request_call/views/request_call_view.dart';
+import 'package:tot_pro/app/modules/review/bindings/review_binding.dart';
+import 'package:tot_pro/app/modules/review/views/review.dart';
 import 'package:tot_pro/app/modules/settings/bindings/settings_binding.dart';
 import 'package:tot_pro/app/modules/settings/views/settings_view.dart';
 import 'package:tot_pro/app/modules/splash_screen/bindings/splash_screen_binding.dart';
@@ -141,6 +149,26 @@ class AppPages {
       page: () => const SettingsView(),
       binding: SettingsBinding(),
     ),
+
+    GetPage(
+        name: _Paths.category,
+        page: () => const CategoryView(),
+        binding: CategoryBinding()),
+
+    GetPage(
+        name: _Paths.review,
+        page: () => const ReviewView(),
+        binding: ReviewBinding()),
+
+    GetPage(
+        name: _Paths.joinUs,
+        page: () => const JoinUsView(),
+        binding: JoinUsBinding()),
+
+    GetPage(
+        name: _Paths.quote,
+        page: () => const QuoteView(),
+        binding: QuoteBinding()),
 
     //faceIdAuth
   ];
