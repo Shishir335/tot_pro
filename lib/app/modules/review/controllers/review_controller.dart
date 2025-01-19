@@ -55,6 +55,22 @@ class ReviewController extends GetxController {
 
     if (response != null) {
       log(response.data.toString());
+      Get.snackbar('Success', 'Review submit successful');
+      resetControllers();
     }
+  }
+
+  resetControllers() {
+    name.clear();
+    email.clear();
+    phone.clear();
+    review.clear();
+    update();
+  }
+
+  @override
+  void onInit() {
+    resetControllers();
+    super.onInit();
   }
 }

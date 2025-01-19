@@ -14,7 +14,7 @@ class JoinUsView extends GetView<JoinController> {
     return Stack(children: [
       Scaffold(
           backgroundColor: Colors.grey.shade200,
-          appBar: const CustomAppBar(title: 'Leave a Review'),
+          appBar: const CustomAppBar(title: 'Join us'),
           body: Container(
               height: MediaQuery.of(context).size.height,
               color: Colors.grey.shade300,

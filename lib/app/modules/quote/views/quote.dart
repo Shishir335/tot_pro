@@ -14,7 +14,7 @@ class QuoteView extends GetView<QuoteController> {
     return Stack(children: [
       Scaffold(
           backgroundColor: Colors.grey.shade200,
-          appBar: const CustomAppBar(title: 'Leave a Review'),
+          appBar: const CustomAppBar(title: 'Request a quote'),
           body: Container(
               height: MediaQuery.of(context).size.height,
               color: Colors.grey.shade300,

@@ -60,6 +60,22 @@ class JoinController extends GetxController {
 
     if (response != null) {
       log(response.data.toString());
+      Get.snackbar('Success', 'Join request successful');
+      resetControllers();
     }
+  }
+
+  resetControllers() {
+    addressSecondLine.clear();
+    addressFirstLine.clear();
+    addressThirdLine.clear();
+    name.clear();
+    email.clear();
+    phone.clear();
+    town.clear();
+    postcode.clear();
+    details.clear();
+    categoryIds.clear();
+    cv.clear();
   }
 }

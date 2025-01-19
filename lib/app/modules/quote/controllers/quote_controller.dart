@@ -53,7 +53,7 @@ class QuoteController extends GetxController {
 
     if (response != null) {
       log(response.data.toString());
-      Get.snackbar('Success', 'Review submit successful');
+      Get.snackbar('Success', 'Quote request successful');
       resetControllers();
     }
   }
