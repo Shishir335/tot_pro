@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:tot_pro/app/data/core/values/app_space.dart';
 import 'package:tot_pro/app/data/customIntputHeader.dart';
 import 'package:tot_pro/app/data/helper.dart';
-import 'package:tot_pro/components.dart/app_bar.dart';
+import 'package:tot_pro/components/app_bar.dart';
 import 'package:tot_pro/app/data/custom_text_form_field.dart';
 import 'package:tot_pro/app/modules/review/controllers/review_controller.dart';
-import 'package:tot_pro/components.dart/floating_button.dart';
+import 'package:tot_pro/components/floating_button.dart';
 
 class ReviewView extends GetView<ReviewController> {
   const ReviewView({super.key});

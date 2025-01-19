@@ -177,6 +177,11 @@ class AppPages {
         page: () => const ContactUsView(),
         binding: ContactUsBinding()),
 
+    GetPage(
+        name: _Paths.category,
+        page: () => const CategoryView(),
+        binding: CategoryBinding()),
+
     //faceIdAuth
   ];
 }

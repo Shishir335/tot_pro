@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:tot_pro/app/data/custom_text_form_field.dart';
 import 'package:tot_pro/app/data/helper.dart';
 import 'package:tot_pro/app/modules/join_us/controllers/join_controller.dart';
-import 'package:tot_pro/components.dart/app_bar.dart';
-import 'package:tot_pro/components.dart/floating_button.dart';
+import 'package:tot_pro/app/modules/join_us/views/category_widget.dart';
+import 'package:tot_pro/app/modules/join_us/views/image_picker.dart';
+import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/components/floating_button.dart';
 
 class JoinUsView extends GetView<JoinController> {
   const JoinUsView({super.key});
@@ -92,7 +94,7 @@ class JoinUsView extends GetView<JoinController> {
                           }
                           return null;
                         }),
-                    CustomTextFormField( 
+                    CustomTextFormField(
                         title: 'Postcode',
                         controller: controller.postcode,
                         textInputType: TextInputType.text,
@@ -102,12 +104,21 @@ class JoinUsView extends GetView<JoinController> {
                           }
                           return null;
                         }),
-                    const SizedBox(height: 100)
+                    const SizedBox(height: 20),
+                    CategoryWidget(
+                        selectedCategories: controller.selectedCategories,
+                        onChanged: (data) {
+                          print(data.length);
+                          controller.changeSelectedCategory(data);
+                        }),
+                    const SizedBox(height: 20),
+                    const CVPicker(),
+                    const SizedBox(height: 100),
                   ]),
                 ),
               )),
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
+              FloatingActionButtonLocation.centerDocked,
           floatingActionButton: FloatingButton(
               title: 'SUBMIT',
               onTap: () {

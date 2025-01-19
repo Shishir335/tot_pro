@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:tot_pro/app/data/custom_text_form_field.dart';
 import 'package:tot_pro/app/data/helper.dart';
 import 'package:tot_pro/app/modules/contact_us/controllers/contact_us_controller.dart';
-import 'package:tot_pro/components.dart/app_bar.dart';
-import 'package:tot_pro/components.dart/floating_button.dart';
+import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/components/floating_button.dart';
 
 class ContactUsView extends GetView<ContactUsController> {
   const ContactUsView({super.key});

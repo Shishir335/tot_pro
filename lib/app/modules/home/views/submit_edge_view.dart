@@ -810,60 +810,7 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
           fit: BoxFit.fitWidth,
           height: 250,
           width: double.infinity,
-        )
-        /*Image.network(
-
-          '${ApiURL.globalUrl + imagePath}',
-          height: 120,
-
-          loadingBuilder: (BuildContext context, Widget child,
-              ImageChunkEvent? loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-
-
-                  // LinearProgressIndicator()
-                  LinearProgressIndicator(
-
-                    backgroundColor: Colors.grey,
-
-                    valueColor: AlwaysStoppedAnimation(Colors.green),
-                    //  strokeWidth: 5,
-
-                    // strokeWidth: 2.0,
-                    //  valueColor : AlwaysStoppedAnimation(Colors.red.shade100),
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
-                  AppSpace.spaceH4,
-                  Text('Loading...',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),),
-
-                ],
-              ),
-            );},
-          width: double.infinity,
-          fit: BoxFit.cover,
-        ),*/
-        );
-
-    /*PhotoView(
-        imageProvider:// Image.network('src')
-        CachedNetworkImageProvider('${ApiURL.globalUrl + imagePath}'),
-      );*/
-
-    /* Image.network('${ApiURL.globalUrl + imagePath}',
-      alignment: Alignment.center,
-      fit: BoxFit.fitWidth,
-      // height: 180,
-      width: double.infinity,
-    );*/
+        ));
   }
 }
 

@@ -8,6 +8,8 @@ class ApiURL {
   ///-------------- live url -----------
   static const String globalUrl = 'https://www.totpro.net/';
   static const String baseApiUrl = 'https://www.totpro.net/api/';
+  static const String categoryImageUrl =
+      'https://www.totpro.net/images/category/';
 
   ///---------- Authentication  url path -----
   static const String loginUrl = '${baseApiUrl}login';
@@ -47,7 +49,7 @@ class ApiURL {
       '${baseApiUrl}account-delete-request';
 
   static const String review = '${baseApiUrl}review';
-  static const String category = '${baseApiUrl}category';
+  static const String category = '${baseApiUrl}get-category';
   static const String contactUs = '${baseApiUrl}contact-us';
   static const String quote = '${baseApiUrl}request-quote';
   static const String joinUs = '${baseApiUrl}join-us';

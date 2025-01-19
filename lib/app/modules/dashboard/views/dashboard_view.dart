@@ -121,11 +121,9 @@ class DashboardView extends GetView<DashboardController> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              'Welcome to EDGE',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 20),
-                            ),
+                            Text('Welcome to EDGE',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20)),
 
                             /* Column(
                     children: [
