@@ -18,34 +18,29 @@ class UserProfileView extends GetView<UserProfileController> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: const Text(
-          'User Profile ',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-      ),
+          backgroundColor: Colors.red,
+          centerTitle: true,
+          title: const Text('User Profile ',
+              style: TextStyle(color: Colors.white))),
       body: Container(
         child: Stack(
           children: [
             Container(
-              height: 150,
-              padding: const EdgeInsets.only(top: 0, bottom: 30),
-              decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.2),
-                  borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(0.0),
-                      bottom: Radius.circular(10.0))),
-              width: double.infinity,
-              child: Image.asset(AppAssets.appLogo),
-            ),
+                height: 150,
+                padding: const EdgeInsets.only(top: 0, bottom: 30),
+                decoration: BoxDecoration(
+                    color: Colors.red.withOpacity(0.2),
+                    borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(0.0),
+                        bottom: Radius.circular(10.0))),
+                width: double.infinity,
+                child: Image.asset(AppAssets.appLogo)),
             Container(
-              margin: const EdgeInsets.only(
-                  top: 100, left: 5, right: 5, bottom: 20),
-              //   color: Colors.red,
-              width: double.infinity,
-              child: registerUI(),
-            ),
+                margin: const EdgeInsets.only(
+                    top: 100, left: 5, right: 5, bottom: 20),
+                //   color: Colors.red,
+                width: double.infinity,
+                child: registerUI())
           ],
         ),
       ),
@@ -120,10 +115,11 @@ class UserProfileView extends GetView<UserProfileController> {
                           ///----------- Finder Address --------
                           /*        FinderAddress(controller:controller,
                               address:controller.addressFirstLineCTL.text),
-*/
-
+                          */
                           Obx(
                             () => FieldSuggestion<AddressModel>.network(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               inputDecoration: InputDecoration(
                                 fillColor: controller.isReadOnly.value
                                     ? Colors.red.shade50
@@ -133,7 +129,8 @@ class UserProfileView extends GetView<UserProfileController> {
                                 hintText: controller.firstAddress.value,
                                 //controller.addressFirstLineCTL.text,
                                 isDense: true,
-                                contentPadding: const EdgeInsets.all(20),
+                                contentPadding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: const BorderSide(

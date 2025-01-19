@@ -80,7 +80,7 @@ class ApiClient {
     if (connectivityResult[0] == ConnectivityResult.mobile ||
         connectivityResult[0] == ConnectivityResult.wifi) {
       try {
-        //  if (enableLoading) showloader();
+        //  if (enableLoading) showLoader();
 
         if (apiType == 'GET') {
           print('ApiClient.connection ??? GET ');
@@ -198,6 +198,9 @@ class ApiClient {
       url = apiUrl;
     }
 
+    log(url);
+    log(customheader.toString());
+
     Map<String, dynamic> header = customheader ??
         <String, String>{
           'Accept': 'application/json',
@@ -228,7 +231,7 @@ class ApiClient {
     if (connectivityResult[0] == ConnectivityResult.mobile ||
         connectivityResult[0] == ConnectivityResult.wifi) {
       try {
-        if (enableLoading) showloader();
+        if (enableLoading) showLoader();
 
         if (apiType == 'GET') {
           print('ApiClient.connection ??? GET ');
@@ -263,6 +266,9 @@ class ApiClient {
             options: dio.Options(headers: header),
           );
         }
+
+        log(response.statusCode.toString());
+        log(response.data.toString());
 
         print('ApiClient.connection ???? $url');
 
@@ -316,7 +322,7 @@ class ApiClient {
       // print('res status data :: ${response.data.toString()}');
       final Map<String, dynamic> mapdata = response.data;
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return response;
       } else {
         //Error Response (error provided by REST API)
@@ -326,12 +332,12 @@ class ApiClient {
         } else {
           //errorSnack(mapdata['response']['message']);
         }
-        return null;
+        return response;
       }
     } else {
       alertSnack('Sorry, You are not connected with mobile-wifi network');
     }
-    return null;
+    return response;
   }
 
   Future<dio.Response?> connectionWork({
@@ -388,7 +394,7 @@ class ApiClient {
     if (connectivityResult[0] == ConnectivityResult.mobile ||
         connectivityResult[0] == ConnectivityResult.wifi) {
       try {
-        if (enableLoading) showloader();
+        if (enableLoading) showLoader();
 
         if (apiType == 'GET') {
           print('ApiClient.connection ??? GET ');
@@ -535,7 +541,7 @@ class ApiClient {
     if (connectivityResult[0] == ConnectivityResult.mobile ||
         connectivityResult[0] == ConnectivityResult.wifi) {
       try {
-        if (enableLoading) showloader();
+        if (enableLoading) showLoader();
 
         log('ApiClient.connection POST >>>>>>>>>>>> $url $REQUEST_DATA $header');
         response = await _dio.post(
@@ -646,7 +652,7 @@ class ApiClient {
           'Authorization': 'Bearer $tokenValue'
         };
 
-        if (enableLoading) showloader();
+        if (enableLoading) showLoader();
 
         print('ApiClient.connection POST >>>>>>>>>>>> ');
         FormData formData = FormData.fromMap({

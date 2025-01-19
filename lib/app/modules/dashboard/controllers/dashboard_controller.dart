@@ -43,16 +43,20 @@ class DashboardController extends GetxController {
         icon: Icon(Icons.category, size: 40, color: Colors.red.shade900)));
     menuList.add(MenuModel(
         menuId: 6,
+        menuTitle: 'Request a Quote',
+        icon: Icon(Icons.note, size: 40, color: Colors.red.shade900)));
+    menuList.add(MenuModel(
+        menuId: 7,
         menuTitle: 'Leave a Review',
         icon: Icon(Icons.reviews, size: 40, color: Colors.red.shade900)));
     menuList.add(MenuModel(
-        menuId: 7,
+        menuId: 8,
         menuTitle: 'Join Us',
         icon: Icon(Icons.person_add, size: 40, color: Colors.red.shade900)));
     menuList.add(MenuModel(
-        menuId: 8,
-        menuTitle: 'Request a Quote',
-        icon: Icon(Icons.note, size: 40, color: Colors.red.shade900)));
+        menuId: 9,
+        menuTitle: 'Contact Us',
+        icon: Icon(Icons.phone, size: 40, color: Colors.red.shade900)));
 
     _apiClient = ApiClient();
     // getUserDetailsCTR();

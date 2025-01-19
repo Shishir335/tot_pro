@@ -4,6 +4,8 @@ import 'package:tot_pro/app/modules/category/bindings/edge_submit_binding.dart';
 import 'package:tot_pro/app/modules/category/views/category.dart';
 import 'package:tot_pro/app/modules/change_password/bindings/dashboard_binding.dart';
 import 'package:tot_pro/app/modules/change_password/views/change_password_view.dart';
+import 'package:tot_pro/app/modules/contact_us/bindings/contact_us_binding.dart';
+import 'package:tot_pro/app/modules/contact_us/views/contact_us.dart';
 import 'package:tot_pro/app/modules/dashboard/bindings/dashboard_binding.dart';
 import 'package:tot_pro/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:tot_pro/app/modules/face_id/views/face_id_view.dart';
@@ -169,6 +171,11 @@ class AppPages {
         name: _Paths.quote,
         page: () => const QuoteView(),
         binding: QuoteBinding()),
+
+    GetPage(
+        name: _Paths.contactUs,
+        page: () => const ContactUsView(),
+        binding: ContactUsBinding()),
 
     //faceIdAuth
   ];

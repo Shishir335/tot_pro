@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
@@ -23,7 +21,7 @@ Future<void> loader({String? msg}) => EasyLoading.show(
     );
 
 ///runing
-Future<void> showloader({String? msg}) async {
+showLoader({String? msg}) {
   EasyLoading.instance
     ..loadingStyle = EasyLoadingStyle.custom
     ..backgroundColor = Colors.white
@@ -45,23 +43,23 @@ Future<void> showloader({String? msg}) async {
           Image.asset(
             AppAssets.appLogo,
 
-           // color: Colors.red,
+            // color: Colors.red,
           ),
-           Padding(
-            padding: const EdgeInsets.all(10.0),
-            child:Image.asset(
-              ImageConstant.fetchDataLoading,
-              width: 40,
-              height:40,
-              color: Colors.red,
-            )
-           /* Center(
+          Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Image.asset(
+                ImageConstant.fetchDataLoading,
+                width: 40,
+                height: 40,
+                color: Colors.red,
+              )
+              /* Center(
               child: CircularProgressIndicator(
                 color: AppThemes.primaryColor,
                 backgroundColor: Colors.teal,
               ),
             ),*/
-          ),
+              ),
         ],
       ),
     ),

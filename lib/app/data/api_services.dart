@@ -77,7 +77,7 @@ class ApiService {
     if (connectivityResult[0] == ConnectivityResult.mobile ||
         connectivityResult[0] == ConnectivityResult.wifi) {
       try {
-        // if (enableLoading) showloader();
+        // if (enableLoading) showLoader();
 
 
         print('url : $url');
@@ -223,7 +223,7 @@ class ApiService {
     if (connectivityResult[0] == ConnectivityResult.mobile ||
         connectivityResult[0] == ConnectivityResult.wifi) {
       try {
-        // if (enableLoading) showloader();
+        // if (enableLoading) showLoader();
 
 
         print('url : $url');

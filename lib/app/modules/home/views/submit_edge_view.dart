@@ -1,4 +1,3 @@
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:field_suggestion/field_suggestion.dart';
@@ -17,7 +16,6 @@ import '../../../data/customIntputHeader.dart';
 import '../../../data/custom_checkbox_button.dart';
 import '../../../data/custom_text_form_field.dart';
 import 'dart:io';
-
 
 class SubmitEdgeView extends GetView<SubmitEdgeController> {
   var inputTextStyle = TextStyle(fontSize: 14, color: Colors.grey.shade700);
@@ -97,16 +95,16 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
           children: [
             edgeSubmitForm(context),
             AppSpace.spaceH20,
-            edgeCompanyInfo('100 Fairholt, Rd, London, N165HN',Icons.location_on_outlined),
-            edgeCompanyInfo('02-039947611',Icons.phone),
-            edgeCompanyInfo('sam@edgeemg.co.uk',Icons.email_outlined),
+            edgeCompanyInfo(
+                '100 Fairholt, Rd, London, N165HN', Icons.location_on_outlined),
+            edgeCompanyInfo('02-039947611', Icons.phone),
+            edgeCompanyInfo('sam@edgeemg.co.uk', Icons.email_outlined),
             AppSpace.spaceH20,
           ],
         ),
       ),
     );
   }
-
 
   edgeSubmitForm(BuildContext context) {
     return Container(
@@ -267,14 +265,17 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                   },
                 ),
 
-                CustomInputHeader(header: 'Address  First Line'),
+                CustomInputHeader(header: 'Address First Line'),
                 AppSpace.spaceH6,
 
                 ///------------ finder Address  ------
 
                 Obx(
                   () => FieldSuggestion<AddressModel>.network(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     inputDecoration: InputDecoration(
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 10),
                       hintText: controller.firstAddress.value,
                       filled: true,
                       fillColor: true
@@ -414,7 +415,8 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                               context: context,
                               builder: (BuildContext context) {
                                 return Container(
-                                  margin: const EdgeInsets.symmetric(vertical: 20),
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 20),
                                   child: Wrap(
                                     children: <Widget>[
                                       ListTile(
@@ -425,10 +427,10 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                                               color: Colors.green,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        trailing:
-                                            const Icon(Icons.touch_app_outlined),
-                                        onTap: () => controller
-                                            .selectImage(ImageSource.camera,'camera'),
+                                        trailing: const Icon(
+                                            Icons.touch_app_outlined),
+                                        onTap: () => controller.selectImage(
+                                            ImageSource.camera, 'camera'),
                                       ),
                                       ListTile(
                                         leading: const Icon(Icons.image),
@@ -438,10 +440,10 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                                               color: Colors.green,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        trailing:
-                                            const Icon(Icons.touch_app_outlined),
-                                        onTap: () => controller
-                                            .selectImage(ImageSource.gallery,'gallery'),
+                                        trailing: const Icon(
+                                            Icons.touch_app_outlined),
+                                        onTap: () => controller.selectImage(
+                                            ImageSource.gallery, 'gallery'),
                                       ),
                                       ListTile(
                                         leading: const Icon(
@@ -452,13 +454,12 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                                               color: Colors.green,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        trailing:
-                                            const Icon(Icons.video_call_outlined),
-                                        onTap: () =>
-                                            controller.selectImage(ImageSource.gallery,'video'),
-                                            //controller.selectVideo(ImageSource.gallery),
-                                       //video
-
+                                        trailing: const Icon(
+                                            Icons.video_call_outlined),
+                                        onTap: () => controller.selectImage(
+                                            ImageSource.gallery, 'video'),
+                                        //controller.selectVideo(ImageSource.gallery),
+                                        //video
                                       ),
                                     ],
                                   ),
@@ -493,9 +494,13 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                                   shrinkWrap: true,
                                   itemCount: controller.imageFiles.length,
                                   itemBuilder: (BuildContext ctx, int index) {
-                                    String extendFile = controller.imageFiles[index].path.split('.').last;
+                                    String extendFile = controller
+                                        .imageFiles[index].path
+                                        .split('.')
+                                        .last;
                                     print('basename :: $extendFile');
-                                    String path = controller.imageFiles[index].path;
+                                    String path =
+                                        controller.imageFiles[index].path;
 
                                     return Container(
                                       decoration: BoxDecoration(
@@ -522,13 +527,16 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                                             ),
                                             width: double.infinity,
                                             alignment: Alignment.topRight,
-                                            margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+                                            margin: const EdgeInsets.symmetric(
+                                                vertical: 0, horizontal: 0),
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 5, horizontal: 5),
                                             child: InkWell(
                                               onTap: () {
-                                                controller.imageFiles.removeAt(index);
-                                                controller.descriptionCont.removeAt(index);
+                                                controller.imageFiles
+                                                    .removeAt(index);
+                                                controller.descriptionCont
+                                                    .removeAt(index);
                                               },
                                               child: const CircleAvatar(
                                                 radius: 14,
@@ -545,8 +553,10 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                                             color: Colors.white,
                                             child: CustomTextFormField(
                                               maxLines: 2,
-                                              textStyle: const TextStyle(fontSize: 10),
-                                              controller: controller.descriptionCont[index],
+                                              textStyle:
+                                                  const TextStyle(fontSize: 10),
+                                              controller: controller
+                                                  .descriptionCont[index],
                                               hintText: "Description",
                                             ),
                                           ),
@@ -560,21 +570,34 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                                             radius: const Radius.circular(10),
                                             padding: const EdgeInsets.all(2),
                                             child: ClipRRect(
-                                              borderRadius: const BorderRadius.all(
-                                                  Radius.circular(10)),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(10)),
                                               child: Container(
                                                 height: 250,
-                                                padding: const EdgeInsets.all(0),
+                                                padding:
+                                                    const EdgeInsets.all(0),
                                                 alignment: Alignment.center,
                                                 child: Stack(
                                                   children: [
-                                                   // Obx(() => controller.fileModeCameraOrVideo.value=='video' ?
+                                                    // Obx(() => controller.fileModeCameraOrVideo.value=='video' ?
 
-
-                                                    extendFile.toLowerCase() == 'jpg' || extendFile == 'png'  ||extendFile == 'bmp'  || extendFile == 'webp'  ||extendFile == 'heic' || extendFile == 'jpge'  ?
-                                                         imageShowWithZoomInOut(path, index):
-                                                    VideoPlay1(
-                                                            path: path,//'images/works/667a29a242056.mp4',
+                                                    extendFile.toLowerCase() ==
+                                                                'jpg' ||
+                                                            extendFile ==
+                                                                'png' ||
+                                                            extendFile ==
+                                                                'bmp' ||
+                                                            extendFile ==
+                                                                'webp' ||
+                                                            extendFile ==
+                                                                'heic' ||
+                                                            extendFile == 'jpge'
+                                                        ? imageShowWithZoomInOut(
+                                                            path, index)
+                                                        : VideoPlay1(
+                                                            path:
+                                                                path, //'images/works/667a29a242056.mp4',
                                                             index: index,
                                                           )
 
@@ -587,9 +610,13 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                                           AppSpace.spaceH4,
                                           Padding(
                                             padding: const EdgeInsets.all(5.0),
-                                            child: Text('File Path :${path.split('/').last} ',style: const TextStyle(fontSize: 8),),
-                                          )
-                                          ,AppSpace.spaceH4,
+                                            child: Text(
+                                              'File Path :${path.split('/').last} ',
+                                              style:
+                                                  const TextStyle(fontSize: 8),
+                                            ),
+                                          ),
+                                          AppSpace.spaceH4,
                                         ],
                                       ),
                                     );
@@ -611,7 +638,8 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                             context: context,
                             builder: (BuildContext context) {
                               return Container(
-                                margin: const EdgeInsets.symmetric(vertical: 20),
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 20),
                                 child: Wrap(
                                   children: <Widget>[
                                     ListTile(
@@ -622,9 +650,10 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                                             color: Colors.green,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      trailing: const Icon(Icons.touch_app_outlined),
-                                      onTap: () => controller
-                                          .selectImage(ImageSource.camera,'camera'),
+                                      trailing:
+                                          const Icon(Icons.touch_app_outlined),
+                                      onTap: () => controller.selectImage(
+                                          ImageSource.camera, 'camera'),
                                     ),
                                     ListTile(
                                       leading: const Icon(Icons.image),
@@ -634,9 +663,10 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                                             color: Colors.green,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      trailing: const Icon(Icons.touch_app_outlined),
-                                      onTap: () => controller
-                                          .selectImage(ImageSource.gallery,'gallery'),
+                                      trailing:
+                                          const Icon(Icons.touch_app_outlined),
+                                      onTap: () => controller.selectImage(
+                                          ImageSource.gallery, 'gallery'),
                                     ),
                                     ListTile(
                                       leading: const Icon(
@@ -647,9 +677,10 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                                             color: Colors.green,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                      trailing: const Icon(Icons.video_call_outlined),
-                                      onTap: () => controller
-                                          .selectImage(ImageSource.gallery,'video'),
+                                      trailing:
+                                          const Icon(Icons.video_call_outlined),
+                                      onTap: () => controller.selectImage(
+                                          ImageSource.gallery, 'video'),
                                     ),
                                   ],
                                 ),
@@ -743,7 +774,7 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
     );
   }
 
-  edgeCompanyInfo(String info, IconData? icon){
+  edgeCompanyInfo(String info, IconData? icon) {
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: Row(
@@ -752,7 +783,7 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
           CircleAvatar(
               radius: 12,
               backgroundColor: Colors.red,
-              child:  Icon(
+              child: Icon(
                 icon,
                 color: Colors.white,
                 size: 14,
@@ -769,8 +800,6 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
       ),
     );
   }
-
-
 
   imageShowWithZoomInOut(String imagePath, int index) {
     return WidgetZoom(
@@ -856,7 +885,7 @@ class _VideoPlay1State extends State<VideoPlay1> {
 
   initVideo() {
     //print('Init Video path :: ${ApiURL.globalUrl +widget.path.toString()}');
-    String videoUrl =widget.path.toString();
+    String videoUrl = widget.path.toString();
     print('_VideoPlay1State.initVideo Path >> $videoUrl ');
     controller = VideoPlayerController.file(File(videoUrl));
     futureController = controller!.initialize();
@@ -885,10 +914,7 @@ class _VideoPlay1State extends State<VideoPlay1> {
 
   @override
   Widget build(BuildContext context) {
-    return
-
-
-      Card(
+    return Card(
       elevation: 0.0,
       color: Colors.white,
       child: Container(
@@ -899,12 +925,11 @@ class _VideoPlay1State extends State<VideoPlay1> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: [
-
             AppSpace.spaceH4,
             widget.path.toString() != 'null'
                 ? SizedBox(
                     height: 220,
-                    child:FutureBuilder(
+                    child: FutureBuilder(
                       future: futureController,
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (snapshot.connectionState ==
@@ -1026,7 +1051,8 @@ class _VideoPlay1State extends State<VideoPlay1> {
                                                     valueListenable:
                                                         currentPosition,
                                                     builder: (context,
-                                                        VideoPlayerValue?videoPlayerValue,
+                                                        VideoPlayerValue?
+                                                            videoPlayerValue,
                                                         w) {
                                                       return Padding(
                                                         padding:
@@ -1090,7 +1116,8 @@ class _VideoPlay1State extends State<VideoPlay1> {
                   )
                 : Container(
                     height: 200,
-                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     decoration: BoxDecoration(
                         color: Colors.red.shade50,
                         borderRadius: BorderRadius.circular(10)),

@@ -1,15 +1,13 @@
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:tot_pro/app/data/core/values/app_space.dart';
-import 'package:tot_pro/app/data/customIntputHeader.dart';
-import 'package:tot_pro/app/data/helper.dart';
-import 'package:tot_pro/components.dart/app_bar.dart';
+import 'package:get/get.dart';
 import 'package:tot_pro/app/data/custom_text_form_field.dart';
-import 'package:tot_pro/app/modules/review/controllers/review_controller.dart';
+import 'package:tot_pro/app/data/helper.dart';
+import 'package:tot_pro/app/modules/contact_us/controllers/contact_us_controller.dart';
+import 'package:tot_pro/components.dart/app_bar.dart';
 import 'package:tot_pro/components.dart/floating_button.dart';
 
-class ReviewView extends GetView<ReviewController> {
-  const ReviewView({super.key});
+class ContactUsView extends GetView<ContactUsController> {
+  const ContactUsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +23,22 @@ class ReviewView extends GetView<ReviewController> {
                 child: SingleChildScrollView(
                   child: Column(children: [
                     CustomTextFormField(
-                        title: 'Name',
-                        controller: controller.name,
+                        title: 'First name',
+                        controller: controller.firstName,
                         textInputType: TextInputType.text,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter your name';
+                          }
+                          return null;
+                        }),
+                    CustomTextFormField(
+                        title: 'Last name',
+                        controller: controller.lastName,
+                        textInputType: TextInputType.phone,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your email';
                           }
                           return null;
                         }),
@@ -45,18 +53,8 @@ class ReviewView extends GetView<ReviewController> {
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'Phone',
-                        controller: controller.phone,
-                        textInputType: TextInputType.phone,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          return null;
-                        }),
-                    CustomTextFormField(
-                        title: 'Review',
-                        controller: controller.review,
+                        title: 'Message',
+                        controller: controller.message,
                         textInputType: TextInputType.text,
                         maxLines: 5,
                         validator: (value) {
@@ -65,20 +63,6 @@ class ReviewView extends GetView<ReviewController> {
                           }
                           return null;
                         }),
-                    AppSpace.spaceH20,
-                    Row(children: [
-                      CustomInputHeader(header: 'Rate Us: '),
-                      for (int i = 0; i < 5; i++)
-                        InkWell(
-                            onTap: () {
-                              controller.changeStar(i);
-                            },
-                            child: Icon(Icons.star_rounded,
-                                color: i < controller.stars
-                                    ? Colors.amber
-                                    : Colors.grey,
-                                size: 40))
-                    ]),
                     const SizedBox(height: 100)
                   ]),
                 ),
@@ -88,7 +72,7 @@ class ReviewView extends GetView<ReviewController> {
           floatingActionButton: FloatingButton(
               title: 'SUBMIT',
               onTap: () {
-                controller.submitReview();
+                controller.contactUs();
               })),
       if (controller.isLoading) showLoader(msg: 'Please wait')
     ]);

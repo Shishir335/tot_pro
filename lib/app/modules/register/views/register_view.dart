@@ -124,7 +124,10 @@ class RegisterView extends GetView<RegisterController> {
                           ///------------ finder Address ------
 
                           FieldSuggestion<AddressModel>.network(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             inputDecoration: InputDecoration(
+                              contentPadding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
                               // suffixIcon: suffixIc,
                               filled: true,
                               fillColor: true

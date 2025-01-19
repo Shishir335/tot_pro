@@ -23,6 +23,7 @@ abstract class Routes {
   static const Review = _Paths.review;
   static const JoinUs = _Paths.joinUs;
   static const Quote = _Paths.quote;
+  static const ContactUs = _Paths.contactUs;
   static const accountDeleteRequest = _Paths.accountDeleteRequest;
   static const workCompleteDetails = _Paths.workCompleteDetails;
 
@@ -58,4 +59,5 @@ abstract class _Paths {
   static const review = '/review';
   static const joinUs = '/joinUs';
   static const quote = '/quote';
+  static const contactUs = '/contact-us';
 }

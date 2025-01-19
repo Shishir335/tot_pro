@@ -198,11 +198,13 @@ class DashboardView extends GetView<DashboardController> {
         } else if (menu.menuId == 5) {
           Get.toNamed(Routes.Category);
         } else if (menu.menuId == 6) {
-          Get.toNamed(Routes.Review);
-        } else if (menu.menuId == 7) {
-          Get.toNamed(Routes.JoinUs);
-        } else if (menu.menuId == 8) {
           Get.toNamed(Routes.Quote);
+        } else if (menu.menuId == 7) {
+          Get.toNamed(Routes.Review);
+        } else if (menu.menuId == 8) {
+          Get.toNamed(Routes.JoinUs);
+        } else if (menu.menuId == 9) {
+          Get.toNamed(Routes.ContactUs);
         }
       },
       child: Container(
