@@ -67,6 +67,7 @@ dependencies:
   local_auth: 
   photo_view: 
   widget_zoom: 
+  file_picker:
 
 dev_dependencies:
   flutter_test:
