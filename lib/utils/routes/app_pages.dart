@@ -64,7 +64,7 @@ class AppPages {
         binding: SplashScreenBinding()),
     GetPage(
       name: _Paths.HOME,
-      page: () => SubmitEdgeView(),
+      page: () => const SubmitEdgeView(),
       binding: HomeBinding(),
     ),
     GetPage(

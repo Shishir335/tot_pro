@@ -5,19 +5,25 @@ import 'package:tot_pro/models/category.dart';
 
 class CategoryWidget extends StatefulWidget {
   final List<Data> selectedCategories;
+  final bool singlePick;
   final Function(List<Data>) onChanged;
+
   const CategoryWidget(
-      {super.key, required this.selectedCategories, required this.onChanged});
+      {super.key,
+      required this.selectedCategories,
+      required this.onChanged,
+      this.singlePick = false});
 
   @override
   State<CategoryWidget> createState() => _CategoryWidgetState();
 }
 
 class _CategoryWidgetState extends State<CategoryWidget> {
-  final List<Data> categories = [];
+  List<Data> categories = [];
 
   @override
   void initState() {
+    categories = widget.selectedCategories;
     Get.put(CategoryController());
     super.initState();
   }
@@ -51,7 +57,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                           height: 20,
                           width: 20,
                           child: Checkbox(
-                              value: widget.selectedCategories.contains(item),
+                              value: checkIfContains(item),
                               onChanged: (value) {
                                 addToCategories(item);
                                 widget.onChanged(categories);
@@ -68,14 +74,24 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     });
   }
 
-  addToCategories(Data value) {
-    int index = categories.indexWhere((element) => element.id == value.id);
-    print('index $index');
+  bool checkIfContains(Data item) {
+    int index = categories.indexWhere((element) => element.id == item.id);
+    return index > -1 ? true : false;
+  }
 
-    if (index == -1) {
+  addToCategories(Data value) {
+    if (widget.singlePick) {
+      categories.clear();
       categories.add(value);
     } else {
-      categories.removeWhere((element) => element.id == value.id);
+      int index = categories.indexWhere((element) => element.id == value.id);
+      print('index $index');
+
+      if (index == -1) {
+        categories.add(value);
+      } else {
+        categories.removeWhere((element) => element.id == value.id);
+      }
     }
     setState(() {});
   }

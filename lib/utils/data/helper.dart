@@ -30,40 +30,20 @@ showLoader({String? msg}) {
     ..progressColor = Colors.teal;
 
   EasyLoading.show(
-    maskType: EasyLoadingMaskType.black,
-    status: msg ?? 'Please wait',
-    indicator: Container(
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-        color: Colors.white,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Image.asset(
-            AppAssets.appLogo,
-
-            // color: Colors.red,
-          ),
-          Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Image.asset(
-                ImageConstant.fetchDataLoading,
-                width: 40,
-                height: 40,
-                color: Colors.red,
-              )
-              /* Center(
-              child: CircularProgressIndicator(
-                color: AppThemes.primaryColor,
-                backgroundColor: Colors.teal,
-              ),
-            ),*/
-              ),
-        ],
-      ),
-    ),
-  );
+      maskType: EasyLoadingMaskType.black,
+      status: msg ?? 'Please wait',
+      indicator: Container(
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+              color: Colors.white),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Image.asset(AppAssets.appLogo),
+            Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Image.asset(ImageConstant.fetchDataLoading,
+                    width: 40, height: 40, color: Colors.red))
+          ])));
 }
 
 loaderDismiss() => EasyLoading.dismiss();

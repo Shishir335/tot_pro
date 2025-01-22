@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/models/menu_model.dart';
-
+import 'package:tot_pro/screens/home/controllers/submit_edge_controller.dart';
 import '../../../main.dart';
 import '../../../models/user_profile_model.dart';
 import '../../../utils/data/api_client.dart';
@@ -20,6 +20,7 @@ class DashboardController extends GetxController {
 
   @override
   void onInit() {
+    Get.put(SubmitEdgeController());
     menuList.add(MenuModel(
         menuId: 1,
         menuTitle: 'Submit an EDGE',

@@ -17,6 +17,7 @@ class ApiURL {
   static const String updateProfileUrl = '${baseApiUrl}user-profile-update';
   static const String changePasswordUrl = '${baseApiUrl}password-change';
   static const String userDetailsUrl = '${baseApiUrl}user-details';
+  static const String aboutUs = '${baseApiUrl}about-us';
 
   /// ------------- Address ----------------
   static const String addressIndexUrl = '${baseApiUrl}additional-addresses';

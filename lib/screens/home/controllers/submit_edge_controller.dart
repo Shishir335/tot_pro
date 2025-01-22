@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:tot_pro/models/about_us.dart';
+import 'package:tot_pro/models/category.dart';
 import 'package:tot_pro/utils/data/api_services.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -151,12 +153,38 @@ class SubmitEdgeController extends GetxController {
   @override
   void onInit() async {
     print('HomeController.onInit');
+    submitFormKey = GlobalKey<FormState>();
     apiService = ApiService();
     _apiClient = ApiClient();
-    await getDetailsInfo();
+    getDetailsInfo();
+    getAboutUs();
     nameCon.text = proInfo.value.name ?? '';
     mailCon.text = proInfo.value.email ?? '';
     super.onInit();
+  }
+
+  AboutUs? aboutUs;
+
+  Future getAboutUs() async {
+    String? token = localStoreSRF.getString('token');
+    final response = await _apiClient.connection(
+      API_TYPE: 'GET',
+      apiType: 'GET',
+      REQUEST_TYPE: '',
+      REQUEST_DATA: {},
+      customheader: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+      apiUrl: ApiURL.aboutUs,
+      PARAM: {},
+    );
+
+    if (response != null) {
+      print(response.data);
+      aboutUs = AboutUs.fromJson(response.data);
+      update();
+    }
   }
 
   void increment() => count.value++;
@@ -251,6 +279,19 @@ class SubmitEdgeController extends GetxController {
     }
   }
 
+  List<Data> selectedCategories = [];
+
+  changeSelectedCategory(List<Data> data) {
+    if (data.length == 2) {
+      Data category = data[1];
+      selectedCategories.clear();
+      selectedCategories.add(category);
+    } else {
+      selectedCategories.add(data[0]);
+    }
+    update();
+  }
+
   /// Work Submit  done Image
   Future<void> workSubmit(BuildContext context) async {
     print('SubmitEdgeController.workSubmit Image Upload ');
@@ -267,7 +308,8 @@ class SubmitEdgeController extends GetxController {
         "Authorization": "Bearer $token"
       };
 
-      final url = Uri.parse("https://www.totpro.net/api/work");
+      final url = Uri.parse(
+          "https://www.totpro.net/api/work-store/${selectedCategories[0]}");
       var request = http.MultipartRequest('POST', url);
 
       for (int i = 0; i < imageFiles.length; i++) {
@@ -354,63 +396,53 @@ class SubmitEdgeController extends GetxController {
             builder: (BuildContext context) {
               return Dialog(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
+                    borderRadius: BorderRadius.circular(10.0)),
                 child: Container(
                   width: 390,
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(
-                        ' Work Order is added successfully! ',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.green),
-                      ),
+                      const Text(' Work Order is added successfully! ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.green)),
                       Image.asset('assets/images/successful.png'),
                       AppSpace.spaceH10,
                       ElevatedButton(
-                        onPressed: () {
-                          //nameCon.clear();
-                          //mailCon.clear();
-                          phoneCon.clear();
-                          streetCon.clear();
-                          townCon.clear();
-                          postCon.clear();
-                          houseCon.clear();
-                          countryTextController.clear();
-                          // nameCon.clear();
-                          commentCon.clear();
-                          addressLineThreeController.clear();
-                          addressLineOneController.clear();
-                          addressLineTwoController.clear();
-                          descriptionCont.clear();
-                          postcodeTextController.clear();
-                          postCodeStatusMsg.value = '';
-                          postCodeStatus.value = '';
-                          imageFiles.clear();
+                          onPressed: () {
+                            //nameCon.clear();
+                            //mailCon.clear();
+                            phoneCon.clear();
+                            streetCon.clear();
+                            townCon.clear();
+                            postCon.clear();
+                            houseCon.clear();
+                            countryTextController.clear();
+                            // nameCon.clear();
+                            commentCon.clear();
+                            addressLineThreeController.clear();
+                            addressLineOneController.clear();
+                            addressLineTwoController.clear();
+                            descriptionCont.clear();
+                            postcodeTextController.clear();
+                            postCodeStatusMsg.value = '';
+                            postCodeStatus.value = '';
+                            imageFiles.clear();
 
-                          isUseRegisterAddress.value = false;
-                          isUseRegisterNumber.value = false;
-                          isVideoCapture.value = false;
-                          DBHelper.loadingClose();
-                          // pDialog.hide();
-                          Get.back();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          // primary: Colors.green,
-                          minimumSize: const Size(150, 40),
-                        ),
-                        child: const Text(
-                          'Ok',
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                            isUseRegisterAddress.value = false;
+                            isUseRegisterNumber.value = false;
+                            isVideoCapture.value = false;
+                            DBHelper.loadingClose();
+                            // pDialog.hide();
+                            Get.back();
+                          },
+                          style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              minimumSize: const Size(150, 40)),
+                          child: const Text('Ok')),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),

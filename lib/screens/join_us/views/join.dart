@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/utils/data/custom_text_form_field.dart';
-import 'package:tot_pro/utils/data/helper.dart';
 import 'package:tot_pro/screens/join_us/controllers/join_controller.dart';
 import 'package:tot_pro/screens/join_us/views/category_widget.dart';
 import 'package:tot_pro/screens/join_us/views/image_picker.dart';
@@ -123,9 +122,9 @@ class JoinUsView extends StatelessWidget {
             floatingActionButton: FloatingButton(
                 title: 'SUBMIT',
                 onTap: () {
-                  controller.joinUs();
+                  controller.joinUs(context);
                 })),
-        if (controller.isLoading) showLoader(msg: 'Please wait')
+        // if (controller.isLoading) showLoader(msg: 'Please wait')
       ]);
     });
   }

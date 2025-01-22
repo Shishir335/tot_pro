@@ -4,6 +4,8 @@ import 'package:field_suggestion/field_suggestion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/screens/join_us/views/category_widget.dart';
 import 'package:tot_pro/utils/data/core/values/app_space.dart';
 import 'package:tot_pro/screens/home/controllers/submit_edge_controller.dart';
 import 'package:image_picker/image_picker.dart';
@@ -17,96 +19,102 @@ import '../../../utils/data/custom_checkbox_button.dart';
 import '../../../utils/data/custom_text_form_field.dart';
 import 'dart:io';
 
-class SubmitEdgeView extends GetView<SubmitEdgeController> {
-  var inputTextStyle = TextStyle(fontSize: 14, color: Colors.grey.shade700);
+class SubmitEdgeView extends StatefulWidget {
+  const SubmitEdgeView({super.key});
 
-  SubmitEdgeView({super.key});
+  @override
+  State<SubmitEdgeView> createState() => _SubmitEdgeViewState();
+}
+
+class _SubmitEdgeViewState extends State<SubmitEdgeView> {
+  final inputTextStyle = TextStyle(fontSize: 14, color: Colors.grey.shade700);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: const Text(
-          'Submit an EDGE',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: Container(
-        color: Colors.grey.shade300,
-        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-        child: Stack(
-          children: [
-            Container(
-              height: 160,
-              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-              decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.2),
-                  borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(20.0),
-                      bottom: Radius.circular(5.0))),
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.asset(
-                    AppAssets.appLogo,
-                    fit: BoxFit.cover,
-                    height: 50,
-                    width: 60,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(left: 15, right: 15),
-                    child: Text(
-                      'Tell us about your task. We will get in touch with you soon.',
-                      maxLines: 2,
-                      textAlign: TextAlign.justify,
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w600),
+    return GetBuilder<SubmitEdgeController>(builder: (controller) {
+      return Scaffold(
+        backgroundColor: Colors.grey.shade200,
+        appBar: const CustomAppBar(title: 'Submit an EDGE'),
+        body: Container(
+          color: Colors.grey.shade300,
+          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+          child: Stack(
+            children: [
+              Container(
+                height: 160,
+                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+                decoration: BoxDecoration(
+                    color: Colors.red.withOpacity(0.2),
+                    borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(20.0),
+                        bottom: Radius.circular(5.0))),
+                width: double.infinity,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(
+                      AppAssets.appLogo,
+                      fit: BoxFit.cover,
+                      height: 50,
+                      width: 60,
                     ),
-                  ),
-                  AppSpace.spaceH6,
-                ],
+                    const Padding(
+                      padding: EdgeInsets.only(left: 15, right: 15),
+                      child: Text(
+                        'Tell us about your task. We will get in touch with you soon.',
+                        maxLines: 2,
+                        textAlign: TextAlign.justify,
+                        style: TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    AppSpace.spaceH6,
+                  ],
+                ),
               ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(
-                  top: 110, left: 0, right: 0, bottom: 20),
-              //   color: Colors.red,
-              width: double.infinity,
-              child: submitEdge(context),
-            ),
-          ],
+              Container(
+                margin: const EdgeInsets.only(
+                    top: 110, left: 0, right: 0, bottom: 20),
+                //   color: Colors.red,
+                width: double.infinity,
+                child: submitEdge(context, controller),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
-  Widget submitEdge(BuildContext context) {
+  Widget submitEdge(BuildContext context, SubmitEdgeController controller) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: SingleChildScrollView(
         physics: const ScrollPhysics(),
         child: Column(
           children: [
-            edgeSubmitForm(context),
-            AppSpace.spaceH20,
-            edgeCompanyInfo(
-                '100 Fairholt, Rd, London, N165HN', Icons.location_on_outlined),
-            edgeCompanyInfo('02-039947611', Icons.phone),
-            edgeCompanyInfo('sam@edgeemg.co.uk', Icons.email_outlined),
-            AppSpace.spaceH20,
+            edgeSubmitForm(context, controller),
+            controller.aboutUs == null
+                ? const SizedBox()
+                : Column(children: [
+                    AppSpace.spaceH20,
+                    edgeCompanyInfo(controller.aboutUs!.address1!,
+                        Icons.location_on_outlined),
+                    edgeCompanyInfo(controller.aboutUs!.phone1!, Icons.phone),
+                    edgeCompanyInfo(
+                        controller.aboutUs!.email1!, Icons.email_outlined),
+                    AppSpace.spaceH20,
+                  ]),
           ],
         ),
       ),
     );
   }
 
-  edgeSubmitForm(BuildContext context) {
+  edgeSubmitForm(BuildContext context, SubmitEdgeController controller) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 5),
       decoration: BoxDecoration(
@@ -278,9 +286,7 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                           const EdgeInsets.symmetric(horizontal: 10),
                       hintText: controller.firstAddress.value,
                       filled: true,
-                      fillColor: true
-                          ? Colors.red.shade50.withOpacity(0.8)
-                          : Colors.black12,
+                      fillColor: Colors.red.shade50.withOpacity(0.8),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -400,6 +406,13 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                     return null;
                   },
                 ),
+                // categories
+                CategoryWidget(
+                    selectedCategories: controller.selectedCategories,
+                    singlePick: true,
+                    onChanged: (value) {
+                      controller.changeSelectedCategory(value);
+                    }),
 
                 ///todo list
                 /// -------- Image With Comments  ---------
@@ -742,30 +755,35 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
                 ),
                 AppSpace.spaceH20,
                 InkWell(
-                  onTap: () {
-                    print('check submit ');
-                    FocusManager.instance.primaryFocus?.unfocus();
-                    if (controller.submitFormKey.currentState!.validate()) {
-                      controller.isVideoCapture.value == true
-                          ? controller.workSubmitVideo(context)
-                          : controller.workSubmit(context);
-                    }
-                  },
-                  child: Container(
-                    width: double.maxFinite,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                        child: Text(
-                      "Submit".toUpperCase(),
-                      style: const TextStyle(fontSize: 18, color: Colors.white),
-                    )),
-                  ),
-                ),
-                AppSpace.spaceH10,
+                    onTap: () {
+                      print('check submit ');
+                      FocusManager.instance.primaryFocus?.unfocus();
+                      if (controller.submitFormKey.currentState!.validate()) {
+                        if (controller.selectedCategories.isNotEmpty) {
+                          controller.isVideoCapture.value == true
+                              ? controller.workSubmitVideo(context)
+                              : controller.workSubmit(context);
+                        } else {
+                          Get.snackbar(
+                            'Error',
+                            'Please select a category.',
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white,
+                          );
+                        }
+                      }
+                    },
+                    child: Container(
+                        width: double.maxFinite,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                            child: Text("Submit".toUpperCase(),
+                                style: const TextStyle(
+                                    fontSize: 18, color: Colors.white))))),
+                AppSpace.spaceH10
               ],
             ),
           ),
@@ -815,13 +833,13 @@ class SubmitEdgeView extends GetView<SubmitEdgeController> {
 }
 
 class VideoPlay1 extends StatefulWidget {
-  String? path;
-  int? index;
+  final String? path;
+  final int? index;
 
   @override
   _VideoPlay1State createState() => _VideoPlay1State();
 
-  VideoPlay1({super.key, this.path, this.index // Video from assets folder
+  const VideoPlay1({super.key, this.path, this.index // Video from assets folder
       });
 }
 
