@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/utils/data/custom_text_form_field.dart';
@@ -14,7 +15,7 @@ class QuoteView extends GetView<QuoteController> {
     return Stack(children: [
       Scaffold(
           backgroundColor: Colors.grey.shade200,
-          appBar: const CustomAppBar(title: 'Request a quote'),
+          appBar: CustomAppBar(title: context.tr('Request a quote')),
           body: Container(
               height: MediaQuery.of(context).size.height,
               color: Colors.grey.shade300,
@@ -23,63 +24,63 @@ class QuoteView extends GetView<QuoteController> {
                 child: SingleChildScrollView(
                   child: Column(children: [
                     CustomTextFormField(
-                        title: 'Name',
+                        title: context.tr('Name'),
                         controller: controller.name,
                         textInputType: TextInputType.text,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
+                            return context.tr('Please enter your name');
                           }
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'Email',
+                        title: context.tr('Email'),
                         controller: controller.email,
                         textInputType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
+                            return context.tr('Please enter your email');
                           }
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'Phone',
+                        title: context.tr('Phone'),
                         controller: controller.phone,
                         textInputType: TextInputType.phone,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your phone';
+                            return context.tr('Please enter your phone');
                           }
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'City',
+                        title: context.tr('City'),
                         controller: controller.city,
                         textInputType: TextInputType.text,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your city';
+                            return context.tr('Please enter your city');
                           }
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'Address',
+                        title: context.tr('Address'),
                         controller: controller.address,
                         textInputType: TextInputType.text,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your address';
+                            return context.tr('Please enter your address');
                           }
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'Details',
+                        title: context.tr('Details'),
                         controller: controller.details,
                         textInputType: TextInputType.text,
                         maxLines: 5,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your details';
+                            return context.tr('Please enter your details');
                           }
                           return null;
                         }),
@@ -90,11 +91,11 @@ class QuoteView extends GetView<QuoteController> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: FloatingButton(
-              title: 'SUBMIT',
+              title: context.tr('SUBMIT'),
               onTap: () {
                 controller.requestQuote();
               })),
-      if (controller.isLoading) showLoader(msg: 'Please wait')
+      if (controller.isLoading) showLoader(msg: context.tr('Please wait'))
     ]);
   }
 }

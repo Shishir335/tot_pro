@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart' as dio;
@@ -6,7 +5,6 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tot_pro/main.dart';
@@ -39,36 +37,6 @@ class JoinController extends GetxController {
   TextEditingController details = TextEditingController();
 
   XFile? cv;
-
-  /// Get Job History Details  done
-  // Future joinUs() async {
-  //   changeIsLoading(true);
-
-  //   dio.FormData formData = dio.FormData.fromMap({
-  //     "name": name.text,
-  //     "email": email.text,
-  //     "phone": phone.text,
-  //     "address_first_line": addressFirstLine.text,
-  //     "address_second_line": addressSecondLine.text,
-  //     "address_third_line": addressThirdLine.text,
-  //     "town": town.text,
-  //     "postcode": postcode.text,
-  //     "category_ids[]":
-  //         jsonEncode([for (var item in selectedCategories) item.id.toString()]),
-  //     'cv': await dio.MultipartFile.fromFile(cv!.path,
-  //         filename: cv!.path.split('/').last),
-  //   });
-
-  //   var response = await post(ApiURL.joinUs, data: formData, isMultipart: true);
-
-  //   changeIsLoading(false);
-
-  //   if (response != null) {
-  //     log(response.toString());
-  //     Get.snackbar('Success', 'Join request successful');
-  //     resetControllers();
-  //   }
-  // }
 
   resetControllers() {
     addressSecondLine.clear();
@@ -103,8 +71,6 @@ class JoinController extends GetxController {
   Future<void> joinUs(BuildContext context) async {
     print('SubmitEdgeController.workSubmit Image Upload ');
     final Directory tempDir = await getTemporaryDirectory();
-    // final targetPath = '${tempDir.absolute.path}/temp.jpg';
-    //DBHelper.loadingDialog(Get.overlayContext!);
     if (cv != null) {
       DBHelper.loadingDialog(Get.overlayContext!);
       List<http.MultipartFile> multipartFileList = [];
@@ -204,8 +170,8 @@ class JoinController extends GetxController {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text('You have joined successfully!',
-                          style: TextStyle(
+                      Text('You have joined successfully!'.tr,
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.green)),
                       Image.asset('assets/images/successful.png'),
@@ -231,7 +197,7 @@ class JoinController extends GetxController {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               minimumSize: const Size(150, 40)),
-                          child: const Text('Ok')),
+                          child: Text('Ok'.tr)),
                       const SizedBox(height: 10),
                     ],
                   ),
@@ -249,7 +215,7 @@ class JoinController extends GetxController {
           changeIsLoading(false);
           DBHelper.loadingClose();
           Get.snackbar(
-            'Error',
+            'Error'.tr,
             'Status code :  ${response.statusCode.toString()}\n work order has Failed ',
             backgroundColor: Colors.red,
             colorText: Colors.white,
@@ -259,7 +225,7 @@ class JoinController extends GetxController {
         DBHelper.loadingClose();
         //  pDialog.hide();
         Get.snackbar(
-          'Failed',
+          'Failed'.tr,
           e.toString(),
           backgroundColor: Colors.red,
           colorText: Colors.white,
@@ -271,7 +237,7 @@ class JoinController extends GetxController {
       // pDialog.hide();
     } else {
       Helpers.snackbarForErorr(
-          titleText: 'Alert Message', bodyText: 'Image field required.');
+          titleText: 'Alert Message'.tr, bodyText: 'Image field required.'.tr);
     }
   }
 }

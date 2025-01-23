@@ -1,5 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_line/dotted_line.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:field_suggestion/field_suggestion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,59 +34,49 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
   Widget build(BuildContext context) {
     return GetBuilder<SubmitEdgeController>(builder: (controller) {
       return Scaffold(
-        backgroundColor: Colors.grey.shade200,
-        appBar: const CustomAppBar(title: 'Submit an EDGE'),
-        body: Container(
-          color: Colors.grey.shade300,
-          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
-          child: Stack(
-            children: [
-              Container(
-                height: 160,
-                padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-                decoration: BoxDecoration(
-                    color: Colors.red.withOpacity(0.2),
-                    borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(20.0),
-                        bottom: Radius.circular(5.0))),
-                width: double.infinity,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset(
-                      AppAssets.appLogo,
-                      fit: BoxFit.cover,
-                      height: 50,
-                      width: 60,
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 15, right: 15),
-                      child: Text(
-                        'Tell us about your task. We will get in touch with you soon.',
-                        maxLines: 2,
-                        textAlign: TextAlign.justify,
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                    AppSpace.spaceH6,
-                  ],
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(
-                    top: 110, left: 0, right: 0, bottom: 20),
-                //   color: Colors.red,
-                width: double.infinity,
-                child: submitEdge(context, controller),
-              ),
-            ],
-          ),
-        ),
-      );
+          backgroundColor: Colors.grey.shade200,
+          appBar: const CustomAppBar(title: 'Submit an EDGE'),
+          body: Container(
+              color: Colors.grey.shade300,
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+              child: Stack(children: [
+                Container(
+                    height: 160,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+                    decoration: BoxDecoration(
+                        color: Colors.red.withOpacity(0.2),
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(20.0),
+                            bottom: Radius.circular(5.0))),
+                    width: double.infinity,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(AppAssets.appLogo,
+                              fit: BoxFit.cover, height: 50, width: 60),
+                          Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              child: Text(
+                                  context.tr(
+                                      'Tell us about your task. We will get in touch with you soon.'),
+                                  maxLines: 2,
+                                  textAlign: TextAlign.justify,
+                                  style: const TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w600))),
+                          AppSpace.spaceH6
+                        ])),
+                Container(
+                    margin: const EdgeInsets.only(
+                        top: 110, left: 0, right: 0, bottom: 20),
+                    width: double.infinity,
+                    child: submitEdge(context, controller))
+              ])));
     });
   }
 
@@ -133,106 +124,97 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                 /// -------- Ck Box ---------
 
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: Obx(
-                        () => CustomCheckboxButton(
-                          value: controller.isUseRegisterAddress.value,
-                          onChange: (value) async {
-                            if (controller.isUseRegisterAddress.value == true) {
-                              controller.isUseRegisterAddress.value = false;
-                              controller.phoneCon.text = '';
-                            } else {
-                              controller.isUseRegisterAddress.value = true;
-                              controller.phoneCon.text =
-                                  controller.proInfo.value.phone.toString();
-                            }
-                          },
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: Obx(
+                          () => CustomCheckboxButton(
+                            value: controller.isUseRegisterAddress.value,
+                            onChange: (value) async {
+                              if (controller.isUseRegisterAddress.value ==
+                                  true) {
+                                controller.isUseRegisterAddress.value = false;
+                                controller.phoneCon.text = '';
+                              } else {
+                                controller.isUseRegisterAddress.value = true;
+                                controller.phoneCon.text =
+                                    controller.proInfo.value.phone.toString();
+                              }
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    const Expanded(
-                      flex: 8,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Use registered phone number.",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                      Expanded(
+                          flex: 8,
+                          child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(context.tr("Use registered phone number."),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold))
+                              ]))
+                    ]),
                 AppSpace.spaceH20,
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Expanded(
-                      child: Obx(
-                        () => CustomCheckboxButton(
-                          value: controller.isUseRegisterNumber.value,
-                          onChange: (value) async {
-                            if (controller.isUseRegisterNumber.value == true) {
-                              controller.isUseRegisterNumber.value = false;
-                              controller.firstAddress.value = '';
-                              controller.addressLineTwoController.text = '';
-                              controller.addressLineThreeController.text = '';
-                              controller.countryTextController.text = '';
-                              controller.postcodeTextController.text = '';
-                            } else {
-                              controller.isUseRegisterNumber.value = true;
-                              controller.firstAddress.value =
-                                  controller.proInfo.value.addressFirstLine ??
-                                      '';
-                              controller.addressLineTwoController.text =
-                                  controller.proInfo.value.addressSecondLine ??
-                                      '';
-                              controller.addressLineThreeController.text =
-                                  controller.proInfo.value.addressThirdLine ??
-                                      '';
-                              controller.countryTextController.text =
-                                  controller.proInfo.value.town ?? '';
-                              print(
-                                  'SubmitEdgeController proInfo >> ${controller.proInfo.value.toJson()}');
-                              print(
-                                  'SubmitEdgeController >> ${controller.countryTextController.text}');
-
-                              controller.postcodeTextController.text =
-                                  controller.proInfo.value.postcode.toString();
-                            }
-                          },
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: Obx(
+                          () => CustomCheckboxButton(
+                            value: controller.isUseRegisterNumber.value,
+                            onChange: (value) async {
+                              if (controller.isUseRegisterNumber.value ==
+                                  true) {
+                                controller.isUseRegisterNumber.value = false;
+                                controller.firstAddress.value = '';
+                                controller.addressLineTwoController.text = '';
+                                controller.addressLineThreeController.text = '';
+                                controller.countryTextController.text = '';
+                                controller.postcodeTextController.text = '';
+                              } else {
+                                controller.isUseRegisterNumber.value = true;
+                                controller.firstAddress.value =
+                                    controller.proInfo.value.addressFirstLine ??
+                                        '';
+                                controller.addressLineTwoController.text =
+                                    controller
+                                            .proInfo.value.addressSecondLine ??
+                                        '';
+                                controller.addressLineThreeController.text =
+                                    controller.proInfo.value.addressThirdLine ??
+                                        '';
+                                controller.countryTextController.text =
+                                    controller.proInfo.value.town ?? '';
+                                controller.postcodeTextController.text =
+                                    controller.proInfo.value.postcode
+                                        .toString();
+                              }
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    const Expanded(
-                      flex: 8,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Use registered address.",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                      Expanded(
+                          flex: 8,
+                          child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(context.tr("Use registered address."),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold))
+                              ]))
+                    ]),
 
                 ///-------- Input field
                 AppSpace.spaceH20,
-                CustomInputHeader(header: 'Name'),
+                CustomInputHeader(header: context.tr('Name')),
                 AppSpace.spaceH6,
                 CustomTextFormField(
                   controller: controller.nameCon,
@@ -243,7 +225,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                     return null;
                   },
                 ),
-                CustomInputHeader(header: 'Email'),
+                CustomInputHeader(header: context.tr('Email')),
                 AppSpace.spaceH6,
                 CustomTextFormField(
                   textInputType: TextInputType.emailAddress,
@@ -255,7 +237,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                     return null;
                   },
                 ),
-                CustomInputHeader(header: 'Phone Number'),
+                CustomInputHeader(header: context.tr('Phone Number')),
                 AppSpace.spaceH6,
                 CustomTextFormField(
                   textInputType: TextInputType.phone,
@@ -273,7 +255,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                   },
                 ),
 
-                CustomInputHeader(header: 'Address First Line'),
+                CustomInputHeader(header: context.tr('Address First Line')),
                 AppSpace.spaceH6,
 
                 ///------------ finder Address  ------
@@ -349,7 +331,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
 
                 ///--------- End  ---------
 
-                CustomInputHeader(header: 'Address  Second Line'),
+                CustomInputHeader(header: context.tr('Address  Second Line')),
                 AppSpace.spaceH6,
                 CustomTextFormField(
                   isReadOnly: true,
@@ -364,7 +346,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                   },
                 ),
 
-                CustomInputHeader(header: 'Address  Third Line'),
+                CustomInputHeader(header: context.tr('Address  Third Line')),
                 AppSpace.spaceH6,
                 CustomTextFormField(
                   isReadOnly: true,
@@ -379,7 +361,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                   },
                 ),
 
-                CustomInputHeader(header: 'Town'),
+                CustomInputHeader(header: context.tr('Town')),
                 AppSpace.spaceH6,
                 CustomTextFormField(
                   isReadOnly: true,
@@ -393,7 +375,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                   },
                 ),
 
-                CustomInputHeader(header: 'Post Code'),
+                CustomInputHeader(header: context.tr('Post Code')),
                 AppSpace.spaceH6,
                 CustomTextFormField(
                   isReadOnly: true,
@@ -424,80 +406,62 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                     () => controller.imageFiles.isEmpty
                         ? InkWell(
                             onTap: () => showModalBottomSheet(
-                              barrierColor: Colors.teal.withOpacity(0.5),
-                              context: context,
-                              builder: (BuildContext context) {
-                                return Container(
-                                  margin:
-                                      const EdgeInsets.symmetric(vertical: 20),
-                                  child: Wrap(
-                                    children: <Widget>[
-                                      ListTile(
-                                        leading: const Icon(Icons.camera),
-                                        title: const Text(
-                                          'Camera',
-                                          style: TextStyle(
-                                              color: Colors.green,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        trailing: const Icon(
-                                            Icons.touch_app_outlined),
-                                        onTap: () => controller.selectImage(
-                                            ImageSource.camera, 'camera'),
-                                      ),
-                                      ListTile(
-                                        leading: const Icon(Icons.image),
-                                        title: const Text(
-                                          'Gallery',
-                                          style: TextStyle(
-                                              color: Colors.green,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        trailing: const Icon(
-                                            Icons.touch_app_outlined),
-                                        onTap: () => controller.selectImage(
-                                            ImageSource.gallery, 'gallery'),
-                                      ),
-                                      ListTile(
-                                        leading: const Icon(
-                                            Icons.video_camera_back_outlined),
-                                        title: const Text(
-                                          'Video',
-                                          style: TextStyle(
-                                              color: Colors.green,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        trailing: const Icon(
-                                            Icons.video_call_outlined),
-                                        onTap: () => controller.selectImage(
-                                            ImageSource.gallery, 'video'),
-                                        //controller.selectVideo(ImageSource.gallery),
-                                        //video
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                            ),
+                                barrierColor: Colors.teal.withOpacity(0.5),
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 20),
+                                      child: Wrap(children: <Widget>[
+                                        ListTile(
+                                            leading: const Icon(Icons.camera),
+                                            title: Text(context.tr('Camera'),
+                                                style: const TextStyle(
+                                                    color: Colors.green,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            trailing: const Icon(
+                                                Icons.touch_app_outlined),
+                                            onTap: () => controller.selectImage(
+                                                ImageSource.camera, 'camera')),
+                                        ListTile(
+                                            leading: const Icon(Icons.image),
+                                            title: Text(context.tr('Gallery'),
+                                                style: const TextStyle(
+                                                    color: Colors.green,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            trailing: const Icon(
+                                                Icons.touch_app_outlined),
+                                            onTap: () => controller.selectImage(
+                                                ImageSource.gallery,
+                                                'gallery')),
+                                        ListTile(
+                                            leading: const Icon(Icons
+                                                .video_camera_back_outlined),
+                                            title: Text(context.tr('Video'),
+                                                style: const TextStyle(
+                                                    color: Colors.green,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            trailing: const Icon(
+                                                Icons.video_call_outlined),
+                                            onTap: () => controller.selectImage(
+                                                ImageSource.gallery, 'video'))
+                                      ]));
+                                }),
                             child: Center(
                                 child: Padding(
                                     padding: const EdgeInsets.all(0.0),
-                                    child: Column(
-                                      children: [
-                                        Image.asset(
+                                    child: Column(children: [
+                                      Image.asset(
                                           'assets/images/empty_iamges.png',
                                           width: 100,
-                                          height: 100,
-                                        ),
-                                        const Text(
-                                          'No Images OR Videos ',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ))),
-                          )
+                                          height: 100),
+                                      Text(context.tr('No Images OR Videos'),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold))
+                                    ]))))
                         : SizedBox(
                             width: double.infinity,
                             child: Center(
@@ -511,128 +475,126 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                                         .imageFiles[index].path
                                         .split('.')
                                         .last;
-                                    print('basename :: $extendFile');
                                     String path =
                                         controller.imageFiles[index].path;
 
                                     return Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.shade300,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      //color: Colors.red.shade50,
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 5, horizontal: 2),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 2, horizontal: 5),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey.shade300,
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            width: double.infinity,
-                                            alignment: Alignment.topRight,
-                                            margin: const EdgeInsets.symmetric(
-                                                vertical: 0, horizontal: 0),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 5, horizontal: 5),
-                                            child: InkWell(
-                                              onTap: () {
-                                                controller.imageFiles
-                                                    .removeAt(index);
-                                                controller.descriptionCont
-                                                    .removeAt(index);
-                                              },
-                                              child: const CircleAvatar(
-                                                radius: 14,
-                                                backgroundColor: Colors.red,
-                                                child: Icon(
-                                                  Icons.close,
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey.shade300,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 5, horizontal: 2),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 2, horizontal: 5),
+                                        child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                  decoration: BoxDecoration(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              5)),
+                                                  width: double.infinity,
+                                                  alignment: Alignment.topRight,
+                                                  margin: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 0,
+                                                      horizontal: 0),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 5,
+                                                      horizontal: 5),
+                                                  child: InkWell(
+                                                      onTap: () {
+                                                        controller.imageFiles
+                                                            .removeAt(index);
+                                                        controller
+                                                            .descriptionCont
+                                                            .removeAt(index);
+                                                      },
+                                                      child: const CircleAvatar(
+                                                          radius: 14,
+                                                          backgroundColor:
+                                                              Colors.red,
+                                                          child: Icon(
+                                                            Icons.close,
+                                                            color: Colors.white,
+                                                          )))),
+                                              Container(
                                                   color: Colors.white,
-                                                  // size: 30,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Container(
-                                            color: Colors.white,
-                                            child: CustomTextFormField(
-                                              maxLines: 2,
-                                              textStyle:
-                                                  const TextStyle(fontSize: 10),
-                                              controller: controller
-                                                  .descriptionCont[index],
-                                              hintText: "Description",
-                                            ),
-                                          ),
+                                                  child: CustomTextFormField(
+                                                      maxLines: 2,
+                                                      textStyle:
+                                                          const TextStyle(
+                                                              fontSize: 10),
+                                                      controller: controller
+                                                              .descriptionCont[
+                                                          index],
+                                                      hintText: context
+                                                          .tr("Description"))),
 
-                                          AppSpace.spaceH6,
+                                              AppSpace.spaceH6,
 
-                                          ///------- Image ----------
+                                              ///------- Image ----------
 
-                                          DottedBorder(
-                                            borderType: BorderType.RRect,
-                                            radius: const Radius.circular(10),
-                                            padding: const EdgeInsets.all(2),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(10)),
-                                              child: Container(
-                                                height: 250,
-                                                padding:
-                                                    const EdgeInsets.all(0),
-                                                alignment: Alignment.center,
-                                                child: Stack(
-                                                  children: [
-                                                    // Obx(() => controller.fileModeCameraOrVideo.value=='video' ?
-
-                                                    extendFile.toLowerCase() ==
-                                                                'jpg' ||
-                                                            extendFile ==
-                                                                'png' ||
-                                                            extendFile ==
-                                                                'bmp' ||
-                                                            extendFile ==
-                                                                'webp' ||
-                                                            extendFile ==
-                                                                'heic' ||
-                                                            extendFile == 'jpge'
-                                                        ? imageShowWithZoomInOut(
-                                                            path, index)
-                                                        : VideoPlay1(
-                                                            path:
-                                                                path, //'images/works/667a29a242056.mp4',
-                                                            index: index,
-                                                          )
-
-                                                    //)
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          AppSpace.spaceH4,
-                                          Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Text(
-                                              'File Path :${path.split('/').last} ',
-                                              style:
-                                                  const TextStyle(fontSize: 8),
-                                            ),
-                                          ),
-                                          AppSpace.spaceH4,
-                                        ],
-                                      ),
-                                    );
+                                              DottedBorder(
+                                                  borderType: BorderType.RRect,
+                                                  radius:
+                                                      const Radius.circular(10),
+                                                  padding:
+                                                      const EdgeInsets.all(2),
+                                                  child: ClipRRect(
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .all(
+                                                              Radius.circular(
+                                                                  10)),
+                                                      child: Container(
+                                                          height: 250,
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(0),
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child:
+                                                              Stack(children: [
+                                                            extendFile
+                                                                            .toLowerCase() ==
+                                                                        'jpg' ||
+                                                                    extendFile ==
+                                                                        'png' ||
+                                                                    extendFile ==
+                                                                        'bmp' ||
+                                                                    extendFile ==
+                                                                        'webp' ||
+                                                                    extendFile ==
+                                                                        'heic' ||
+                                                                    extendFile ==
+                                                                        'jpge'
+                                                                ? imageShowWithZoomInOut(
+                                                                    path, index)
+                                                                : VideoPlay1(
+                                                                    path: path,
+                                                                    index:
+                                                                        index)
+                                                          ])))),
+                                              AppSpace.spaceH4,
+                                              Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(5.0),
+                                                  child: Text(
+                                                      'File Path :${path.split('/').last} ',
+                                                      style: const TextStyle(
+                                                          fontSize: 8))),
+                                              AppSpace.spaceH4
+                                            ]));
                                   }),
                             ),
                           ),
@@ -642,68 +604,55 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
 
                 ///-------- ADD + BUTTON
 
-                Obx(
-                  () => controller.imageFiles.isEmpty
-                      ? Container()
-                      : InkWell(
-                          onTap: () => showModalBottomSheet(
-                            barrierColor: Colors.teal.withOpacity(0.5),
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 20),
-                                child: Wrap(
-                                  children: <Widget>[
-                                    ListTile(
-                                      leading: const Icon(Icons.camera),
-                                      title: const Text(
-                                        'Camera',
-                                        style: TextStyle(
-                                            color: Colors.green,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      trailing:
-                                          const Icon(Icons.touch_app_outlined),
-                                      onTap: () => controller.selectImage(
-                                          ImageSource.camera, 'camera'),
-                                    ),
-                                    ListTile(
-                                      leading: const Icon(Icons.image),
-                                      title: const Text(
-                                        'Gallery',
-                                        style: TextStyle(
-                                            color: Colors.green,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      trailing:
-                                          const Icon(Icons.touch_app_outlined),
-                                      onTap: () => controller.selectImage(
-                                          ImageSource.gallery, 'gallery'),
-                                    ),
-                                    ListTile(
-                                      leading: const Icon(
-                                          Icons.video_camera_back_outlined),
-                                      title: const Text(
-                                        'Video',
-                                        style: TextStyle(
-                                            color: Colors.green,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      trailing:
-                                          const Icon(Icons.video_call_outlined),
-                                      onTap: () => controller.selectImage(
-                                          ImageSource.gallery, 'video'),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-
-                          //controller.selectImage(ImageSource.gallery),
-
-                          child: Container(
+                Obx(() => controller.imageFiles.isEmpty
+                    ? Container()
+                    : InkWell(
+                        onTap: () => showModalBottomSheet(
+                              barrierColor: Colors.teal.withOpacity(0.5),
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: Wrap(
+                                    children: <Widget>[
+                                      ListTile(
+                                          leading: const Icon(Icons.camera),
+                                          title: Text(context.tr('Camera'),
+                                              style: const TextStyle(
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold)),
+                                          trailing: const Icon(
+                                              Icons.touch_app_outlined),
+                                          onTap: () => controller.selectImage(
+                                              ImageSource.camera, 'camera')),
+                                      ListTile(
+                                          leading: const Icon(Icons.image),
+                                          title: Text(context.tr('Gallery'),
+                                              style: const TextStyle(
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold)),
+                                          trailing: const Icon(
+                                              Icons.touch_app_outlined),
+                                          onTap: () => controller.selectImage(
+                                              ImageSource.gallery, 'gallery')),
+                                      ListTile(
+                                          leading: const Icon(
+                                              Icons.video_camera_back_outlined),
+                                          title: Text(context.tr('Video'),
+                                              style: const TextStyle(
+                                                  color: Colors.green,
+                                                  fontWeight: FontWeight.bold)),
+                                          trailing: const Icon(
+                                              Icons.video_call_outlined),
+                                          onTap: () => controller.selectImage(
+                                              ImageSource.gallery, 'video')),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                        child: Container(
                             width: double.maxFinite,
                             height: 50,
                             decoration: BoxDecoration(
@@ -711,31 +660,22 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Text(
-                                  'add'.toUpperCase(),
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                AppSpace.spaceW6,
-                                CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor:
-                                      Colors.white.withOpacity(0.4),
-                                  child: const Icon(
-                                    Icons.add,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                ),
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Text(context.tr('Add').toUpperCase(),
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                                  AppSpace.spaceW6,
+                                  CircleAvatar(
+                                      radius: 15,
+                                      backgroundColor:
+                                          Colors.white.withOpacity(0.4),
+                                      child: const Icon(Icons.add,
+                                          color: Colors.white))
+                                ])))),
 
                 AppSpace.spaceH20,
 
@@ -756,7 +696,6 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                 AppSpace.spaceH20,
                 InkWell(
                     onTap: () {
-                      print('check submit ');
                       FocusManager.instance.primaryFocus?.unfocus();
                       if (controller.submitFormKey.currentState!.validate()) {
                         if (controller.selectedCategories.isNotEmpty) {
@@ -765,8 +704,8 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                               : controller.workSubmit(context);
                         } else {
                           Get.snackbar(
-                            'Error',
-                            'Please select a category.',
+                            context.tr('Error'),
+                            context.tr('Please select a category.'),
                             backgroundColor: Colors.red,
                             colorText: Colors.white,
                           );
@@ -780,7 +719,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                             color: Colors.red,
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
-                            child: Text("Submit".toUpperCase(),
+                            child: Text(context.tr("Submit").toUpperCase(),
                                 style: const TextStyle(
                                     fontSize: 18, color: Colors.white))))),
                 AppSpace.spaceH10
@@ -801,19 +740,9 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
           CircleAvatar(
               radius: 12,
               backgroundColor: Colors.red,
-              child: Icon(
-                icon,
-                color: Colors.white,
-                size: 14,
-              )),
-          const SizedBox(
-            width: 10,
-          ),
-          Text(
-            info,
-
-            // style: contactbodytext,
-          ),
+              child: Icon(icon, color: Colors.white, size: 14)),
+          const SizedBox(width: 10),
+          Text(info),
         ],
       ),
     );

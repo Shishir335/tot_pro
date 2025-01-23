@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class FloatingButton extends StatelessWidget {
@@ -17,7 +18,7 @@ class FloatingButton extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.red, borderRadius: BorderRadius.circular(10)),
               child: Center(
-                  child: Text(title!,
+                  child: Text(context.tr(title!),
                       style: const TextStyle(
                           fontSize: 18, color: Colors.white))))),
     );

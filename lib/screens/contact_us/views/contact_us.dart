@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/utils/data/custom_text_form_field.dart';
@@ -23,43 +24,43 @@ class ContactUsView extends GetView<ContactUsController> {
                 child: SingleChildScrollView(
                   child: Column(children: [
                     CustomTextFormField(
-                        title: 'First name',
+                        title: context.tr('First name'),
                         controller: controller.firstName,
                         textInputType: TextInputType.text,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
+                            return context.tr('Please enter your first name');
                           }
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'Last name',
+                        title: context.tr('Last name'),
                         controller: controller.lastName,
                         textInputType: TextInputType.phone,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
+                            return context.tr('Please enter your last name');
                           }
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'Email',
+                        title: context.tr('Email'),
                         controller: controller.email,
                         textInputType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
+                            return context.tr('Please enter your email');
                           }
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'Message',
+                        title: context.tr('Message'),
                         controller: controller.message,
                         textInputType: TextInputType.text,
                         maxLines: 5,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your review';
+                            return context.tr('Please enter your review');
                           }
                           return null;
                         }),
@@ -70,11 +71,11 @@ class ContactUsView extends GetView<ContactUsController> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: FloatingButton(
-              title: 'SUBMIT',
+              title: context.tr('SUBMIT'),
               onTap: () {
                 controller.contactUs();
               })),
-      if (controller.isLoading) showLoader(msg: 'Please wait')
+      if (controller.isLoading) showLoader(msg: context.tr('Please wait'))
     ]);
   }
 }

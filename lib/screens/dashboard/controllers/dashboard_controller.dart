@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/models/menu_model.dart';
 import 'package:tot_pro/screens/home/controllers/submit_edge_controller.dart';
+import 'package:tot_pro/utils/localization/localization_controller.dart';
 import '../../../main.dart';
 import '../../../models/user_profile_model.dart';
 import '../../../utils/data/api_client.dart';
@@ -21,6 +22,7 @@ class DashboardController extends GetxController {
   @override
   void onInit() {
     Get.put(SubmitEdgeController());
+    Get.put(LocalizationController());
     menuList.add(MenuModel(
         menuId: 1,
         menuTitle: 'Submit an EDGE',
@@ -71,8 +73,6 @@ class DashboardController extends GetxController {
 
   /// Get Job History done done
   Future checkAccount() async {
-    print('HomeController.getOrderHistoryCTR >>>>>>>>>>>>>>>');
-    // String? token = await localStoreSRF.getString('token');
     String? token = localStoreSRF.getString('token');
     String? id = localStoreSRF.getString('id');
     final response = await _apiClient.connection(
@@ -88,17 +88,11 @@ class DashboardController extends GetxController {
       PARAM: {},
     );
 
-    print('DashboardController.checkAccount >>');
     if (response != null) {
-      print('HomeController.homeAllProductsCTR');
       final Map<String, dynamic> mapdata = response.data;
-      print('DashboardController.checkAccount $mapdata');
-      // String status=mapdata['status'];
       String message = mapdata['message'];
       checkAccountMessage.value = message.toString();
       checkAccountFlag.value = true;
-      //await localStoreSRF.setString('id', '');
-      print('DashboardController.checkAccount $mapdata');
     } else {}
   }
 }

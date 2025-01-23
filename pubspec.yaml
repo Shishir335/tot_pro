@@ -68,6 +68,7 @@ dependencies:
   photo_view: 
   widget_zoom: 
   file_picker:
+  easy_localization:
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +97,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/faceid/
+    - assets/langs/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

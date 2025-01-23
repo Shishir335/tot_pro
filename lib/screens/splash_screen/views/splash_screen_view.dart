@@ -10,29 +10,18 @@ class SplashScreendView extends GetView<SplashScreenController> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                "assets/images/splogo.png",
-                fit: BoxFit.cover,
-                height: 200,
-                width: 200,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                '  Copyright © 2024 \n  EDGE Design & Developed: Mento Software',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+        child: Scaffold(
+            body: Center(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+          Image.asset("assets/images/splogo.png",
+              fit: BoxFit.cover, height: 200, width: 200),
+          const SizedBox(height: 20),
+          const Text(
+              'Copyright © 2024 \n  EDGE Design & Developed: Mento Software',
+              style: TextStyle(fontWeight: FontWeight.bold))
+        ]))));
   }
 }

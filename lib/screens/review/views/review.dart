@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:tot_pro/utils/data/core/values/app_space.dart';
@@ -25,49 +26,49 @@ class ReviewView extends GetView<ReviewController> {
                 child: SingleChildScrollView(
                   child: Column(children: [
                     CustomTextFormField(
-                        title: 'Name',
+                        title: context.tr('Name'),
                         controller: controller.name,
                         textInputType: TextInputType.text,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
+                            return context.tr('Please enter your name');
                           }
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'Email',
+                        title: context.tr('Email'),
                         controller: controller.email,
                         textInputType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
+                            return context.tr('Please enter your email');
                           }
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'Phone',
+                        title: context.tr('Phone'),
                         controller: controller.phone,
                         textInputType: TextInputType.phone,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
+                            return context.tr('Please enter your phone');
                           }
                           return null;
                         }),
                     CustomTextFormField(
-                        title: 'Review',
+                        title: context.tr('Review'),
                         controller: controller.review,
                         textInputType: TextInputType.text,
                         maxLines: 5,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your review';
+                            return context.tr('Please enter your review');
                           }
                           return null;
                         }),
                     AppSpace.spaceH20,
                     Row(children: [
-                      CustomInputHeader(header: 'Rate Us: '),
+                      CustomInputHeader(header: context.tr('Rate Us: ')),
                       for (int i = 0; i < 5; i++)
                         InkWell(
                             onTap: () {
@@ -90,7 +91,7 @@ class ReviewView extends GetView<ReviewController> {
               onTap: () {
                 controller.submitReview();
               })),
-      if (controller.isLoading) showLoader(msg: 'Please wait')
+      if (controller.isLoading) showLoader(msg: context.tr('Please wait'))
     ]);
   }
 }

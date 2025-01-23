@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tot_pro/components/app_bar.dart';
 import 'package:video_player/video_player.dart';
 import 'package:widget_zoom/widget_zoom.dart';
 export 'package:get/get.dart';
@@ -7,7 +9,6 @@ import '../../../models/completed_work_model.dart';
 import '../../../utils/data/core/values/app_space.dart';
 import '../../../utils/data/core/values/app_url.dart';
 import '../controllers/work_complete_details_controller.dart';
-
 
 class WorkCompleteDetailsView extends GetView<WorkCompleteDetailsController> {
   const WorkCompleteDetailsView({super.key});
@@ -17,16 +18,10 @@ class WorkCompleteDetailsView extends GetView<WorkCompleteDetailsController> {
     var pageActivity = Get.arguments;
     String OrderId = pageActivity[0]['orderId'];
     List<CompletedWorkModel> dataList = pageActivity[1]['CompletedList'];
-    print('data lng :: ${dataList.length}');
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: Text(
-          'Order Id ${OrderId.toString()}',
-          style: const TextStyle(color: Colors.white),
-        ),
-      ),
+      appBar: CustomAppBar(
+          title: '${context.tr('Order Id')} ${OrderId.toString()}'),
       body: SingleChildScrollView(
         child: Column(children: [
           ListView.builder(
@@ -35,36 +30,23 @@ class WorkCompleteDetailsView extends GetView<WorkCompleteDetailsController> {
             itemCount: dataList.length,
             itemBuilder: (BuildContext context, int index) {
               CompletedWorkModel model = dataList[index];
-              String imagePath = model.image.toString();
-              String videoPath = model.video.toString();
-              print('imagePath :: $imagePath');
-              print('videoPath :: $videoPath');
-
-              String imagePathLink = ApiURL.globalUrl + imagePath;
-              String videoPathLink = ApiURL.globalUrl + videoPath;
-              print('videoPath Link  :: $videoPathLink');
-
-              return VideoPlay(pathh: model,);
+              return VideoPlay(pathh: model);
             },
           ),
         ]),
       ),
-      //  fetchAPI(dataList),
     );
   }
 }
 
 class VideoPlay extends StatefulWidget {
-  CompletedWorkModel? pathh;
-  int? index;
+  final CompletedWorkModel? pathh;
+  final int? index;
 
   @override
   _VideoPlayState createState() => _VideoPlayState();
 
-  VideoPlay({
-    super.key,
-    this.pathh,this.index,// Video from assets folder
-  });
+  const VideoPlay({super.key, this.pathh, this.index});
 }
 
 class _VideoPlayState extends State<VideoPlay> {
@@ -73,8 +55,6 @@ class _VideoPlayState extends State<VideoPlay> {
   late Future<void> futureController;
 
   initVideo() {
-    print(
-        'Init Video path :: ${ApiURL.globalUrl + widget.pathh!.video.toString()}');
     String videoUrl = ApiURL.globalUrl + widget.pathh!.video.toString();
     controller = VideoPlayerController.networkUrl(Uri.parse(videoUrl));
     futureController = controller!.initialize();
@@ -82,7 +62,6 @@ class _VideoPlayState extends State<VideoPlay> {
 
   @override
   void initState() {
-    print('testing Video PAth :${widget.pathh!.video.toString()}');
     if (widget.pathh!.video.toString() != 'null') {
       initVideo();
       controller!.addListener(() {
@@ -115,52 +94,23 @@ class _VideoPlayState extends State<VideoPlay> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(5),
-              margin: const EdgeInsets.only(top: 0, bottom: 5),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: Colors.red.shade400,
-                  borderRadius: BorderRadius.circular(5)),
-              child: const Text(
-                'Image',
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-            ),
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(5),
+                margin: const EdgeInsets.only(top: 0, bottom: 5),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Colors.red.shade400,
+                    borderRadius: BorderRadius.circular(5)),
+                child: Text(context.tr('Image'),
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold))),
             widget.pathh!.image != 'null'
-                ? imageShowWithZoom(widget.pathh!.image.toString(),widget.index??0)
-
-                   /* WidgetZoom(
-                      heroAnimationTag: 'ere',
-                      zoomWidget: Image.network(
-                        '${ApiURL.globalUrl + widget.pathh!.image.toString()}',
-                        height: 120,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    )*/
-                   // imageShowWithZoom(ApiURL.globalUrl + widget.pathh!.image.toString())
-
-                    /*InkWell(
-                onTap: (){
-
-                  imageShowWithZoom(ApiURL.globalUrl+widget.pathh!.image.toString());
-                 // fullScreen(ApiURL.globalUrl+widget.pathh!.image.toString());
-
-                },
-                child: Image.network('${ApiURL.globalUrl + widget.pathh!.image.toString()}',
-                  alignment: Alignment.center,
-                  fit: BoxFit.fill,
-                  // height: 180,
-                  width: double.infinity,
-                ),
-              )*/
-
-               //   )
+                ? imageShowWithZoom(
+                    widget.pathh!.image.toString(), widget.index ?? 0)
                 : Container(
                     height: 200,
-                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     decoration: BoxDecoration(
                         color: Colors.red.shade50,
                         borderRadius: BorderRadius.circular(10)),
@@ -174,12 +124,9 @@ class _VideoPlayState extends State<VideoPlay> {
                     decoration: BoxDecoration(
                         color: Colors.red.shade400,
                         borderRadius: BorderRadius.circular(5)),
-                    child: const Text(
-                      'Video',
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  )
+                    child: Text(context.tr('Video'),
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold)))
                 : Container(),
             AppSpace.spaceH4,
             widget.pathh!.video.toString() != 'null'
@@ -371,7 +318,8 @@ class _VideoPlayState extends State<VideoPlay> {
                   )
                 : Container(
                     height: 200,
-                    padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     decoration: BoxDecoration(
                         color: Colors.red.shade50,
                         borderRadius: BorderRadius.circular(10)),
@@ -408,89 +356,48 @@ class _VideoPlayState extends State<VideoPlay> {
     );
   }
 
-  /// Image with Zoom
- /* imageShowWithZoom(String imagePath) {
-    return WidgetZoom(
-      heroAnimationTag: 'dfd',
-      zoomWidget: Image.network(
-        '${ApiURL.globalUrl + imagePath}',
-        height: 120,
-        width: double.infinity,
-        fit: BoxFit.cover,
-      ),
-    );
-
-    *//*PhotoView(
-        imageProvider:// Image.network('src')
-        CachedNetworkImageProvider('${ApiURL.globalUrl + imagePath}'),
-      );*//*
-
-    Image.network(
-      '${ApiURL.globalUrl + imagePath}',
-      alignment: Alignment.center,
-      fit: BoxFit.fitWidth,
-      // height: 180,
-      width: double.infinity,
-    );
-  }*/
-
-
-  imageShowWithZoom(String imagePath,int index){
-    return
-      Container(
-          height: 200,
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-          decoration: BoxDecoration(
-              color: Colors.red.shade50,
-              borderRadius: BorderRadius.circular(10)),
-          child:
-      WidgetZoom(
-        heroAnimationTag: index,
-        zoomWidget: Image.network(
-
-          ApiURL.globalUrl + imagePath,
-          height: 120,
-          loadingBuilder: (BuildContext context, Widget child,
-              ImageChunkEvent? loadingProgress) {
-            if (loadingProgress == null) return child;
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CircularProgressIndicator(
-
-                    backgroundColor: Colors.grey,
-                    valueColor: const AlwaysStoppedAnimation(Colors.green),
+  imageShowWithZoom(String imagePath, int index) {
+    return Container(
+        height: 200,
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+        decoration: BoxDecoration(
+            color: Colors.red.shade50, borderRadius: BorderRadius.circular(10)),
+        child: WidgetZoom(
+          heroAnimationTag: index,
+          zoomWidget: Image.network(
+            ApiURL.globalUrl + imagePath,
+            height: 120,
+            loadingBuilder: (BuildContext context, Widget child,
+                ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CircularProgressIndicator(
+                      backgroundColor: Colors.grey,
+                      valueColor: const AlwaysStoppedAnimation(Colors.green),
                       strokeWidth: 5,
-                    value: loadingProgress.expectedTotalBytes != null
-                        ? loadingProgress.cumulativeBytesLoaded /
-                        loadingProgress.expectedTotalBytes!
-                        : null,
-                  ),
-                  AppSpace.spaceH4,
-                  const Text('Loading...',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red),),
-
-                ],
-              ),
-            );},
-          width: double.infinity,
-          fit: BoxFit.cover,
-        ),
-      )
-      );
-
-    /*PhotoView(
-        imageProvider:// Image.network('src')
-        CachedNetworkImageProvider('${ApiURL.globalUrl + imagePath}'),
-      );*/
-
-    Image.network(ApiURL.globalUrl + imagePath,
-      alignment: Alignment.center,
-      fit: BoxFit.fitWidth,
-      // height: 180,
-      width: double.infinity,
-    );
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                    AppSpace.spaceH4,
+                    Text(
+                      context.tr('Loading...'),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.red),
+                    ),
+                  ],
+                ),
+              );
+            },
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        ));
   }
 }

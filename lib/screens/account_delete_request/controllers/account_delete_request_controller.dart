@@ -9,7 +9,6 @@ import '../../../utils/data/core/values/app_url.dart';
 import '../../../utils/routes/app_pages.dart';
 
 class AccountDeleteRequestController extends GetxController {
-  //TODO: Implement ContactController
 
   final changePasswordFormKey = GlobalKey<FormState>();
 
@@ -51,8 +50,6 @@ class AccountDeleteRequestController extends GetxController {
       PARAM: {},
     );
     if (response != null) {
-      final Map<String, dynamic> myresponse = response.data;
-
       Helpers.snackbarForSucess(
           titleText: 'Successful Alert',
           bodyText: 'Change Password has successful!');

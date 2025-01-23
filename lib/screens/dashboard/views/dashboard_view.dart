@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -8,26 +9,16 @@ import '../../../main.dart';
 import '../../../utils/routes/app_pages.dart';
 import '../controllers/dashboard_controller.dart';
 
-enum menuItem {
-  LogOut,
-  Profile,
-}
-
 class DashboardView extends GetView<DashboardController> {
   const DashboardView({super.key});
   @override
   Widget build(BuildContext context) {
-    String register = localStoreSRF.getString('register') ?? '';
-    print('DashboardView.build register:: $register');
-
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
             backgroundColor: Colors.black,
             actions: [
               Obx(() {
-                print(
-                    'DashboardView.build ${controller.count.value.toString()}');
                 return controller.checkAccountFlag.value == true
                     ? PopupMenuButton<String>(
                         iconColor: Colors.white,
@@ -37,67 +28,49 @@ class DashboardView extends GetView<DashboardController> {
                           return Constants.choices.map((String choice) {
                             return PopupMenuItem<String>(
                               value: choice,
-                              child: choice == 'LogOut'
-                                  ? const Text('Logout')
-                                  : Text(choice),
+                              child: choice == context.tr('LogOut')
+                                  ? Text(context.tr('Logout'))
+                                  : Text(context.tr(choice)),
                             );
                           }).toList();
                         })
                     : Container();
               })
             ],
-            title:
-                const Text('Dashboard', style: TextStyle(color: Colors.white)),
+            title: Text(context.tr('Dashboard'),
+                style: const TextStyle(color: Colors.white)),
             centerTitle: true),
         body: Obx(() {
-          print('checkAccount ${controller.checkAccountFlag.value}');
           if (controller.checkAccountFlag.value == false) {
             return Container(
                 color: Colors.white,
                 child: Card(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
                       Center(
                           child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Text(
-                          controller.checkAccountMessage.value,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                              fontSize: 20),
-                        ),
-                      )),
-                      const SizedBox(
-                        height: 20,
-                      ),
+                              padding: const EdgeInsets.all(20.0),
+                              child: Text(controller.checkAccountMessage.value,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                      fontSize: 20)))),
+                      const SizedBox(height: 20),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            //backgroundColor: Colors.red,
-                            //minimumSize: const Size(80, 20),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 20),
-                            textStyle: const TextStyle(
-                              fontSize: 30,
-                              // color: Colors.red
-                            ),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0)),
-                          ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 20, horizontal: 20),
+                              textStyle: const TextStyle(fontSize: 30),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0))),
                           onPressed: () {
-                            print('SignOut');
-                            print(localStoreSRF.getString('token'));
-                            print('SignOut clear');
                             localStoreSRF.clear();
-                            print(localStoreSRF.getString('token'));
                             Get.offAllNamed(Routes.LOGIN);
                           },
                           child: const Text('Retry'))
-                    ],
-                  ),
-                ));
+                    ])));
           } else {
             return Container(
                 color: Colors.grey.shade300,
@@ -109,39 +82,19 @@ class DashboardView extends GetView<DashboardController> {
                       height: 150,
                       padding: const EdgeInsets.only(top: 0, bottom: 40),
                       decoration: const BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(20.0),
-                          bottom: Radius.circular(5.0),
-                        ),
-                      ),
+                          color: Colors.red,
+                          borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(20.0),
+                              bottom: Radius.circular(5.0))),
                       width: double.infinity,
-                      child: const Row(
+                      child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text('Welcome to EDGE',
-                                style: TextStyle(
+                            Text(context.tr('Welcome to EDGE'),
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 20)),
-
-                            /* Column(
-                    children: [
-                      CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 20,
-                          child: Icon(
-                            Icons.settings,
-                            size: 20,
-                            color: Colors.red,
-                          )),
-                      Text(
-                        'Settings',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
-                      )
-                    ],
-                  )*/
                           ])),
                   menuCartFetchData(context)
                 ]));
@@ -182,7 +135,7 @@ class DashboardView extends GetView<DashboardController> {
         ));
   }
 
-  dashboardCardUI(MenuModel menu, context) {
+  dashboardCardUI(MenuModel menu, BuildContext context) {
     return InkWell(
       onTap: () {
         if (menu.menuId == 1) {
@@ -217,25 +170,19 @@ class DashboardView extends GetView<DashboardController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-              ),
-              child: CircleAvatar(
-                  backgroundColor: Colors.grey.shade200,
-                  radius: 35,
-                  child: menu.icon),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              menu.menuTitle.toString(),
-              maxLines: 2,
-              style:
-                  GoogleFonts.asar(fontWeight: FontWeight.bold, fontSize: 14),
-              textAlign: TextAlign.center,
-            ),
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: CircleAvatar(
+                    backgroundColor: Colors.grey.shade200,
+                    radius: 35,
+                    child: menu.icon)),
+            const SizedBox(height: 10),
+            Text(context.tr(menu.menuTitle!).toString(),
+                maxLines: 2,
+                style:
+                    GoogleFonts.asar(fontWeight: FontWeight.bold, fontSize: 14),
+                textAlign: TextAlign.center)
           ],
         ),
       ),
@@ -243,16 +190,10 @@ class DashboardView extends GetView<DashboardController> {
   }
 
   void choiceAction(String choice) {
-    print('choice :$choice');
     if (choice == 'Profile') {
-      print('My Profile');
       Get.toNamed(Routes.USERPROFILE);
     } else if (choice == 'LogOut') {
-      print('SignOut');
-      print(localStoreSRF.getString('token'));
-      print('SignOut clear');
       localStoreSRF.clear();
-      print(localStoreSRF.getString('token'));
       Get.offAllNamed(Routes.LOGIN);
     } else if (choice == 'Account Delete Request') {
       Get.toNamed(Routes.accountDeleteRequest);
@@ -269,7 +210,7 @@ class Constants {
 //  static const String Settings = 'Settings';
   static const String SignOut = 'Sign out';
 
-  static const List<String> choices = <String>[
+  static List<String> choices = <String>[
     'Profile',
     'Account Delete Request',
     'Change Password',

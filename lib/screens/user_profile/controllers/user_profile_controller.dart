@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import 'package:field_suggestion/box_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:tot_pro/models/user_profile_model.dart';
-
 import 'package:http/http.dart' as http;
 import '../../../main.dart';
 import '../../../models/address_model.dart';
@@ -41,16 +39,7 @@ class UserProfileController extends GetxController {
   void onInit() async {
     _apiClient = ApiClient();
     await getDetailsInfo();
-
-    print('pr :${proInfo.value.name}');
-    print('address  first :${proInfo.value.addressFirstLine}');
-    firstAddress.value = proInfo.value.addressFirstLine.toString();
-    print('address  first :${proInfo.value.toJson()}');
-
     addressFirstLineCTL.text = proInfo.value.addressFirstLine.toString();
-    // firstAddress=proInfo.value.addressFirstLine??'no data';
-    print('UserProfileController.onInit >>$firstAddress');
-
     super.onInit();
   }
 
@@ -65,16 +54,12 @@ class UserProfileController extends GetxController {
   var addressLineOneController = TextEditingController();
   var addressLineTwoController = TextEditingController();
   var addressLineThreeController = TextEditingController();
-  //  var countryTextController = TextEditingController();
-  //  var postcodeTextController = TextEditingController();
   bool shouldSearch = true;
 
   returnEmptyFutureData() =>
       Future.delayed(Duration.zero).then((value) => <AddressModel>[]);
 
   Future<List<AddressModel>> searchAddress(query) async {
-    print('query :$query');
-    dynamic response;
     List<AddressModel> addressList = [];
 
     try {
@@ -90,15 +75,11 @@ class UserProfileController extends GetxController {
         headers: headers,
       );
 
-      print('RegisterController.searchAddress ${response.body}');
-      //    response = await _repository.searchAddress(query);
-
       if (response.statusCode == 200) {
         final Map<String, dynamic> mapdata = json.decode(response.body);
         for (var data in mapdata['result']['hits']) {
           addressList.add(AddressModel.fromJson(data));
         }
-        print('address lng :: ${addressList.toString()}');
         return addressList;
       } else {
         return addressList;
@@ -109,8 +90,6 @@ class UserProfileController extends GetxController {
   }
 
   Future getAndSetAddressDetails(endpoint) async {
-    dynamic response;
-
     try {
       var url = '$_baseUrl$endpoint?api_key=$_key';
       var headers = {
@@ -123,10 +102,6 @@ class UserProfileController extends GetxController {
         Uri.parse(url),
         headers: headers,
       );
-      //response = await _repository.getAddressDetails(endpoint);
-
-      print(
-          'RegisterController.getAndSetAddressDetails ${response.statusCode}');
       if (response.statusCode == 200) {
         final Map<String, dynamic> mapdata = json.decode(response.body);
         // addressLineOneController.text = mapdata['result']['line_1'] ?? '';
@@ -155,24 +130,14 @@ class UserProfileController extends GetxController {
 
   fetchUserInfo() {
     proInfo.value = dashboardCTN.userProfile.value;
-
-    print('name :: ');
     nameCTL.value == proInfo.value.name;
     var company =
         proInfo.value.surname.toString() == 'null' ? '' : proInfo.value.surname;
-    var secondLine = proInfo.value.addressSecondLine.toString() == 'null'
-        ? ''
-        : proInfo.value.addressSecondLine;
-    var thirdLine = proInfo.value.addressThirdLine.toString() == 'null'
-        ? ''
-        : proInfo.value.addressThirdLine;
     companyCTL.text == company.toString();
-
     mobileCTL.value.text == proInfo.value.photo;
     mailCTL.text == proInfo.value.email;
     postCodeCTL.text == proInfo.value.postcode;
     addressFirstLineCTL.text == proInfo.value.addressFirstLine;
-    print('UserProfileController.fetchUserInfo ${addressFirstLineCTL.text}');
     townCTL.text == proInfo.value.town;
   }
 
@@ -216,10 +181,7 @@ class UserProfileController extends GetxController {
       "town": town,
       "postcode": postCode,
     };
-
-    print('MyProfileController.getUserProfileInfo');
     String? token = localStoreSRF.getString('token');
-
     final response = await _apiClient.connectionNew(
       API_TYPE: 'POST',
       apiType: 'POST',
@@ -234,22 +196,19 @@ class UserProfileController extends GetxController {
     );
 
     if (response != null) {
-      final Map<String, dynamic> mapdata = response.data;
       Helpers.snackbarForSucess(
-          titleText: 'Successful Alert',
-          bodyText: 'Profile update has successful!');
+          titleText: 'Successful Alert'.tr,
+          bodyText: 'Profile update has successful!'.tr);
       await getDetailsInfo();
     } else {
       Helpers.snackbarForErorr(
-          titleText: 'Error Alert',
-          bodyText: 'Profile update has Wrong.\n please try again');
+          titleText: 'Error Alert'.tr,
+          bodyText: 'Profile update has Wrong. Please try again'.tr);
     }
   }
 
   /// done
   Future getDetailsInfo() async {
-    print('DashboardController.getUserDetailsCTR');
-    // String? token = await localStoreSRF.getString('token');
     String? token = localStoreSRF.getString('token');
     final response = await _apiClient.connection(
       API_TYPE: 'GET',
@@ -265,12 +224,9 @@ class UserProfileController extends GetxController {
     );
 
     if (response != null) {
-      print('UserProfileController.getDetailsInfo');
       final Map<String, dynamic> mapdata = response.data;
       var info = mapdata['response']['data'];
       proInfo.value = UserProfileModel.fromJson(info);
-
-      print('user Info :: ${proInfo.value.toJson()}');
       nameCTL.text = proInfo.value.name.toString();
       companyCTL.text = proInfo.value.surname ?? '';
       mailCTL.text = proInfo.value.email.toString();
@@ -278,10 +234,7 @@ class UserProfileController extends GetxController {
       postCodeCTL.text = proInfo.value.postcode ?? '';
       townCTL.text = proInfo.value.town ?? '';
       addressFirstLineCTL.text = proInfo.value.addressFirstLine ?? '';
-
-      print('addressFirstLineCTL ${addressFirstLineCTL.text}');
       addressSecondLineCTL.text = proInfo.value.addressSecondLine ?? '';
-
       addressThirdLineCTL.text = proInfo.value.addressThirdLine ?? '';
     }
   }

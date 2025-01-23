@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tot_pro/screens/account_delete_request/views/account_delete_request_view.dart';
 import 'package:tot_pro/screens/category/controllers/category_controller.dart';
@@ -39,11 +40,11 @@ class _CategoryWidgetState extends State<CategoryWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(height: 10),
-            const Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text('Select category',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16))),
+            Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: Text(context.tr('Select category'),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 16))),
             const SizedBox(height: 10),
             Wrap(children: [
               for (var item in controller.categories)

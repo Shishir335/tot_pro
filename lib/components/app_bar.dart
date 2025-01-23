@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -9,7 +10,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
         backgroundColor: Colors.red,
         foregroundColor: Colors.white,
-        title: Text(title));
+        centerTitle: true,
+        title: Text(context.tr(title)));
   }
 
   @override

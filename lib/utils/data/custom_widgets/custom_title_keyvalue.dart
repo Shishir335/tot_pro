@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-
 class CustomTitleKeyValue extends StatelessWidget {
   final titleKey;
   final titleValue;
@@ -15,8 +13,7 @@ class CustomTitleKeyValue extends StatelessWidget {
   }
 
   _customTitleKeyValue(String key, String value) {
-    return
-      Padding(
+    return Padding(
       padding: const EdgeInsets.all(0.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -27,22 +24,18 @@ class CustomTitleKeyValue extends StatelessWidget {
               flex: 2,
               child: Text(
                 key,
-
                 maxLines: 1,
-                style: const TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    color: Colors.black, fontWeight: FontWeight.bold),
               )),
           Expanded(
-              flex: 3,
-              child: Text(' : $value', style: const TextStyle(
-
-
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black
-              )),),
-
+            flex: 3,
+            child: Text(' : $value',
+                style: const TextStyle(
+                    fontWeight: FontWeight.w400, color: Colors.black)),
+          ),
         ],
       ),
     );
   }
-
 }

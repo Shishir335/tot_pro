@@ -13,25 +13,22 @@ class ChangePasswordController extends GetxController {
 
   final changePasswordFormKey = GlobalKey<FormState>();
 
-
   Rx<bool> isShowOldPassword = true.obs;
   Rx<bool> isShowNewPassword = true.obs;
   Rx<bool> isShowConfirmPassword = true.obs;
 
-  TextEditingController oldPasswordCTL=TextEditingController();
-  TextEditingController newPasswordCTL=TextEditingController();
-  TextEditingController confirmPasswordCTL=TextEditingController();
+  TextEditingController oldPasswordCTL = TextEditingController();
+  TextEditingController newPasswordCTL = TextEditingController();
+  TextEditingController confirmPasswordCTL = TextEditingController();
 
-  final menuList=<MenuModel> [].obs;
+  final menuList = <MenuModel>[].obs;
   final count = 0.obs;
   late ApiClient _apiClient;
   @override
   void onInit() {
     _apiClient = ApiClient();
-       super.onInit();
+    super.onInit();
   }
-
-
 
   void increment() => count.value++;
 
@@ -50,17 +47,15 @@ class ChangePasswordController extends GetxController {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
       },
-
-
       apiUrl: ApiURL.changePasswordUrl,
       PARAM: {},
     );
     if (response != null) {
-      final Map<String, dynamic> myresponse = response.data;
+      // final Map<String, dynamic> myresponse = response.data;
 
       Helpers.snackbarForSucess(
-          titleText: 'Successful Alert',
-          bodyText: 'Change Password has successful!');
+          titleText: 'Successful Alert'.tr,
+          bodyText: 'Change Password has successful!'.tr);
       Get.offNamedUntil(Routes.LOGIN, (route) => false);
     }
   }

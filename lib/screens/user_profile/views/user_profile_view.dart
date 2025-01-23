@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:field_suggestion/field_suggestion.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tot_pro/components/app_bar.dart';
 import 'package:tot_pro/utils/data/core/values/app_strings.dart';
 export 'package:get/get.dart';
 import '../../../models/address_model.dart';
@@ -17,11 +19,7 @@ class UserProfileView extends GetView<UserProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-          backgroundColor: Colors.red,
-          centerTitle: true,
-          title: const Text('User Profile ',
-              style: TextStyle(color: Colors.white))),
+      appBar: CustomAppBar(title: context.tr('User Profile')),
       body: Container(
         child: Stack(
           children: [
@@ -38,16 +36,15 @@ class UserProfileView extends GetView<UserProfileController> {
             Container(
                 margin: const EdgeInsets.only(
                     top: 100, left: 5, right: 5, bottom: 20),
-                //   color: Colors.red,
                 width: double.infinity,
-                child: registerUI())
+                child: registerUI(context))
           ],
         ),
       ),
     );
   }
 
-  registerUI() {
+  registerUI(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: SingleChildScrollView(
@@ -69,10 +66,10 @@ class UserProfileView extends GetView<UserProfileController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomInputHeader(header: 'Name'),
+                          CustomInputHeader(header: context.tr('Name')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
-                            hintText: 'controller.proInfo.value.name',
+                            hintText: context.tr('Name'),
                             controller: controller.nameCTL,
                             textInputType: TextInputType.text,
                             validator: (value) {
@@ -83,7 +80,7 @@ class UserProfileView extends GetView<UserProfileController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Company Name'),
+                          CustomInputHeader(header: context.tr('Company Name')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             controller: controller.companyCTL,
@@ -96,7 +93,8 @@ class UserProfileView extends GetView<UserProfileController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Mobile Number'),
+                          CustomInputHeader(
+                              header: context.tr('Mobile Number')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             controller: controller.mobileCTL,
@@ -109,7 +107,8 @@ class UserProfileView extends GetView<UserProfileController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Address First Line'),
+                          CustomInputHeader(
+                              header: context.tr('Address First Line')),
                           AppSpace.spaceH6,
 
                           ///----------- Finder Address --------
@@ -167,7 +166,7 @@ class UserProfileView extends GetView<UserProfileController> {
                               sizeByItem: 10,
                               validator: (value) {
                                 if (value!.isEmpty) {
-                                  return 'Please enter address!';
+                                  return context.tr('Please enter address!');
                                 }
                                 return null;
                               },
@@ -220,7 +219,8 @@ class UserProfileView extends GetView<UserProfileController> {
 
                           ///------------- End Finder address -------
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Address Second Line'),
+                          CustomInputHeader(
+                              header: context.tr('Address Second Line')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             // fillColor: controller.isReadOnly.value ?Colors.teal.shade50:Colors.white10,
@@ -229,14 +229,15 @@ class UserProfileView extends GetView<UserProfileController> {
 
                             // width: 185,
                             controller: controller.addressSecondLineCTL,
-                            hintText: "Address Second Line".tr,
+                            hintText: context.tr("Address Second Line"),
                             textInputType: TextInputType.text,
                             validator: (value) {
                               return null;
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Address Third Line'),
+                          CustomInputHeader(
+                              header: context.tr('Address Third Line')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             fillColor: controller.isReadOnly.value
@@ -247,10 +248,10 @@ class UserProfileView extends GetView<UserProfileController> {
 
                             //  width: 185,
                             controller: controller.addressThirdLineCTL,
-                            hintText: "Address Third Line",
+                            hintText: context.tr("Address Third Line"),
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Town'),
+                          CustomInputHeader(header: context.tr('Town')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             isReadOnly: true,
@@ -267,7 +268,7 @@ class UserProfileView extends GetView<UserProfileController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Post Code'),
+                          CustomInputHeader(header: context.tr('Postcode')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             isReadOnly: true,
@@ -281,7 +282,7 @@ class UserProfileView extends GetView<UserProfileController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Email'),
+                          CustomInputHeader(header: context.tr('Email')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             isReadOnly: true,
@@ -313,7 +314,7 @@ class UserProfileView extends GetView<UserProfileController> {
                               ),
                               child: Center(
                                   child: Text(
-                                "Submit".toUpperCase(),
+                                context.tr("Submit").toUpperCase(),
                                 style: const TextStyle(
                                     fontSize: 18, color: Colors.white),
                               )),
@@ -337,17 +338,17 @@ class UserProfileView extends GetView<UserProfileController> {
 }
 
 class FinderAddress extends StatelessWidget {
-  UserProfileController controller;
-  String? address;
-  FinderAddress({super.key, required this.controller, required this.address});
+  final UserProfileController controller;
+  final String? address;
+  const FinderAddress(
+      {super.key, required this.controller, required this.address});
 
   @override
   Widget build(BuildContext context) {
-    print('address :: $address');
-    return searchAddress();
+    return searchAddress(context);
   }
 
-  searchAddress() {
+  searchAddress(BuildContext context) {
     return FieldSuggestion<AddressModel>.network(
       inputDecoration: InputDecoration(
         fillColor:
@@ -394,7 +395,7 @@ class FinderAddress extends StatelessWidget {
       sizeByItem: 10,
       validator: (value) {
         if (value!.isEmpty) {
-          return 'Please enter address!';
+          return context.tr('Please enter address!');
         }
         return null;
       },
