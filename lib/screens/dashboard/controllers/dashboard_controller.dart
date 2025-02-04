@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/models/menu_model.dart';
 import 'package:tot_pro/screens/home/controllers/submit_edge_controller.dart';
+import 'package:tot_pro/screens/settings/controllers/settings_controller.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/localization/localization_controller.dart';
 import '../../../main.dart';
 import '../../../models/user_profile_model.dart';
@@ -23,43 +25,46 @@ class DashboardController extends GetxController {
   void onInit() {
     Get.put(SubmitEdgeController());
     Get.put(LocalizationController());
+    Get.put(SettingsController());
     menuList.add(MenuModel(
         menuId: 1,
         menuTitle: 'Submit an TOT PRO',
-        icon: Icon(Icons.add_a_photo, size: 40, color: Colors.red.shade900)));
+        icon:
+            Icon(Icons.add_a_photo, size: 40, color: AppColors.primaryColor)));
     menuList.add(MenuModel(
         menuId: 2,
         menuTitle: 'Job History',
-        icon: Icon(Icons.history, size: 40, color: Colors.red.shade900)));
+        icon: Icon(Icons.history, size: 40, color: AppColors.primaryColor)));
     menuList.add(MenuModel(
         menuId: 3,
         menuTitle: 'Request a call back',
-        icon: Icon(Icons.call_outlined, size: 40, color: Colors.red.shade900)));
+        icon: Icon(Icons.call_outlined,
+            size: 40, color: AppColors.primaryColor)));
     menuList.add(MenuModel(
         menuId: 4,
         menuTitle: 'Payment & Transactions',
         icon: Icon(Icons.payments_outlined,
-            size: 40, color: Colors.red.shade900)));
+            size: 40, color: AppColors.primaryColor)));
     menuList.add(MenuModel(
         menuId: 5,
         menuTitle: 'Categories',
-        icon: Icon(Icons.category, size: 40, color: Colors.red.shade900)));
+        icon: Icon(Icons.category, size: 40, color: AppColors.primaryColor)));
     menuList.add(MenuModel(
         menuId: 6,
         menuTitle: 'Request a Quote',
-        icon: Icon(Icons.note, size: 40, color: Colors.red.shade900)));
+        icon: Icon(Icons.note, size: 40, color: AppColors.primaryColor)));
     menuList.add(MenuModel(
         menuId: 7,
         menuTitle: 'Leave a Review',
-        icon: Icon(Icons.reviews, size: 40, color: Colors.red.shade900)));
+        icon: Icon(Icons.reviews, size: 40, color: AppColors.primaryColor)));
     menuList.add(MenuModel(
         menuId: 8,
         menuTitle: 'Join Us',
-        icon: Icon(Icons.person_add, size: 40, color: Colors.red.shade900)));
+        icon: Icon(Icons.person_add, size: 40, color: AppColors.primaryColor)));
     menuList.add(MenuModel(
         menuId: 9,
         menuTitle: 'Contact Us',
-        icon: Icon(Icons.phone, size: 40, color: Colors.red.shade900)));
+        icon: Icon(Icons.phone, size: 40, color: AppColors.primaryColor)));
 
     _apiClient = ApiClient();
     // getUserDetailsCTR();

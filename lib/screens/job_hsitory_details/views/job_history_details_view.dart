@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:video_player/video_player.dart';
 import 'package:widget_zoom/widget_zoom.dart';
 export 'package:get/get.dart';
@@ -143,7 +144,8 @@ class JobHistoryDetailsView extends GetView<JobHistoryDetailsController> {
                                                       vertical: 5,
                                                       horizontal: 5),
                                               decoration: BoxDecoration(
-                                                  color: Colors.red.shade50,
+                                                  color: AppColors.primaryColor
+                                                      .withOpacity(.5),
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10)),
@@ -181,8 +183,9 @@ class JobHistoryDetailsView extends GetView<JobHistoryDetailsController> {
                 ),
                 AppSpace.spaceH4,
                 Text(context.tr('Loading...'),
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.red))
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryColor))
               ]));
         }, width: double.infinity, fit: BoxFit.cover));
   }
@@ -257,7 +260,7 @@ class JobHistoryDetailsView extends GetView<JobHistoryDetailsController> {
                           width: double.maxFinite,
                           height: 50,
                           decoration: BoxDecoration(
-                            color: Colors.red,
+                            color: AppColors.primaryColor,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
@@ -346,10 +349,10 @@ class _VideoPlayState extends State<VideoPlay> {
                       builder: (BuildContext context, AsyncSnapshot snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
-                          return const Center(
+                          return Center(
                               child: CircularProgressIndicator.adaptive(
                             strokeWidth: 8,
-                            backgroundColor: Colors.red,
+                            backgroundColor: AppColors.primaryColor,
                           ));
                         } else {
                           return Padding(
@@ -530,7 +533,7 @@ class _VideoPlayState extends State<VideoPlay> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     decoration: BoxDecoration(
-                        color: Colors.red.shade50,
+                        color: AppColors.primaryColor.withOpacity(.5),
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.asset('assets/images/not_video_found.png'),
                   ),

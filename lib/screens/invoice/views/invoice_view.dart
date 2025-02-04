@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_paypal_payment/flutter_paypal_payment.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_url.dart';
 import 'package:tot_pro/models/invoicemodel.dart';
 export 'package:get/get.dart';
@@ -181,7 +182,7 @@ class InvoiceView extends GetView<InvoiceController> {
                                     width: double.maxFinite,
                                     height: 50,
                                     decoration: BoxDecoration(
-                                        color: Colors.red,
+                                        color: AppColors.primaryColor,
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Center(
@@ -240,7 +241,7 @@ class InvoiceView extends GetView<InvoiceController> {
                         margin: const EdgeInsets.all(2),
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            color: Colors.red,
+                            color: AppColors.primaryColor,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(context.tr('Ok'),
                             style: TextStyle(color: Colors.white)))))

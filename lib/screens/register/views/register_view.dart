@@ -3,6 +3,7 @@ import 'package:field_suggestion/field_suggestion.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_strings.dart';
 export 'package:get/get.dart';
 import '../../../models/address_model.dart';
@@ -24,7 +25,7 @@ class RegisterView extends GetView<RegisterController> {
               height: 150,
               padding: const EdgeInsets.only(top: 0, bottom: 50),
               decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.2),
+                  color: AppColors.primaryColor.withOpacity(0.2),
                   borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(0.0),
                       bottom: Radius.circular(10.0))),
@@ -117,7 +118,7 @@ class RegisterView extends GetView<RegisterController> {
                                   const EdgeInsets.symmetric(horizontal: 10),
                               // suffixIcon: suffixIc,
                               filled: true,
-                              fillColor: Colors.red.shade50.withOpacity(0.8),
+                              fillColor: AppColors.primaryColor.withOpacity(0.8),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               enabledBorder: OutlineInputBorder(
@@ -337,7 +338,7 @@ class RegisterView extends GetView<RegisterController> {
                               width: double.maxFinite,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: Colors.red,
+                                color: AppColors.primaryColor,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Center(

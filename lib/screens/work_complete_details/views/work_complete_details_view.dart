@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:video_player/video_player.dart';
 import 'package:widget_zoom/widget_zoom.dart';
 export 'package:get/get.dart';
@@ -99,7 +100,7 @@ class _VideoPlayState extends State<VideoPlay> {
                 margin: const EdgeInsets.only(top: 0, bottom: 5),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: Colors.red.shade400,
+                    color: AppColors.primaryColor.withOpacity(.4),
                     borderRadius: BorderRadius.circular(5)),
                 child: Text(context.tr('Image'),
                     style: const TextStyle(
@@ -112,7 +113,7 @@ class _VideoPlayState extends State<VideoPlay> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     decoration: BoxDecoration(
-                        color: Colors.red.shade50,
+                        color: AppColors.primaryColor.withOpacity(.5),
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.asset('assets/images/no_image_found.png')),
             widget.pathh!.video != 'null'
@@ -122,7 +123,7 @@ class _VideoPlayState extends State<VideoPlay> {
                     margin: const EdgeInsets.only(top: 0, bottom: 5),
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        color: Colors.red.shade400,
+                        color: AppColors.primaryColor.withOpacity(.4),
                         borderRadius: BorderRadius.circular(5)),
                     child: Text(context.tr('Video'),
                         style: const TextStyle(
@@ -138,9 +139,9 @@ class _VideoPlayState extends State<VideoPlay> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           //return const CircularProgressIndicator.adaptive();
-                          return const Center(
+                          return Center(
                               child: CircularProgressIndicator.adaptive(
-                            backgroundColor: Colors.red,
+                            backgroundColor: AppColors.primaryColor,
                           ));
                         } else {
                           return Padding(
@@ -321,7 +322,7 @@ class _VideoPlayState extends State<VideoPlay> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     decoration: BoxDecoration(
-                        color: Colors.red.shade50,
+                        color: AppColors.primaryColor.withOpacity(.5),
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.asset('assets/images/not_video_found.png'),
                   ),
@@ -340,9 +341,9 @@ class _VideoPlayState extends State<VideoPlay> {
             onTap: () {
               Get.back();
             },
-            child: const CircleAvatar(
-                backgroundColor: Colors.red,
-                child: Icon(
+            child: CircleAvatar(
+                backgroundColor: AppColors.primaryColor,
+                child: const Icon(
                   Icons.close,
                   color: Colors.white,
                 ))),
@@ -361,7 +362,8 @@ class _VideoPlayState extends State<VideoPlay> {
         height: 200,
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
         decoration: BoxDecoration(
-            color: Colors.red.shade50, borderRadius: BorderRadius.circular(10)),
+            color: AppColors.primaryColor.withOpacity(.5),
+            borderRadius: BorderRadius.circular(10)),
         child: WidgetZoom(
           heroAnimationTag: index,
           zoomWidget: Image.network(
@@ -388,8 +390,9 @@ class _VideoPlayState extends State<VideoPlay> {
                     AppSpace.spaceH4,
                     Text(
                       context.tr('Loading...'),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.red),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryColor),
                     ),
                   ],
                 ),

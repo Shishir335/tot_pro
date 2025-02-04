@@ -37,16 +37,13 @@ class SettingsController extends GetxController {
   // Language settings
   String language = 'en';
 
-  // @override
-  // void onInit() {
-  //   changeLanguage(language);
-  //   super.onInit();
-  // }
-
   setLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('language') == null ||
-        prefs.getString('language') == 'en') {
+    String? languageCode = prefs.getString('language');
+
+    if (languageCode == null) {
+      changeLanguage('en');
+    } else if (languageCode == 'en') {
       changeLanguage('en');
     } else {
       changeLanguage('ro');

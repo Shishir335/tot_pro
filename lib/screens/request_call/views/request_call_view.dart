@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_space.dart';
 export 'package:get/get.dart';
 import '../../../main.dart';
@@ -55,7 +56,7 @@ class RequestCallView extends GetView<RequestCallController> {
                   margin: const EdgeInsets.all(20),
                   height: 50,
                   decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: AppColors.primaryColor,
                       borderRadius: BorderRadius.circular(10)),
                   child: Center(
                       child: Text(context.tr("Request a call").toUpperCase(),

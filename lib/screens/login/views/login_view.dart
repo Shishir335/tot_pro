@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_strings.dart';
 export 'package:get/get.dart';
 import '../../../utils/data/core/values/app_assets.dart';
@@ -25,7 +26,7 @@ class LoginView extends GetView<LoginController> {
               height: 150,
               padding: const EdgeInsets.only(top: 0, bottom: 50),
               decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.2),
+                  color: AppColors.primaryColor.withOpacity(0.2),
                   borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(0.0),
                       bottom: Radius.circular(10.0))),
@@ -114,7 +115,7 @@ class LoginView extends GetView<LoginController> {
                                   width: double.maxFinite,
                                   height: 50,
                                   decoration: BoxDecoration(
-                                      color: Colors.red,
+                                      color: AppColors.primaryColor,
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Center(
                                       child: Text(

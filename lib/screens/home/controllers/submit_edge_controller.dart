@@ -10,6 +10,7 @@ import 'package:tot_pro/utils/data/api_services.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import '../../../main.dart';
 import '../../../models/address_model.dart';
 import '../../../models/user_profile_model.dart';
@@ -519,7 +520,7 @@ class SubmitEdgeController extends GetxController {
                             width: double.maxFinite,
                             height: 50,
                             decoration: BoxDecoration(
-                                color: Colors.red,
+                                color: AppColors.primaryColor,
                                 borderRadius: BorderRadius.circular(10)),
                             child: Center(
                                 child: Text("OK".toUpperCase(),

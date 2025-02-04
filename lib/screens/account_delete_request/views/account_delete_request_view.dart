@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 export 'package:get/get.dart';
 import '../../../main.dart';
 import '../../../utils/data/api_client.dart';
@@ -18,7 +19,7 @@ class AccountDeleteRequestView extends GetView<AccountDeleteRequestController> {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
-          backgroundColor: Colors.red,
+          backgroundColor: AppColors.primaryColor,
           title: Text(context.tr('Account Deletion'),
               style: const TextStyle(color: Colors.white))),
       body: Column(
@@ -70,7 +71,7 @@ class AccountDeleteRequestView extends GetView<AccountDeleteRequestController> {
                   margin: const EdgeInsets.all(20),
                   height: 50,
                   decoration: BoxDecoration(
-                      color: Colors.red,
+                      color: AppColors.primaryColor,
                       borderRadius: BorderRadius.circular(10)),
                   child: Center(
                       child: Text(context.tr("Submit").toUpperCase(),

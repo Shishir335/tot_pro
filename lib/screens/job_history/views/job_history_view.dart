@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 export 'package:get/get.dart';
 import '../../../models/job_history_model.dart';
 import '../../../utils/data/core/values/app_space.dart';
@@ -320,11 +321,11 @@ class JobHistoryView extends GetView<JobHistoryController> {
                                       height: 50,
                                       margin: const EdgeInsets.all(2),
                                       padding: const EdgeInsets.all(10),
-                                      child: const Icon(Icons.remove_red_eye,
-                                          color: Colors.red))))
+                                      child: Icon(Icons.remove_red_eye,
+                                          color: AppColors.primaryColor))))
                           : Expanded(
                               child: PopupMenuButton<String>(
-                                  iconColor: Colors.red,
+                                  iconColor: AppColors.primaryColor,
                                   iconSize: 30,
                                   onSelected: (v) {
                                     choiceAction(v, model, context);
@@ -398,7 +399,7 @@ class JobHistoryView extends GetView<JobHistoryController> {
                         margin: const EdgeInsets.all(2),
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                            color: Colors.red,
+                            color: AppColors.primaryColor,
                             borderRadius: BorderRadius.circular(10)),
                         child: Text(context.tr('Ok'),
                             style: const TextStyle(color: Colors.white)))))

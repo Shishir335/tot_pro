@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_space.dart';
 export 'package:get/get.dart';
 import '../../../utils/routes/app_pages.dart';
@@ -49,7 +50,7 @@ class FaceIdAuthView extends GetView<FaceIdAuthController> {
                               margin: const EdgeInsets.all(10),
                               height: 50,
                               decoration: BoxDecoration(
-                                  color: Colors.red,
+                                  color: AppColors.primaryColor,
                                   borderRadius: BorderRadius.circular(10)),
                               child: Center(
                                   child: Text(
@@ -66,7 +67,7 @@ class FaceIdAuthView extends GetView<FaceIdAuthController> {
                               margin: const EdgeInsets.all(10),
                               height: 50,
                               decoration: BoxDecoration(
-                                  color: Colors.red,
+                                  color: AppColors.primaryColor,
                                   borderRadius: BorderRadius.circular(10)),
                               child: Center(
                                   child: Text(

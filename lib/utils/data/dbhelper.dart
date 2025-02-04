@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 
@@ -21,7 +20,7 @@ class DBHelper {
         backgroundColor: Colors.white,
         progressWidget: Container(
           padding: const EdgeInsets.all(10),
-          child:  CircularProgressIndicator(
+          child: CircularProgressIndicator(
             backgroundColor: Colors.grey,
             color: AppColors.secondaryColor,
           ),
@@ -30,8 +29,8 @@ class DBHelper {
         insetAnimCurve: Curves.fastOutSlowIn,
         progress: 0.0,
         maxProgress: 100.0,
-        progressTextStyle: const TextStyle(
-          color: Colors.red,
+        progressTextStyle: TextStyle(
+          color: AppColors.primaryColor,
           fontSize: 13.0,
           fontWeight: FontWeight.w400,
         ),
@@ -43,7 +42,7 @@ class DBHelper {
     return pr!.show();
   }
 
-  static dynamic loadingClose(){
+  static dynamic loadingClose() {
     return pr!.hide();
   }
 }

@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/components/app_bar.dart';
 import 'package:tot_pro/screens/join_us/views/category_widget.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_space.dart';
 import 'package:tot_pro/screens/home/controllers/submit_edge_controller.dart';
 import 'package:image_picker/image_picker.dart';
@@ -46,7 +47,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
                     decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.2),
+                        color: AppColors.primaryColor.withOpacity(0.2),
                         borderRadius: const BorderRadius.vertical(
                             top: Radius.circular(20.0),
                             bottom: Radius.circular(5.0))),
@@ -56,8 +57,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.asset(AppAssets.appLogo,
-                              fit: BoxFit.cover, height: 50, width: 60),
+                          Image.asset(AppAssets.appLogo, height: 50, width: 60),
                           Padding(
                               padding:
                                   const EdgeInsets.only(left: 15, right: 15),
@@ -268,7 +268,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                           const EdgeInsets.symmetric(horizontal: 10),
                       hintText: controller.firstAddress.value,
                       filled: true,
-                      fillColor: Colors.red.shade50.withOpacity(0.8),
+                      fillColor: AppColors.primaryColor.withOpacity(0.8),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -716,7 +716,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                         width: double.maxFinite,
                         height: 50,
                         decoration: BoxDecoration(
-                            color: Colors.red,
+                            color: AppColors.primaryColor,
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
                             child: Text(context.tr("Submit").toUpperCase(),
@@ -739,7 +739,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
         children: [
           CircleAvatar(
               radius: 12,
-              backgroundColor: Colors.red,
+              backgroundColor: AppColors.primaryColor,
               child: Icon(icon, color: Colors.white, size: 14)),
           const SizedBox(width: 10),
           Text(info),
@@ -829,10 +829,10 @@ class _VideoPlay1State extends State<VideoPlay1> {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {
                           //return const CircularProgressIndicator.adaptive();
-                          return const Center(
+                          return Center(
                               child: CircularProgressIndicator.adaptive(
                             strokeWidth: 8,
-                            backgroundColor: Colors.red,
+                            backgroundColor: AppColors.primaryColor,
                           ));
                         } else {
                           return Padding(
@@ -1013,7 +1013,7 @@ class _VideoPlay1State extends State<VideoPlay1> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
                     decoration: BoxDecoration(
-                        color: Colors.red.shade50,
+                        color: AppColors.primaryColor.withOpacity(.5),
                         borderRadius: BorderRadius.circular(10)),
                     child: Image.asset('assets/images/not_video_found.png'),
                   ),

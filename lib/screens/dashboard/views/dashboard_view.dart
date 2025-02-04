@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:tot_pro/models/menu_model.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tot_pro/utils/data/core/values/app_assets.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 export 'package:get/get.dart';
 import '../../../main.dart';
 import '../../../utils/routes/app_pages.dart';
@@ -54,9 +55,9 @@ class DashboardView extends GetView<DashboardController> {
                           child: Padding(
                               padding: const EdgeInsets.all(20.0),
                               child: Text(controller.checkAccountMessage.value,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: Colors.red,
+                                      color: AppColors.primaryColor,
                                       fontSize: 20)))),
                       const SizedBox(height: 20),
                       ElevatedButton(
@@ -82,9 +83,9 @@ class DashboardView extends GetView<DashboardController> {
                   Container(
                       height: 150,
                       padding: const EdgeInsets.only(top: 0, bottom: 40),
-                      decoration: const BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.vertical(
+                      decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: const BorderRadius.vertical(
                               top: Radius.circular(20.0),
                               bottom: Radius.circular(5.0))),
                       width: double.infinity,
@@ -130,8 +131,7 @@ class DashboardView extends GetView<DashboardController> {
                               child: FadeInAnimation(
                                   child: dashboardCardUI(menu, context))));
                     })),
-            Image.asset(AppAssets.appLogo,
-                fit: BoxFit.cover, height: 90, width: 100)
+            Image.asset(AppAssets.appLogo, height: 90, width: 100)
           ]),
         ));
   }

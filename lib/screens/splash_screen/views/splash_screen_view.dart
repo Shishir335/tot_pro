@@ -17,8 +17,7 @@ class SplashScreendView extends GetView<SplashScreenController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-          Image.asset(AppAssets.appLogo,
-              fit: BoxFit.cover, height: 200, width: 200),
+          Image.asset(AppAssets.appLogo, height: 200, width: 200),
           const SizedBox(height: 20),
           const Text(
               'Copyright © 2024 \n  TOT PRO Design & Developed: Mento Software',

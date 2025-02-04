@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_space.dart';
 import 'package:tot_pro/screens/join_us/controllers/join_controller.dart';
 
@@ -60,10 +61,11 @@ class CVPicker extends StatelessWidget {
                                           controller.cv = null;
                                           controller.update();
                                         },
-                                        child: const CircleAvatar(
+                                        child: CircleAvatar(
                                             radius: 14,
-                                            backgroundColor: Colors.red,
-                                            child: Icon(Icons.close,
+                                            backgroundColor:
+                                                AppColors.primaryColor,
+                                            child: const Icon(Icons.close,
                                                 color: Colors.white)))),
                                 AppSpace.spaceH4,
                                 Container(

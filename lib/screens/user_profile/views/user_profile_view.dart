@@ -3,6 +3,7 @@ import 'package:field_suggestion/field_suggestion.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_strings.dart';
 export 'package:get/get.dart';
 import '../../../models/address_model.dart';
@@ -27,7 +28,7 @@ class UserProfileView extends GetView<UserProfileController> {
                 height: 150,
                 padding: const EdgeInsets.only(top: 0, bottom: 30),
                 decoration: BoxDecoration(
-                    color: Colors.red.withOpacity(0.2),
+                    color: AppColors.primaryColor.withOpacity(0.2),
                     borderRadius: const BorderRadius.vertical(
                         top: Radius.circular(0.0),
                         bottom: Radius.circular(10.0))),
@@ -309,7 +310,7 @@ class UserProfileView extends GetView<UserProfileController> {
                               width: double.maxFinite,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: Colors.red,
+                                color: AppColors.black,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Center(
