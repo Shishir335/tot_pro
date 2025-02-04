@@ -35,7 +35,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
     return GetBuilder<SubmitEdgeController>(builder: (controller) {
       return Scaffold(
           backgroundColor: Colors.grey.shade200,
-          appBar: const CustomAppBar(title: 'Submit an EDGE'),
+          appBar: const CustomAppBar(title: 'Submit an TOT PRO'),
           body: Container(
               color: Colors.grey.shade300,
               margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),

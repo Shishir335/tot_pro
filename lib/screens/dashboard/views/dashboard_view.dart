@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/models/menu_model.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tot_pro/utils/data/core/values/app_assets.dart';
 export 'package:get/get.dart';
 import '../../../main.dart';
 import '../../../utils/routes/app_pages.dart';
@@ -92,7 +93,7 @@ class DashboardView extends GetView<DashboardController> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(context.tr('Welcome to EDGE'),
+                            Text(context.tr('Welcome to TOT PRO'),
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 20)),
                           ])),
@@ -129,7 +130,7 @@ class DashboardView extends GetView<DashboardController> {
                               child: FadeInAnimation(
                                   child: dashboardCardUI(menu, context))));
                     })),
-            Image.asset("assets/images/splogo.png",
+            Image.asset(AppAssets.appLogo,
                 fit: BoxFit.cover, height: 90, width: 100)
           ]),
         ));

@@ -25,7 +25,7 @@ class DashboardController extends GetxController {
     Get.put(LocalizationController());
     menuList.add(MenuModel(
         menuId: 1,
-        menuTitle: 'Submit an EDGE',
+        menuTitle: 'Submit an TOT PRO',
         icon: Icon(Icons.add_a_photo, size: 40, color: Colors.red.shade900)));
     menuList.add(MenuModel(
         menuId: 2,

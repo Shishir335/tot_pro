@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
       builder: EasyLoading.init(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(useMaterial3: true),
-      title: "EDGE",
+      title: "TOT PRO",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       // home: MyHomePage(title: 'Gallery Testing ',),

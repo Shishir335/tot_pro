@@ -1,4 +1,4 @@
-package com.tot_pro
+package com.tot.pro
 
 import io.flutter.embedding.android.FlutterActivity
 
