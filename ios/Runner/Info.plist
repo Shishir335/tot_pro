@@ -16,6 +16,8 @@
     <string>tot_pro</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+	  <string>ConnectsApp needs Photo Library access to upload photos and videos.</string>
     <key>CFBundleShortVersionString</key>
     <string>$(FLUTTER_BUILD_NAME)</string>
     <key>CFBundleSignature</key>
