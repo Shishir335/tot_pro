@@ -1,4 +1,3 @@
-
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/utils/data/snackbar.dart';
@@ -7,13 +6,12 @@ import 'package:local_auth/local_auth.dart';
 export 'package:get/get.dart';
 import '../../../main.dart';
 import 'face_id_controller.dart';
-export 'package:get/get.dart';
 
 class FaceIdAuthController extends GetxController {
   final LocalAuthentication auth = LocalAuthentication();
-  _SupportState _supportState = _SupportState.unknown;
+  // _SupportState _supportState = _SupportState.unknown;
   final canCheckBiometrics = false.obs;
-  final _availableBiometrics = <BiometricType>[].obs;
+  // final _availableBiometrics = <BiometricType>[].obs;
   final authorized = 'Not Authorized'.obs;
   final isAuthenticating = false.obs;
   final count = 1.obs;
@@ -21,49 +19,12 @@ class FaceIdAuthController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    auth.isDeviceSupported().then((bool isSupported) {
-      _supportState =
-          isSupported ? _SupportState.supported : _SupportState.unsupported;
-    });
+    // auth.isDeviceSupported().then((bool isSupported) {
+    //   _supportState =
+    //       isSupported ? _SupportState.supported : _SupportState.unsupported;
+    // });
   }
 
-
-
-  /*Future<void> checkBiometrics() async {
-    late bool canCheckBiometrics;
-    try {
-      canCheckBiometrics = await auth.canCheckBiometrics;
-      print('canCheckBiometrics :$canCheckBiometrics');
-    } on PlatformException catch (e) {
-      canCheckBiometrics = false;
-      print(e);
-    }
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _canCheckBiometrics = canCheckBiometrics;
-    });
-  }
-
-  Future<void> getAvailableBiometrics() async {
-    late List<BiometricType> availableBiometrics;
-    try {
-      availableBiometrics = await auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      availableBiometrics = <BiometricType>[];
-      print(e);
-    }
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _availableBiometrics = availableBiometrics;
-    });
-  }
-*/
   Future<void> authenticate() async {
     bool authenticated = false;
     try {
@@ -73,41 +34,31 @@ class FaceIdAuthController extends GetxController {
       authenticated = await auth.authenticate(
         localizedReason: 'Let OS determine authentication method',
         options: const AuthenticationOptions(
-          stickyAuth: true,
-          sensitiveTransaction: true,
-          useErrorDialogs: true
-
-        ),
+            stickyAuth: true,
+            sensitiveTransaction: true,
+            useErrorDialogs: true),
       );
 
       isAuthenticating.value = false;
     } on PlatformException catch (e) {
       print(e);
-
       isAuthenticating.value = false;
       authorized.value = 'Error - ${e.message}';
-
       return;
     }
-    /* if (!mounted) {
-      return;
-    }*/
 
     authorized.value = authenticated ? 'Authorized' : 'Not Authorized';
 
-    if (authorized.value=='Authorized'){
-
-      print('FaceIdAuthController.authenticate Go the Dashboard');
+    if (authorized.value == 'Authorized') {
       successSnack('Face Id has ${authorized.value}');
-     if (localStoreSRF.getString('token') != null){
-    Get.offNamedUntil(Routes.DASHBOARD, (route) => false);
-    }else{
-       Get.toNamed(Routes.LOGIN);
-     }
-    }else if(authorized.value=='Not Authorized'){
-
+      if (localStoreSRF.getString('token') != null) {
+        Get.offNamedUntil(Routes.DASHBOARD, (route) => false);
+      } else {
+        Get.toNamed(Routes.LOGIN);
+      }
+    } else if (authorized.value == 'Not Authorized') {
       alertSnack('Face Id has ${authorized.value}');
-    }else{
+    } else {
       errorSnack(authorized.value);
     }
   }
@@ -130,34 +81,25 @@ class FaceIdAuthController extends GetxController {
       isAuthenticating.value = false;
       authorized.value = 'Authenticating';
     } on PlatformException catch (e) {
-      print(e);
-
       isAuthenticating.value = false;
       authorized.value = 'Error - ${e.message}';
-
       return;
     }
-    /*if (!mounted) {
-      return;
-    }*/
 
     final String message = authenticated ? 'Authorized' : 'Not Authorized';
 
     authorized.value = message;
 
-    if (authorized.value=='Authorized'){
-
-      print('FaceIdAuthController.authenticate Go the Dashboard');
+    if (authorized.value == 'Authorized') {
       successSnack('Face ID has ${authorized.value}');
-      if (localStoreSRF.getString('token') != null){
+      if (localStoreSRF.getString('token') != null) {
         Get.offNamedUntil(Routes.DASHBOARD, (route) => false);
-      }else{
+      } else {
         Get.toNamed(Routes.LOGIN);
       }
-    }else if(authorized.value=='Not Authorized'){
-
+    } else if (authorized.value == 'Not Authorized') {
       alertSnack('Face ID has ${authorized.value}');
-    }else{
+    } else {
       errorSnack(authorized.value);
     }
   }
@@ -168,8 +110,8 @@ class FaceIdAuthController extends GetxController {
   }
 }
 
-enum _SupportState {
-  unknown,
-  supported,
-  unsupported,
-}
+// enum _SupportState {
+//   unknown,
+//   supported,
+//   unsupported,
+// }

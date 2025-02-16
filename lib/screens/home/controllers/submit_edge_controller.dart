@@ -10,6 +10,7 @@ import 'package:tot_pro/utils/data/api_services.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import '../../../main.dart';
 import '../../../models/address_model.dart';
 import '../../../models/user_profile_model.dart';
@@ -69,8 +70,6 @@ class SubmitEdgeController extends GetxController {
       Future.delayed(Duration.zero).then((value) => <AddressModel>[]);
 
   Future<List<AddressModel>> searchAddress(query) async {
-    print('query :$query');
-    dynamic response;
     List<AddressModel> addressList = [];
 
     try {
@@ -86,15 +85,11 @@ class SubmitEdgeController extends GetxController {
         headers: headers,
       );
 
-      print('RegisterController.searchAddress ${response.body}');
-      //    response = await _repository.searchAddress(query);
-
       if (response.statusCode == 200) {
         final Map<String, dynamic> mapdata = json.decode(response.body);
         for (var data in mapdata['result']['hits']) {
           addressList.add(AddressModel.fromJson(data));
         }
-        print('address lng :: ${addressList.toString()}');
         return addressList;
       } else {
         return addressList;
@@ -105,8 +100,6 @@ class SubmitEdgeController extends GetxController {
   }
 
   Future getAndSetAddressDetails(endpoint) async {
-    dynamic response;
-
     try {
       var url = '$_baseUrl$endpoint?api_key=$_key';
       var headers = {
@@ -119,20 +112,11 @@ class SubmitEdgeController extends GetxController {
         Uri.parse(url),
         headers: headers,
       );
-      //response = await _repository.getAddressDetails(endpoint);
-
-      print(
-          'RegisterController.getAndSetAddressDetails ${response.statusCode}');
       if (response.statusCode == 200) {
         final Map<String, dynamic> mapdata = json.decode(response.body);
-        print('mapdata ::: ${mapdata.toString()}');
-        // addressLineOneController.text = mapdata['result']['line_1'] ?? '';
         addressLineTwoController.text = mapdata['result']['line_2'] ?? '';
         addressLineThreeController.text = mapdata['result']['line_3'] ?? '';
         countryTextController.text = mapdata['result']['post_town'] ?? '';
-
-        print('SubmitEdgeController >> ${countryTextController.text}');
-
         postcodeTextController.text = mapdata['result']['postcode'] ?? '';
       } else {
         clearController();
@@ -152,7 +136,6 @@ class SubmitEdgeController extends GetxController {
 
   @override
   void onInit() async {
-    print('HomeController.onInit');
     submitFormKey = GlobalKey<FormState>();
     apiService = ApiService();
     _apiClient = ApiClient();
@@ -181,7 +164,6 @@ class SubmitEdgeController extends GetxController {
     );
 
     if (response != null) {
-      print(response.data);
       aboutUs = AboutUs.fromJson(response.data);
       update();
     }
@@ -192,7 +174,6 @@ class SubmitEdgeController extends GetxController {
   // Current Active
   void selectImage(ImageSource source, String type) async {
     fileModeCameraOrVideo.value = type;
-    print('SubmitEdgeController.selectImage :: ${fileModeCameraOrVideo.value}');
     debugPrint('source :: $source');
     debugPrint('type :: $type');
     if (imageFiles.length <= 3) {
@@ -211,16 +192,12 @@ class SubmitEdgeController extends GetxController {
 
         imageFile = File(pickedFile.path);
         imageFiles.add(File(pickedFile.path));
-
         descriptionCont.add(descriptionCnt);
-
         isVideoCapture.value = false;
-
-        print('images lng : $imageFiles');
       }
     } else {
       Helpers.snackbarForErorr(
-          titleText: 'Alert', bodyText: 'Maximum Three Images ');
+          titleText: 'Alert'.tr, bodyText: 'Maximum Three Images'.tr);
     }
   }
 
@@ -228,31 +205,23 @@ class SubmitEdgeController extends GetxController {
     debugPrint('source :: $source');
     if (imageFiles.length <= 3) {
       final picker = ImagePicker();
-
-      // final pickedFile=picker.pickVideo(source: source);
       final pickedFile = await picker.pickVideo(source: source);
       Get.back();
-      if (pickedFile != null) {
-        final descriptionCnt = TextEditingController();
-      }
       imageFile = File(pickedFile!.path);
       imageFiles.add(
         File(pickedFile.path),
       );
       descriptionCont.add(descriptionCnt);
       isVideoCapture.value = true;
-      print('images lng : $imageFiles');
     } else {
       Helpers.snackbarForErorr(
-          titleText: 'Alert',
-          bodyText: 'You cannot upload more then four files.');
+          titleText: 'Alert'.tr,
+          bodyText: 'You cannot upload more then four files.'.tr);
     }
   }
 
   /// PostCode Check done
   Future postCodeCheck(String postCode) async {
-    print('postCode $postCode');
-
     final response = await ApiService().connectionImage(
       API_TYPE: 'POST',
       apiType: 'POST',
@@ -264,14 +233,9 @@ class SubmitEdgeController extends GetxController {
 
     if (response != null) {
       final Map<String, dynamic> mapdata = response.data;
-      print(mapdata);
       if (mapdata['status'] == 303) {
-        print('mapdata :${mapdata['message']}');
         postCodeStatusMsg.value = mapdata['message'];
       } else {
-        print('mapdata :${mapdata['message']}');
-        print('postcode :${mapdata['data']['postcode']}');
-        print('status :${mapdata['data']['status']}');
         postCodeStatusMsg.value = mapdata['message'];
         postCodeStatus.value = mapdata['data']['status'];
         searchPostCodeName.value = mapdata['data']['postcode'];
@@ -294,10 +258,7 @@ class SubmitEdgeController extends GetxController {
 
   /// Work Submit  done Image
   Future<void> workSubmit(BuildContext context) async {
-    print('SubmitEdgeController.workSubmit Image Upload ');
     final Directory tempDir = await getTemporaryDirectory();
-    final targetPath = '${tempDir.absolute.path}/temp.jpg';
-    //DBHelper.loadingDialog(Get.overlayContext!);
     if (imageFiles.isNotEmpty) {
       DBHelper.loadingDialog(Get.overlayContext!);
       List<http.MultipartFile> multipartFileList = [];
@@ -314,7 +275,6 @@ class SubmitEdgeController extends GetxController {
 
       for (int i = 0; i < imageFiles.length; i++) {
         String extendFile = imageFiles[i].path.split('.').last;
-        print('SubmitEdgeController extendFile >>$extendFile');
 
         if (extendFile.toLowerCase() == 'jpg' ||
             extendFile == 'png' ||
@@ -326,39 +286,25 @@ class SubmitEdgeController extends GetxController {
           final compressImage = await FlutterImageCompress.compressAndGetFile(
               imageFiles[i].path, targetPath,
               minHeight: 1000, minWidth: 1000, quality: 90);
-          final bytes1 = compressImage!.readAsBytes().toString();
-          final newKb = bytes1.length / 2024;
-          final newMb = newKb / 2024;
-          debugPrint('Compress Image Size newKb : ${newKb.toString()}');
-          debugPrint('Compress Image Size newMb: ${newMb.toString()}');
-          var length = await compressImage.length();
-          var stream = http.ByteStream(compressImage.openRead());
           multipartFileList.add(
             http.MultipartFile(
                 'images[]',
-                File(compressImage.path).readAsBytes().asStream(),
+                File(compressImage!.path).readAsBytes().asStream(),
                 File(compressImage.path).lengthSync(),
                 filename: targetPath),
           );
-
-          print('Camera & Gallery');
         } else {
-          print('Video Option ');
-          multipartFileList.add(
-            http.MultipartFile(
-                'images[]',
-                File(imageFiles[i].path).readAsBytes().asStream(),
-                File(imageFiles[i].path).lengthSync(),
-                filename: imageFiles[i].path),
-          );
+          multipartFileList.add(http.MultipartFile(
+              'images[]',
+              File(imageFiles[i].path).readAsBytes().asStream(),
+              File(imageFiles[i].path).lengthSync(),
+              filename: imageFiles[i].path));
         }
 
         request.fields['descriptions[$i]'] = descriptionCont[i].text == ''
             ? 'no description'
             : descriptionCont[i].text;
       }
-      print('multipartFileList final tesing  :: ${multipartFileList.length}');
-
       request.files.addAll(multipartFileList);
 
       Map<String, String> workSubmitMap = {
@@ -403,23 +349,20 @@ class SubmitEdgeController extends GetxController {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Text(' Work Order is added successfully! ',
-                          style: TextStyle(
+                      Text('Work Order is added successfully!'.tr,
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Colors.green)),
                       Image.asset('assets/images/successful.png'),
                       AppSpace.spaceH10,
                       ElevatedButton(
                           onPressed: () {
-                            //nameCon.clear();
-                            //mailCon.clear();
                             phoneCon.clear();
                             streetCon.clear();
                             townCon.clear();
                             postCon.clear();
                             houseCon.clear();
                             countryTextController.clear();
-                            // nameCon.clear();
                             commentCon.clear();
                             addressLineThreeController.clear();
                             addressLineOneController.clear();
@@ -429,12 +372,10 @@ class SubmitEdgeController extends GetxController {
                             postCodeStatusMsg.value = '';
                             postCodeStatus.value = '';
                             imageFiles.clear();
-
                             isUseRegisterAddress.value = false;
                             isUseRegisterNumber.value = false;
                             isVideoCapture.value = false;
                             DBHelper.loadingClose();
-                            // pDialog.hide();
                             Get.back();
                           },
                           style: ElevatedButton.styleFrom(
@@ -450,8 +391,6 @@ class SubmitEdgeController extends GetxController {
             },
           );
         } else if (response.statusCode.toString() == '302') {
-          //  pDialog.hide();
-          print('SubmitEdgeController.workSubmit 302');
           DBHelper.loadingClose();
           loading.value = false;
         } else {
@@ -459,7 +398,7 @@ class SubmitEdgeController extends GetxController {
           loading.value = false;
           DBHelper.loadingClose();
           Get.snackbar(
-            'Error',
+            'Error'.tr,
             'Status code :  ${response.statusCode.toString()}\n work order has Failed ',
             backgroundColor: Colors.red,
             colorText: Colors.white,
@@ -469,7 +408,7 @@ class SubmitEdgeController extends GetxController {
         DBHelper.loadingClose();
         //  pDialog.hide();
         Get.snackbar(
-          'Failed',
+          'Failed'.tr,
           e.toString(),
           backgroundColor: Colors.red,
           colorText: Colors.white,
@@ -477,19 +416,16 @@ class SubmitEdgeController extends GetxController {
         print('Error occurred: $e');
       }
       loading.value = false;
-      // pDialog.hide();
     } else {
       Helpers.snackbarForErorr(
-          titleText: 'Alert Message', bodyText: 'Image field required.');
+          titleText: 'Alert Message'.tr, bodyText: 'Image field required.'.tr);
     }
   }
 
   /// Work Submit  done Video
   Future<void> workSubmitVideo(BuildContext context) async {
-    print('SubmitEdgeController.workSubmitVideo Video Upload ');
     final Directory tempDir = await getTemporaryDirectory();
     final targetPath = '${tempDir.absolute.path}/temp.mp4';
-    //DBHelper.loadingDialog(Get.overlayContext!);
     if (imageFiles.isNotEmpty) {
       DBHelper.loadingDialog(Get.overlayContext!);
       List<http.MultipartFile> multipartFileList = [];
@@ -535,13 +471,11 @@ class SubmitEdgeController extends GetxController {
       try {
         var response = await request.send();
         var responseStream = await response.stream.bytesToString();
-        //  pDialog.hide();
 
         debugPrint(' status code : ${response.statusCode}');
         debugPrint('responseStream  : $responseStream');
 
         if (response.statusCode == 200) {
-          // pDialog.hide();
           return showDialog(
             barrierDismissible: false,
             context: context,
@@ -553,27 +487,20 @@ class SubmitEdgeController extends GetxController {
                 child: Container(
                   width: 390,
                   padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        ' Work Order is added successfully! ',
+                  child: Column(mainAxisSize: MainAxisSize.min, children: [
+                    const Text('Work Order is added successfully!',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.green),
-                      ),
-                      Image.asset('assets/images/successful.png'),
-                      AppSpace.spaceH10,
-                      InkWell(
+                            fontWeight: FontWeight.bold, color: Colors.green)),
+                    Image.asset('assets/images/successful.png'),
+                    AppSpace.spaceH10,
+                    InkWell(
                         onTap: () {
-                          //nameCon.clear();
-                          //mailCon.clear();
                           phoneCon.clear();
                           streetCon.clear();
                           townCon.clear();
                           postCon.clear();
                           houseCon.clear();
                           countryTextController.clear();
-                          // nameCon.clear();
                           commentCon.clear();
                           addressLineThreeController.clear();
                           addressLineOneController.clear();
@@ -583,46 +510,32 @@ class SubmitEdgeController extends GetxController {
                           postCodeStatusMsg.value = '';
                           postCodeStatus.value = '';
                           imageFiles.clear();
-
                           isUseRegisterAddress.value = false;
                           isUseRegisterNumber.value = false;
                           isVideoCapture.value = false;
-
                           DBHelper.loadingClose();
-                          // pDialog.hide();
                           Get.back();
                         },
                         child: Container(
-                          width: double.maxFinite,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Center(
-                              child: Text(
-                            "OK".toUpperCase(),
-                            style: const TextStyle(
-                                fontSize: 18, color: Colors.white),
-                          )),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
+                            width: double.maxFinite,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: AppColors.primaryColor,
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Center(
+                                child: Text("OK".toUpperCase(),
+                                    style: const TextStyle(
+                                        fontSize: 18, color: Colors.white))))),
+                    const SizedBox(height: 10)
+                  ]),
                 ),
               );
             },
           );
         } else if (response.statusCode.toString() == '302') {
-          //  pDialog.hide();
-          print('SubmitEdgeController.workSubmit 302');
           DBHelper.loadingClose();
           loading.value = false;
         } else {
-          // pDialog.hide();
           loading.value = false;
           DBHelper.loadingClose();
           Get.snackbar(
@@ -634,9 +547,8 @@ class SubmitEdgeController extends GetxController {
         }
       } catch (e) {
         DBHelper.loadingClose();
-        //  pDialog.hide();
         Get.snackbar(
-          'Failed',
+          'Failed'.tr,
           e.toString(),
           backgroundColor: Colors.red,
           colorText: Colors.white,
@@ -647,14 +559,12 @@ class SubmitEdgeController extends GetxController {
       // pDialog.hide();
     } else {
       Helpers.snackbarForErorr(
-          titleText: 'Alert Message', bodyText: 'Image field required.');
+          titleText: 'Alert Message'.tr, bodyText: 'Image field required.'.tr);
     }
   }
 
   /// done
   Future getDetailsInfo() async {
-    print('DashboardController.getUserDetailsCTR');
-    // String? token = await localStoreSRF.getString('token');
     String? token = localStoreSRF.getString('token');
     final response = await _apiClient.connection(
       API_TYPE: 'GET',
@@ -670,16 +580,9 @@ class SubmitEdgeController extends GetxController {
     );
 
     if (response != null) {
-      print('HomeController.homeAllProductsCTR');
       final Map<String, dynamic> mapdata = response.data;
       var info = mapdata['response']['data'];
       proInfo.value = UserProfileModel.fromJson(info);
     }
-  }
-
-  Future accountCheck() async {
-    String? id = localStoreSRF.getString('id');
-
-    print('user Id ::$id');
   }
 }

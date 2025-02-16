@@ -1,10 +1,9 @@
-import 'dart:io';
-// import 'package:dotted_border/dotted_border.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_space.dart';
 import 'package:tot_pro/screens/join_us/controllers/join_controller.dart';
-import 'package:widget_zoom/widget_zoom.dart';
 
 class CVPicker extends StatelessWidget {
   const CVPicker({super.key});
@@ -24,11 +23,11 @@ class CVPicker extends StatelessWidget {
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10)),
-                    child: const Column(children: [
-                      Icon(Icons.file_open_outlined, size: 60),
+                    child: Column(children: [
+                      const Icon(Icons.file_open_outlined, size: 60),
                       AppSpace.spaceH10,
-                      Text('Add PDF or Doc',
-                          style: TextStyle(fontWeight: FontWeight.bold))
+                      Text(context.tr('Add PDF or Doc'),
+                          style: const TextStyle(fontWeight: FontWeight.bold))
                     ]),
                   ))
               : SizedBox(
@@ -62,25 +61,12 @@ class CVPicker extends StatelessWidget {
                                           controller.cv = null;
                                           controller.update();
                                         },
-                                        child: const CircleAvatar(
+                                        child: CircleAvatar(
                                             radius: 14,
-                                            backgroundColor: Colors.red,
-                                            child: Icon(Icons.close,
+                                            backgroundColor:
+                                                AppColors.primaryColor,
+                                            child: const Icon(Icons.close,
                                                 color: Colors.white)))),
-                                // AppSpace.spaceH6,
-                                // DottedBorder(
-                                //     borderType: BorderType.RRect,
-                                //     radius: const Radius.circular(10),
-                                //     padding: const EdgeInsets.all(2),
-                                //     child: ClipRRect(
-                                //         borderRadius: const BorderRadius.all(
-                                //             Radius.circular(10)),
-                                //         child: Container(
-                                //             height: 250,
-                                //             padding: const EdgeInsets.all(0),
-                                //             alignment: Alignment.center,
-                                //             child: Image.file(
-                                //                 File(controller.cv!.path))))),
                                 AppSpace.spaceH4,
                                 Container(
                                     decoration: BoxDecoration(

@@ -1,6 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:field_suggestion/field_suggestion.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_strings.dart';
 export 'package:get/get.dart';
 import '../../../models/address_model.dart';
@@ -15,45 +18,28 @@ class RegisterView extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: const Text(
-          'Register ',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-      ),
-      body: Container(
-        child: Stack(
-          children: [
-            Container(
+        backgroundColor: Colors.grey.shade200,
+        appBar: const CustomAppBar(title: 'Register'),
+        body: Stack(children: [
+          Container(
               height: 150,
               padding: const EdgeInsets.only(top: 0, bottom: 50),
               decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.2),
+                  color: AppColors.primaryColor.withOpacity(0.2),
                   borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(0.0),
                       bottom: Radius.circular(10.0))),
               width: double.infinity,
-              child: Image.asset(
-                AppAssets.appLogo,
-              ),
-            ),
-            Container(
+              child: Image.asset(AppAssets.appLogo)),
+          Container(
               margin: const EdgeInsets.only(
                   top: 100, left: 5, right: 5, bottom: 20),
-              //   color: Colors.red,
               width: double.infinity,
-              child: registerUI(),
-            ),
-          ],
-        ),
-      ),
-    );
+              child: registerUI(context))
+        ]));
   }
 
-  registerUI() {
+  registerUI(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: SingleChildScrollView(
@@ -75,7 +61,7 @@ class RegisterView extends GetView<RegisterController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomInputHeader(header: 'Name'),
+                          CustomInputHeader(header: context.tr('Name')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             controller: controller.nameCTL,
@@ -88,7 +74,7 @@ class RegisterView extends GetView<RegisterController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Company Name'),
+                          CustomInputHeader(header: context.tr('Company Name')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             controller: controller.companyCTL,
@@ -101,7 +87,8 @@ class RegisterView extends GetView<RegisterController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Mobile Number'),
+                          CustomInputHeader(
+                              header: context.tr('Mobile Number')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             controller: controller.mobileCTL,
@@ -118,7 +105,8 @@ class RegisterView extends GetView<RegisterController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Address First Line'),
+                          CustomInputHeader(
+                              header: context.tr('Address First Line')),
                           AppSpace.spaceH6,
 
                           ///------------ finder Address ------
@@ -130,17 +118,12 @@ class RegisterView extends GetView<RegisterController> {
                                   const EdgeInsets.symmetric(horizontal: 10),
                               // suffixIcon: suffixIc,
                               filled: true,
-                              fillColor: true
-                                  ? Colors.red.shade50.withOpacity(0.8)
-                                  : Colors.black12,
-
+                              fillColor: AppColors.primaryColor.withOpacity(0.8),
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                                  borderRadius: BorderRadius.circular(10)),
                               enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide:
@@ -204,7 +187,8 @@ class RegisterView extends GetView<RegisterController> {
 
                           ///--------- End -------------
 
-                          CustomInputHeader(header: 'Address Second Line'),
+                          CustomInputHeader(
+                              header: context.tr('Address Second Line')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             isReadOnly: true,
@@ -218,7 +202,8 @@ class RegisterView extends GetView<RegisterController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Address Third Line'),
+                          CustomInputHeader(
+                              header: context.tr('Address Third Line')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             isReadOnly: true,
@@ -232,7 +217,7 @@ class RegisterView extends GetView<RegisterController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Town'),
+                          CustomInputHeader(header: context.tr('Town')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             isReadOnly: true,
@@ -246,7 +231,7 @@ class RegisterView extends GetView<RegisterController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Post Code'),
+                          CustomInputHeader(header: context.tr('Postcode')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             isReadOnly: true,
@@ -260,7 +245,7 @@ class RegisterView extends GetView<RegisterController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Email'),
+                          CustomInputHeader(header: context.tr('Email')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             controller: controller.mailCTL,
@@ -273,7 +258,7 @@ class RegisterView extends GetView<RegisterController> {
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Password'),
+                          CustomInputHeader(header: context.tr('Password')),
                           AppSpace.spaceH6,
                           Obx(
                             () => CustomTextFormField(
@@ -303,7 +288,8 @@ class RegisterView extends GetView<RegisterController> {
                             ),
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Confirm Password'),
+                          CustomInputHeader(
+                              header: context.tr('Confirm Password')),
                           AppSpace.spaceH6,
                           Obx(
                             () => CustomTextFormField(
@@ -352,12 +338,12 @@ class RegisterView extends GetView<RegisterController> {
                               width: double.maxFinite,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: Colors.red,
+                                color: AppColors.primaryColor,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Center(
                                   child: Text(
-                                "Register".toUpperCase(),
+                                context.tr("Register").toUpperCase(),
                                 style: const TextStyle(
                                     fontSize: 18, color: Colors.white),
                               )),
@@ -373,11 +359,11 @@ class RegisterView extends GetView<RegisterController> {
                                   onTap: () {
                                     Get.back();
                                   },
-                                  child: const Text(
-                                    'Already have an account ? Log In',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  )),
+                                  child: Text(
+                                      context.tr(
+                                          'Already have an account ? Log In'),
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold))),
                             ],
                           ),
                           AppSpace.spaceH10,
@@ -387,8 +373,6 @@ class RegisterView extends GetView<RegisterController> {
               ),
             ),
             AppSpace.spaceH20,
-
-            ///------------ Footer ----------
           ],
         ),
       ),

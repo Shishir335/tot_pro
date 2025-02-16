@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/utils/data/custom_text_form_field.dart';
@@ -25,82 +26,85 @@ class JoinUsView extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(children: [
                       CustomTextFormField(
-                          title: 'Name',
+                          title: context.tr('Name'),
                           controller: controller.name,
                           textInputType: TextInputType.text,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your name';
+                              return context.tr('Please enter your name');
                             }
                             return null;
                           }),
                       CustomTextFormField(
-                          title: 'Email',
+                          title: context.tr('Email'),
                           controller: controller.email,
                           textInputType: TextInputType.emailAddress,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
+                              return context.tr('Please enter your email');
                             }
                             return null;
                           }),
                       CustomTextFormField(
-                          title: 'Phone',
+                          title: context.tr('Phone'),
                           controller: controller.phone,
                           textInputType: TextInputType.phone,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your phone';
+                              return context.tr('Please enter your phone');
                             }
                             return null;
                           }),
                       CustomTextFormField(
-                          title: 'Address First Line',
+                          title: context.tr('Address First Line'),
                           controller: controller.addressFirstLine,
                           textInputType: TextInputType.text,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your address first line';
+                              return context
+                                  .tr('Please enter your address first line');
                             }
                             return null;
                           }),
                       CustomTextFormField(
-                          title: 'Address Second Line',
+                          title: context.tr('Address Second Line'),
                           controller: controller.addressSecondLine,
                           textInputType: TextInputType.text,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your address second line';
+                              return context
+                                  .tr('Please enter your address second line');
                             }
                             return null;
                           }),
                       CustomTextFormField(
-                          title: 'Address Third Line',
+                          title: context.tr('Address Third Line'),
                           controller: controller.addressThirdLine,
                           textInputType: TextInputType.text,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your address third line';
+                              return context
+                                  .tr('Please enter your address third line');
                             }
                             return null;
                           }),
                       CustomTextFormField(
-                          title: 'Town',
+                          title: context.tr('Town'),
                           controller: controller.town,
                           textInputType: TextInputType.text,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your town';
+                              return context.tr('Please enter your town');
                             }
                             return null;
                           }),
                       CustomTextFormField(
-                          title: 'Postcode',
+                          title: context.tr('Postcode'),
                           controller: controller.postcode,
                           textInputType: TextInputType.text,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your postcode';
+                              return context.tr('Please enter your postcode');
                             }
                             return null;
                           }),
@@ -120,7 +124,7 @@ class JoinUsView extends StatelessWidget {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             floatingActionButton: FloatingButton(
-                title: 'SUBMIT',
+                title: context.tr('SUBMIT'),
                 onTap: () {
                   controller.joinUs(context);
                 })),

@@ -1,12 +1,9 @@
-
-
-
 import 'package:flutter/material.dart';
 
 class AppColors {
   AppColors._();
 
-  static Color primaryColor = Colors.teal;
+  static Color primaryColor = const Color(0xff0b2559);
   static Color secondaryColor = Colors.green;
   //static Color bgColor = Helpers.fromHex('#F4FDFF');
   static Color black = Colors.black;

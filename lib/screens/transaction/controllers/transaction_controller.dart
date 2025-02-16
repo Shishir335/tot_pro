@@ -1,15 +1,15 @@
 import 'package:get/get.dart';
-import '../../../utils/data/api_client.dart';
+// import '../../../utils/data/api_client.dart';
 
 class TransactionController extends GetxController {
   final count = 0.obs;
-  late ApiClient _apiClient;
+  // late ApiClient _apiClient;
   //RxList<JobHistoryModel> jobHistoryList = List<JobHistoryModel>.empty(growable: true).obs;
   //Rx<JobHistoryDetailsModel> jobHistoryDetails = JobHistoryDetailsModel().obs;
 
   @override
   void onInit() {
-    _apiClient = ApiClient();
+    // _apiClient = ApiClient();
     // getJobHistoryCTR();
     super.onInit();
   }

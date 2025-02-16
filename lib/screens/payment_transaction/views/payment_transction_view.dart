@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 export 'package:get/get.dart';
 import '../../../models/payment_model.dart';
 import '../../../utils/data/core/values/app_space.dart';
@@ -13,16 +15,8 @@ class PaymentTransactionView extends GetView<PaymentTransactionController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: const Text(
-          'Payment',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body:
-          //Text('Not Complete yet')
-          SingleChildScrollView(
+      appBar: CustomAppBar(title: context.tr('Payment')),
+      body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 5),
           width: double.maxFinite,
@@ -46,20 +40,18 @@ class PaymentTransactionView extends GetView<PaymentTransactionController> {
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   separatorBuilder: (context, index) {
-                    //OrderRecordModel model = controller.orderHistoryDataList[index];
                     return Container();
                   },
                   itemCount: controller.paymentList.length,
-                  //controller.jobHistoryList.length,
                   itemBuilder: (context, index) {
                     PaymentModel model = controller.paymentList[index];
-                    return paymentCardUI(model);
+                    return paymentCardUI(model, context);
                   },
                 ),
         ));
   }
 
-  paymentCardUI(PaymentModel model) {
+  paymentCardUI(PaymentModel model, BuildContext context) {
     return Card(
       elevation: 0.0,
       color: Colors.white,
@@ -81,15 +73,14 @@ class PaymentTransactionView extends GetView<PaymentTransactionController> {
                   CustomTitleKeyValue(
                     titleKey: 'TID : ',
                     titleValue: model.tranid.toString(),
-                    // DateFormat('dd-MMM-yyyy').format(model.date)
                   ),
                   CustomTitleKeyValue(
-                      titleKey: 'Date',
+                      titleKey: context.tr('Date'),
                       titleValue:
                           //model.date
                           DateFormat('dd-MMM-yyyy').format(model.date)),
                   CustomTitleKeyValue(
-                      titleKey: 'Amount', titleValue: model.amount),
+                      titleKey: context.tr('Amount'), titleValue: model.amount),
                   AppSpace.spaceH6,
                 ],
               ),
@@ -159,7 +150,7 @@ class PaymentTransactionView extends GetView<PaymentTransactionController> {
                   margin: const EdgeInsets.all(2),
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: Colors.red,
+                    color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Text(

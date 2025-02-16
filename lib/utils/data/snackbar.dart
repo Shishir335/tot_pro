@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 
 
 
@@ -20,7 +21,7 @@ errorSnack(String msg) => Get.snackbar(
       msg,
       snackPosition: SnackPosition.TOP,
       margin: const EdgeInsets.all(20),
-      backgroundColor: Colors.red,
+      backgroundColor: AppColors.primaryColor,
       snackStyle: SnackStyle.FLOATING,
       titleText: const Text('ERROR', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
       messageText: Text(msg, style: const TextStyle(color: Colors.white, fontSize: 14)),

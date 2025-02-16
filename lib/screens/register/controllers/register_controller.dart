@@ -51,8 +51,6 @@ class RegisterController extends GetxController {
       Future.delayed(Duration.zero).then((value) => <AddressModel>[]);
 
   Future<List<AddressModel>> searchAddress(query) async {
-    print('query :$query');
-    dynamic response;
     List<AddressModel> addressList = [];
 
     try {
@@ -87,8 +85,6 @@ class RegisterController extends GetxController {
   }
 
   Future getAndSetAddressDetails(endpoint) async {
-    dynamic response;
-
     try {
       var url = '$_baseUrl$endpoint?api_key=$_key';
       var headers = {
@@ -137,17 +133,6 @@ class RegisterController extends GetxController {
   void increment() => count.value++;
 
   Future registerControllerBTN() async {
-    print('name :: ${nameCTL.text}');
-    print('companyCTL :: ${companyCTL.text}');
-    print('mailCTL :: ${mailCTL.text}');
-    print('mobileCTL :: ${mobileCTL.text}');
-    print('firstCnt :: ${firstCnt.text}');
-    print('addressLineOneController :: ${addressLineOneController.text}');
-    print('addressLineTwoController :: ${addressLineTwoController.text}');
-    print('addressLineThreeController :: ${addressLineThreeController.text}');
-    print('PostCode :: ${postcodeTextController.text}');
-    print('passwordCTL :: ${passwordCTL.text}');
-    print('confirmPasswordCTL :: ${confirmPasswordCTL.text}');
 
     if (passwordCTL.text != confirmPasswordCTL.text) {
       helloSnack('Alert', 'Password and confirm pasword has not match');
@@ -173,20 +158,10 @@ class RegisterController extends GetxController {
           apiUrl: ApiURL.registerUrl,
           PARAM: {},
         );
-        //  print('res code :: ${response!.statusCode.toString()}');
         if (response != null) {
-          /* final Map<String, dynamic> myresponse = response.data;
-          String token = myresponse["token"];
-          await localStoreSRF.setString('token', token);
-          Get.offNamedUntil(Routes.DASHBOARD, (route) => false);*/
-
           final Map<String, dynamic> myresponse = response.data;
-          print('RegisterController.registerControllerBTN $myresponse');
-
           int id = myresponse["userId"]['id'];
           String token = myresponse["token"];
-          //print('token ::$token');
-          print('id ::$id');
           await localStoreSRF.setString('token', token.toString());
           await localStoreSRF.setString('id', id.toString());
           await localStoreSRF.setString('register', 'register');

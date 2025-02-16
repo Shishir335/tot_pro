@@ -43,7 +43,6 @@ class JobHistoryController extends GetxController {
   ///
 
   onSearchTextChanged(String text) async {
-    print('Check >>>> $text');
     searchResult1.clear();
     if (text.isEmpty) {
       return;
@@ -58,8 +57,6 @@ class JobHistoryController extends GetxController {
 
   /// Get Job History done done
   Future getJobHistoryCTR() async {
-    print('HomeController.getOrderHistoryCTR >>>>>>>>>>>>>>>');
-    // String? token = await localStoreSRF.getString('token');
     String? token = localStoreSRF.getString('token');
     final response = await _apiClient.connection(
       API_TYPE: 'GET',
@@ -75,26 +72,18 @@ class JobHistoryController extends GetxController {
     );
 
     if (response != null) {
-      print('HomeController.homeAllProductsCTR');
       final Map<String, dynamic> mapdata = response.data;
-      print('HomeController.getDonationRecordCTR $mapdata');
       final list = (mapdata['response']['data'] as List)
           .map((x) => JobHistoryModel.fromJson(x))
           .toList();
       jobHistoryList.value = list;
     } else {
-      print('HomeController.homeAllProductsCTR');
       jobHistoryList.value = [];
     }
-
-    print('HomeController lng :: ${jobHistoryList.length}');
-    print('HomeController history :: ${jobHistoryList.toJson()}');
   }
 
   /// Get Job History Details  done
   Future getJobHistoryDetailsCTR(int id, String role) async {
-    print('HomeController.getOrderHistoryCTR >>>>>>>>>> $id');
-    // String? token = await localStoreSRF.getString('token');
     String? token = localStoreSRF.getString('token');
     final response = await _apiClient.connection(
       API_TYPE: 'GET',
@@ -110,7 +99,6 @@ class JobHistoryController extends GetxController {
     );
 
     if (response != null) {
-      print('HomeController.homeAllProductsCTR');
       final Map<String, dynamic> mapdata = response.data;
       Map<String, dynamic> info = mapdata['response']['data'];
       jobHistoryDetails.value = JobHistoryDetailsModel.fromJson(info);
@@ -124,10 +112,6 @@ class JobHistoryController extends GetxController {
 
   /// Get Job Completed Details  done New Task
   Future getJobCompletedDetailsCTR(int id) async {
-    print('HomeController.getOrderHistoryCTR >>>>>>>>>> $id');
-    print(
-        'HomeController.getOrderHistoryCTR >>>>>>>>>> ${'${ApiURL.getCompleteWorkDetailsUrl}$id'}');
-    // String? token = await localStoreSRF.getString('token');
     String? token = localStoreSRF.getString('token');
     final response = await _apiClient.connectionWork(
       API_TYPE: 'GET',
@@ -142,23 +126,8 @@ class JobHistoryController extends GetxController {
       PARAM: {},
     );
 
-    /*if (response != null) {
-      print('HomeController.homeAllProductsCTR');
-      final Map<String, dynamic> mapdata = response.data;
-      Map<String, dynamic> info = mapdata['response']['data'];
-      completedWorkList.value = CompletedWorkModel.fromJson(info);
-d
-      Get.toNamed(Routes.workCompleteDetails,arguments: [
-        {"first": 'role'},
-        {"second": completedWorkList.value}
-      ]
-      );
-    }*/
-
     if (response != null) {
-      print('HomeController.homeAllProductsCTR');
       final Map<String, dynamic> mapdata = response.data;
-      print('HomeController.getDonationRecordCTR $mapdata');
       final list = (mapdata['response']['data'] as List)
           .map((x) => CompletedWorkModel.fromJson(x))
           .toList();
@@ -166,10 +135,10 @@ d
 
       Get.toNamed(Routes.workCompleteDetails, arguments: [
         {"orderId": id.toString()},
+        // ignore: invalid_use_of_protected_member
         {"CompletedList": completedWorkList.value}
       ]);
     } else {
-      print('HomeController.homeAllProductsCTR');
       completedWorkList.value = [];
     }
   }
@@ -190,22 +159,14 @@ d
       PARAM: {},
     );
 
-    print('invoice Url :: ${ApiURL.getInvoiceUrl}  $id');
     if (response != null) {
       final Map<String, dynamic> mapdata = response.data;
-      print('JobHistoryController.getJobHistoryInvoiceCTR $mapdata');
-      print('JobHistoryController ?? ${mapdata['response']['data']}');
       final list = (mapdata['response']['data'] as List)
           .map((x) => InvoiceModel.fromJson(x))
           .toList();
       invoiceList.value = list;
-      print('invoice lng :: ${invoiceList.length}');
-      print('invoice lng :: ${invoiceList[0].toJson()}');
-      //   invoice.value.jobId=jobId;
       Get.toNamed(Routes.Invoice, arguments: [invoiceList, jobId]);
-      //  print(invoice.value.jobId);
     } else {
-      print('HomeController.homeAllProductsCTR');
       invoiceList.value = [];
     }
   }
@@ -227,25 +188,20 @@ d
     );
 
     if (response != null) {
-      print('JobHistoryController.getJobHistoryTransactionCTR');
       final Map<String, dynamic> mapdata = response.data;
 
       final list = (mapdata['response']['data'] as List)
           .map((x) => TransactionModel.fromJson(x))
           .toList();
       transactionList.value = list;
-      print('transactionList :: ${transactionList.value}');
-      print('tn lng :: ${transactionList.length}');
       Get.toNamed(Routes.Transaction, arguments: [transactionList, jobId]);
     }
   }
 
   /// Get Job History delete  done
   Future getJobHistoryDeleteCTR(int id) async {
-    print('HomeController.getOrderHistoryCTR delete >>>>>>>>>> $id');
-    // String? token = await localStoreSRF.getString('token');
     String? token = localStoreSRF.getString('token');
-    final response = await _apiClient.connection(
+    await _apiClient.connection(
       API_TYPE: 'DELETE',
       apiType: 'DELETE',
       REQUEST_TYPE: '',
@@ -257,10 +213,6 @@ d
       apiUrl: '${ApiURL.deleteWorkByIdUrl}$id',
       PARAM: {},
     );
-
-    print(
-        'JobHistoryController.getJobHistoryDeleteCTR ${response!.statusCode.toString()}');
     await getJobHistoryCTR();
-    print('JobHistoryController.getJobHistoryDeleteCTR');
   }
 }

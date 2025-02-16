@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:io';
 
@@ -53,47 +52,49 @@ class VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) => AspectRatio(
-    aspectRatio: 16 / 9,
-    child: _controller.value.isInitialized ? videoPlayer() : Container(),
-  );
+        aspectRatio: 16 / 9,
+        child: _controller.value.isInitialized ? videoPlayer() : Container(),
+      );
 
   Widget videoPlayer() => Stack(
-    children: <Widget>[
-      video(),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: VideoProgressIndicator(
-          _controller,
-          allowScrubbing: true,
-          padding: const EdgeInsets.all(16.0),
-        ),
-      ),
-      Center(child: videoStatusAnimation),
-    ],
-  );
+        children: <Widget>[
+          video(),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: VideoProgressIndicator(
+              _controller,
+              allowScrubbing: true,
+              padding: const EdgeInsets.all(16.0),
+            ),
+          ),
+          Center(child: videoStatusAnimation),
+        ],
+      );
 
   Widget video() => GestureDetector(
-    child: VideoPlayer(_controller),
-    onTap: () {
-      if (!_controller.value.isInitialized) {
-        return;
-      }
-      if (_controller.value.isPlaying) {
-        videoStatusAnimation =
-            const FadeAnimation(child: Icon(Icons.pause, size: 100.0));
-        _controller.pause();
-      } else {
-        videoStatusAnimation =
-            const FadeAnimation(child: Icon(Icons.play_arrow, size: 100.0));
-        _controller.play();
-      }
-    },
-  );
+        child: VideoPlayer(_controller),
+        onTap: () {
+          if (!_controller.value.isInitialized) {
+            return;
+          }
+          if (_controller.value.isPlaying) {
+            videoStatusAnimation =
+                const FadeAnimation(child: Icon(Icons.pause, size: 100.0));
+            _controller.pause();
+          } else {
+            videoStatusAnimation =
+                const FadeAnimation(child: Icon(Icons.play_arrow, size: 100.0));
+            _controller.play();
+          }
+        },
+      );
 }
 
 class FadeAnimation extends StatefulWidget {
   const FadeAnimation(
-      {super.key, required this.child, this.duration = const Duration(milliseconds: 1000)});
+      {super.key,
+      required this.child,
+      this.duration = const Duration(milliseconds: 1000)});
 
   final Widget child;
   final Duration duration;
@@ -142,8 +143,8 @@ class _FadeAnimationState extends State<FadeAnimation>
   @override
   Widget build(BuildContext context) => animationController.isAnimating
       ? Opacity(
-    opacity: 1.0 - animationController.value,
-    child: widget.child,
-  )
+          opacity: 1.0 - animationController.value,
+          child: widget.child,
+        )
       : Container();
 }

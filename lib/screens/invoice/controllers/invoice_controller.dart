@@ -24,8 +24,6 @@ class InvoiceController extends GetxController {
 
   /// Get Job History done done
   Future getJobHistoryCTR() async {
-    print('HomeController.getOrderHistoryCTR >>>>>>>>>>>>>>>');
-    // String? token = await localStoreSRF.getString('token');
     String? token = localStoreSRF.getString('token');
     final response = await _apiClient.connection(
       API_TYPE: 'GET',
@@ -41,26 +39,18 @@ class InvoiceController extends GetxController {
     );
 
     if (response != null) {
-      print('HomeController.homeAllProductsCTR');
       final Map<String, dynamic> mapdata = response.data;
-      //print('HomeController.getDonationRecordCTR ${mapdata}');
       final list = (mapdata['response']['data'] as List)
           .map((x) => JobHistoryModel.fromJson(x))
           .toList();
       jobHistoryList.value = list;
     } else {
-      print('HomeController.homeAllProductsCTR');
       jobHistoryList.value = [];
     }
-
-    print('HomeController lng :: ${jobHistoryList.length}');
-    //print('HomeController history :: ${jobHistoryList.toJson()}');
   }
 
   /// Get Invoice done
   Future getInvoiceCTR() async {
-    print('HomeController.getOrderHistoryCTR >>>>>>>>>>>>>>>');
-    // String? token = await localStoreSRF.getString('token');
     String? token = localStoreSRF.getString('token');
     final response = await _apiClient.connection(
       API_TYPE: 'GET',
@@ -76,26 +66,18 @@ class InvoiceController extends GetxController {
     );
 
     if (response != null) {
-      print('HomeController.homeAllProductsCTR');
       final Map<String, dynamic> mapdata = response.data;
-      print('HomeController.getDonationRecordCTR $mapdata');
       final list = (mapdata['response']['data'] as List)
           .map((x) => JobHistoryModel.fromJson(x))
           .toList();
       jobHistoryList.value = list;
     } else {
-      print('HomeController.homeAllProductsCTR');
       jobHistoryList.value = [];
     }
-
-    print('HomeController lng :: ${jobHistoryList.length}');
-    print('HomeController history :: ${jobHistoryList.toJson()}');
   }
 
   /// Get Job History Details  done
   Future getJobHistoryDetailsCTR(int id, String role) async {
-    print('HomeController.getOrderHistoryCTR >>>>>>>>>> $id');
-    // String? token = await localStoreSRF.getString('token');
     String? token = localStoreSRF.getString('token');
     final response = await _apiClient.connection(
       API_TYPE: 'GET',
@@ -111,7 +93,6 @@ class InvoiceController extends GetxController {
     );
 
     if (response != null) {
-      print('HomeController.homeAllProductsCTR');
       final Map<String, dynamic> mapdata = response.data;
       Map<String, dynamic> info = mapdata['response']['data'];
       jobHistoryDetails.value = JobHistoryDetailsModel.fromJson(info);
@@ -125,10 +106,8 @@ class InvoiceController extends GetxController {
 
   /// Get Job History delete  done
   Future getJobHistoryDeleteCTR(int id) async {
-    print('HomeController.getOrderHistoryCTR delete >>>>>>>>>> $id');
-    // String? token = await localStoreSRF.getString('token');
     String? token = localStoreSRF.getString('token');
-    final response = await _apiClient.connection(
+    await _apiClient.connection(
       API_TYPE: 'DELETE',
       apiType: 'DELETE',
       REQUEST_TYPE: '',
@@ -140,15 +119,10 @@ class InvoiceController extends GetxController {
       apiUrl: '${ApiURL.deleteWorkByIdUrl}$id',
       PARAM: {},
     );
-
-    print(
-        'JobHistoryController.getJobHistoryDeleteCTR ${response!.statusCode.toString()}');
     await getJobHistoryCTR();
-    print('JobHistoryController.getJobHistoryDeleteCTR');
   }
 
   Future<void> postPaymentCTR(Map params, InvoiceModel model) async {
-    print(' params :: $params');
     String paymentId = params['data']['id'];
     String paypalState = params['data']['state'];
     String paypalMail = params['data']['payer']['payer_info']['email'];
@@ -164,25 +138,12 @@ class InvoiceController extends GetxController {
       "state": paypalState,
     };
 
-    // print(data);
-
-    print(reqData);
-
     String? token = localStoreSRF.getString('token');
     final response = await _apiClient.connection(
       API_TYPE: 'payment',
       apiType: 'POST',
       REQUEST_TYPE: '',
-      REQUEST_DATA: reqData
-      /*{
-        "amount": "100",
-        "work_id": "97",
-        "payment_id": "PAYID-MY3O7CA2SX28349FC263524U",
-        "payer_id": "Z54664",
-        "payer_email": "sb-uxexq26090830@personal.example.com",
-        "state": "approved"
-      }*/
-      ,
+      REQUEST_DATA: reqData,
       apiUrl: ApiURL.paypalPaymentStoreURl,
       customheader: {
         'Content-Type': 'application/json',
@@ -191,22 +152,15 @@ class InvoiceController extends GetxController {
       PARAM: {},
     );
     if (response != null) {
-      final Map<String, dynamic> myresponse = response.data;
-      print(
-          'InvoiceController.postPaymentCTR ${response.statusCode.toString()}');
       if (response.statusCode == 200) {
         Helpers.snackbarForSucess(
-            titleText: 'Successful Alert', bodyText: 'Payment has Successful');
-        print('InvoiceController.postPaymentCTR ');
+            titleText: 'Successful Alert'.tr,
+            bodyText: 'Payment has Successful'.tr);
         await getJobHistoryCTR();
-
-        //  return true;
       }
     } else {
       Helpers.snackbarForErorr(
-          titleText: 'Error Alert', bodyText: 'Payment has Failed');
-      //return false;
+          titleText: 'Error Alert'.tr, bodyText: 'Payment has Failed'.tr);
     }
-    //return false;
   }
 }

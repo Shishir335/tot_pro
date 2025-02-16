@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tot_pro/components/app_bar.dart';
 export 'package:get/get.dart';
 import '../../../models/transactionmodel.dart';
 import '../controllers/transaction_controller.dart';
@@ -8,19 +9,11 @@ class TransactionView extends GetView<TransactionController> {
   const TransactionView({super.key});
   @override
   Widget build(BuildContext context) {
-    print('TransactionView.build >>>');
     List<TransactionModel> transactions = Get.arguments[0];
     String jobId = Get.arguments[1];
-    print('tns lng :: ${transactions.length}');
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: const Text(
-          'Transaction',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
+      appBar: const CustomAppBar(title: 'Transaction'),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -34,7 +27,6 @@ class TransactionView extends GetView<TransactionController> {
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     separatorBuilder: (context, index) {
-                      //OrderRecordModel model = controller.orderHistoryDataList[index];
                       return Container();
                     },
                     itemCount: transactions.length,

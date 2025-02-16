@@ -1,6 +1,9 @@
 import 'package:dotted_line/dotted_line.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tot_pro/components/app_bar.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_strings.dart';
 export 'package:get/get.dart';
 import '../../../utils/data/core/values/app_assets.dart';
@@ -16,40 +19,25 @@ class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-        backgroundColor: Colors.red,
-        title: const Text(
-          'Login ',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-      ),
-      body: Container(
-        child: Stack(
-          children: [
-            Container(
+        backgroundColor: Colors.grey.shade200,
+        appBar: CustomAppBar(title: context.tr('Login')),
+        body: Stack(children: [
+          Container(
               height: 150,
               padding: const EdgeInsets.only(top: 0, bottom: 50),
               decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.2),
+                  color: AppColors.primaryColor.withOpacity(0.2),
                   borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(0.0),
                       bottom: Radius.circular(10.0))),
               width: double.infinity,
-              child: Image.asset(AppAssets.appLogo),
-            ),
-            Container(
+              child: Image.asset(AppAssets.appLogo)),
+          Container(
               margin: const EdgeInsets.only(
                   top: 100, left: 5, right: 5, bottom: 20),
-              //   color: Colors.red,
               width: double.infinity,
-              child: loginUI(context),
-            ),
-          ],
-        ),
-      ),
-    );
+              child: loginUI(context))
+        ]));
   }
 
   Widget loginUI(BuildContext context) {
@@ -76,47 +64,36 @@ class LoginView extends GetView<LoginController> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           AppSpace.spaceH6,
-                          CustomInputHeader(header: 'Email'),
+                          CustomInputHeader(header: context.tr('Email')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             controller: controller.mailCTL,
                             textInputType: TextInputType.emailAddress,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
+                                return context.tr('Please enter your email');
                               }
                               return null;
                             },
                           ),
                           AppSpace.spaceH10,
-                          CustomInputHeader(header: 'Password'),
+                          CustomInputHeader(header: context.tr('Password')),
                           AppSpace.spaceH6,
-                          Obx(
-                            () => CustomTextFormField(
+                          Obx(() => CustomTextFormField(
                               suffix: InkWell(
-                                onTap: () {
-                                  controller.isLoginShowPassword.value =
-                                      !controller.isLoginShowPassword.value;
-                                },
-                                child: Container(
-                                  child: controller.isLoginShowPassword.value
-                                      ? const Icon(Icons.visibility_off)
-                                      : const Icon(Icons.visibility)
-
-                                  /*   CustomImageView(
-                                                  svgPath: controller
-                                                          .isShowPassword.value
-                                                      ? ImageConstant.imgEye
-                                                      : ImageConstant.imgEye)*/
-                                  ,
-                                ),
-                              ),
+                                  onTap: () {
+                                    controller.isLoginShowPassword.value =
+                                        !controller.isLoginShowPassword.value;
+                                  },
+                                  child: Container(
+                                    child: controller.isLoginShowPassword.value
+                                        ? const Icon(Icons.visibility_off)
+                                        : const Icon(Icons.visibility),
+                                  )),
                               suffixConstraints:
                                   const BoxConstraints(maxHeight: 36),
-
                               obscureText: controller.isLoginShowPassword.value,
                               controller: controller.passwordCTL,
-                              // suffixIc: const Icon(Icons.remove_red_eye),
                               textInputType: TextInputType.text,
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
@@ -125,33 +102,27 @@ class LoginView extends GetView<LoginController> {
                                   return AppStrings.passwordMustBe8Digit;
                                 }
                                 return null;
-                              },
-                            ),
-                          ),
+                              })),
                           AppSpace.spaceH20,
                           InkWell(
-                            onTap: () {
-                              if (controller.loginFormKey.currentState!
-                                  .validate()) {
-                                controller.loginController();
-                                //  Get.offAllNamed(Routes.DASHBOARD);
-                              }
-                            },
-                            child: Container(
-                              width: double.maxFinite,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                color: Colors.red,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Center(
-                                  child: Text(
-                                "Submit".toUpperCase(),
-                                style: const TextStyle(
-                                    fontSize: 18, color: Colors.white),
-                              )),
-                            ),
-                          ),
+                              onTap: () {
+                                if (controller.loginFormKey.currentState!
+                                    .validate()) {
+                                  controller.loginController();
+                                }
+                              },
+                              child: Container(
+                                  width: double.maxFinite,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.primaryColor,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Center(
+                                      child: Text(
+                                          context.tr("Submit").toUpperCase(),
+                                          style: const TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.white))))),
                           AppSpace.spaceH10,
                           const DottedLine(
                             direction: Axis.horizontal,
@@ -167,33 +138,21 @@ class LoginView extends GetView<LoginController> {
                           ),
                           AppSpace.spaceH10,
                           Row(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Get.toNamed(Routes.REGISTER);
-                                },
-                                child: const Text(
-                                  'Need an account? Register Now',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                    onTap: () {
+                                      Get.toNamed(Routes.REGISTER);
+                                    },
+                                    child: Text(
+                                        context.tr(
+                                            'Need an account? Register Now'),
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold)))
+                              ]),
                           AppSpace.spaceH20,
-                          /*Center(child: InkWell(
-                              onTap: (){
-
-                                Get.toNamed(Routes.faceIdAuth);
-
-                                */ /*Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => const FaceIdAuth()),
-                                );*/ /*
-                              },
-                              child: Image.asset('assets/faceid/face-id.png',height: 50,width: 50,)))*/
                         ],
                       ),
                     )),

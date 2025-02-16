@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 
 import 'core/utils/image_constant.dart';
 import 'core/values/app_assets.dart';
@@ -42,7 +43,7 @@ showLoader({String? msg}) {
             Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Image.asset(ImageConstant.fetchDataLoading,
-                    width: 40, height: 40, color: Colors.red))
+                    width: 40, height: 40, color: AppColors.primaryColor))
           ])));
 }
 
