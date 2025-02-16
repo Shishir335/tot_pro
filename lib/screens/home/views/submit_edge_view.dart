@@ -406,7 +406,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                     () => controller.imageFiles.isEmpty
                         ? InkWell(
                             onTap: () => showModalBottomSheet(
-                                barrierColor: Colors.teal.withOpacity(0.5),
+                                barrierColor: Colors.black38,
                                 context: context,
                                 builder: (BuildContext context) {
                                   return Container(
