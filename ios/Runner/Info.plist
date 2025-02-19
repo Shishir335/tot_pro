@@ -17,13 +17,20 @@
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>NSPhotoLibraryUsageDescription</key>
-	  <string>ConnectsApp needs Photo Library access to upload photos and videos.</string>
+	  <string>This app needs access to your photo library to upload and share images and videos. For instance, you can select a picture from your gallery to set as your profile photo or share in a post.</string>
     <key>NSCameraUsageDescription</key>
-    <string>Need to upload image</string>
+    <string>This app requires access to your camera to capture photos and videos for sharing with your friends and saving memories. For example, you can take a picture directly within the app to update your profile or post an image.</string>
     <key>NSMicrophoneUsageDescription</key>
-    <string>Need to upload image</string>
+    <string>This app requires access to your microphone to record audio for voice messages and video posts. For example, you can record a voice message to send in chat or capture audio while recording a video.</string>
     <key>CFBundleShortVersionString</key>
     <string>$(FLUTTER_BUILD_NAME)</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
+    <key>NSLocalNetworkUsageDescription</key>
+    <string>This app requires access to your local network to connect with nearby devices for seamless communication and data sharing.</string>
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleVersion</key>

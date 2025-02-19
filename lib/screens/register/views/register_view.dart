@@ -1,12 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:field_suggestion/field_suggestion.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/components/app_bar.dart';
 import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 import 'package:tot_pro/utils/data/core/values/app_strings.dart';
 export 'package:get/get.dart';
-import '../../../models/address_model.dart';
 import '../../../utils/data/core/values/app_assets.dart';
 import '../../../utils/data/core/values/app_space.dart';
 import '../../../utils/data/customIntputHeader.dart';
@@ -91,19 +89,8 @@ class RegisterView extends GetView<RegisterController> {
                               header: context.tr('Mobile Number')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
-                            controller: controller.mobileCTL,
-                            textInputType: TextInputType.number,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return AppStrings.emptyInputFieldMsg;
-                              }
-                              /*else if(value.length>11){
-                                return AppStrings.phoneNumber11Digit;
-                              }*/
-
-                              return null;
-                            },
-                          ),
+                              controller: controller.mobileCTL,
+                              textInputType: TextInputType.number),
                           AppSpace.spaceH10,
                           CustomInputHeader(
                               header: context.tr('Address First Line')),
@@ -111,76 +98,86 @@ class RegisterView extends GetView<RegisterController> {
 
                           ///------------ finder Address ------
 
-                          FieldSuggestion<AddressModel>.network(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            inputDecoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              // suffixIcon: suffixIc,
-                              filled: true,
-                              fillColor: AppColors.primaryColor.withOpacity(0.8),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide:
-                                    const BorderSide(color: Colors.greenAccent),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: const BorderSide(color: Colors.red),
-                              ),
-                            ),
-                            future: (input) => controller.shouldSearch
-                                ? controller.addressLineOneController.text
-                                        .isNotEmpty
-                                    ? controller.searchAddress(input)
-                                    : controller.returnEmptyFutureData()
-                                : controller.returnEmptyFutureData(),
-                            textController: controller.addressLineOneController,
-                            boxController: controller.boxController,
+                          // FieldSuggestion<AddressModel>.network(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 10),
+                          //   inputDecoration: InputDecoration(
+                          //     contentPadding:
+                          //         const EdgeInsets.symmetric(horizontal: 10),
+                          //     // suffixIcon: suffixIc,
+                          //     filled: true,
+                          //     fillColor: AppColors.primaryColor.withOpacity(0.8),
+                          //     border: OutlineInputBorder(
+                          //         borderRadius: BorderRadius.circular(10)),
+                          //     enabledBorder: OutlineInputBorder(
+                          //         borderRadius: BorderRadius.circular(10),
+                          //         borderSide: BorderSide.none),
+                          //     focusedBorder: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(10),
+                          //       borderSide:
+                          //           const BorderSide(color: Colors.greenAccent),
+                          //     ),
+                          //     errorBorder: OutlineInputBorder(
+                          //       borderRadius: BorderRadius.circular(10),
+                          //       borderSide: const BorderSide(color: Colors.red),
+                          //     ),
+                          //   ),
+                          //   future: (input) => controller.shouldSearch
+                          //       ? controller.addressLineOneController.text
+                          //               .isNotEmpty
+                          //           ? controller.searchAddress(input)
+                          //           : controller.returnEmptyFutureData()
+                          //       : controller.returnEmptyFutureData(),
+                          //   textController: controller.addressLineOneController,
+                          //   boxController: controller.boxController,
+                          //   validator: (value) {
+                          //     if (value!.isEmpty) {
+                          //       return AppStrings.emptyInputFieldMsg;
+                          //     }
+                          //     return null;
+                          //   },
+                          //   builder: (context, snapshot) {
+                          //     if (snapshot.connectionState !=
+                          //         ConnectionState.done) {
+                          //       return const Center(
+                          //           child: CircularProgressIndicator());
+                          //     }
+                          //     final result = snapshot.data ?? [];
+                          //     return ListView.builder(
+                          //       itemCount: result.length,
+                          //       itemBuilder: (context, index) {
+                          //         //  print('result lng : ${snapshot.data}');
+                          //         return GestureDetector(
+                          //           onTap: () {
+                          //             controller.shouldSearch = false;
+                          //             controller.addressLineOneController.text =
+                          //                 result[index].suggestion!;
+
+                          //             FocusScope.of(context).unfocus();
+                          //             controller.boxController.close?.call();
+                          //             controller.shouldSearch = true;
+
+                          //             /// get address details and set data to text fields
+                          //             if (result[index].urls != null &&
+                          //                 result[index].urls!.udprn != null) {
+                          //               controller.getAndSetAddressDetails(
+                          //                   result[index].urls!.udprn!);
+                          //             }
+                          //           },
+                          //           child: ListTile(
+                          //               title: Text(result[index].suggestion!)),
+                          //         );
+                          //       },
+                          //     );
+                          //   },
+                          // ),
+                          CustomTextFormField(
+                            controller: controller.addressLineOneController,
+                            textInputType: TextInputType.text,
                             validator: (value) {
-                              if (value!.isEmpty) {
+                              if (value == null || value.isEmpty) {
                                 return AppStrings.emptyInputFieldMsg;
                               }
                               return null;
-                            },
-                            builder: (context, snapshot) {
-                              if (snapshot.connectionState !=
-                                  ConnectionState.done) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                              final result = snapshot.data ?? [];
-                              return ListView.builder(
-                                itemCount: result.length,
-                                itemBuilder: (context, index) {
-                                  //  print('result lng : ${snapshot.data}');
-                                  return GestureDetector(
-                                    onTap: () {
-                                      controller.shouldSearch = false;
-                                      controller.addressLineOneController.text =
-                                          result[index].suggestion!;
-
-                                      FocusScope.of(context).unfocus();
-                                      controller.boxController.close?.call();
-                                      controller.shouldSearch = true;
-
-                                      /// get address details and set data to text fields
-                                      if (result[index].urls != null &&
-                                          result[index].urls!.udprn != null) {
-                                        controller.getAndSetAddressDetails(
-                                            result[index].urls!.udprn!);
-                                      }
-                                    },
-                                    child: ListTile(
-                                        title: Text(result[index].suggestion!)),
-                                  );
-                                },
-                              );
                             },
                           ),
                           AppSpace.spaceH10,

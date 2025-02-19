@@ -405,51 +405,70 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                   child: Obx(
                     () => controller.imageFiles.isEmpty
                         ? InkWell(
-                            onTap: () => showModalBottomSheet(
-                                barrierColor: Colors.black38,
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 20),
-                                      child: Wrap(children: <Widget>[
-                                        ListTile(
-                                            leading: const Icon(Icons.camera),
-                                            title: Text(context.tr('Camera'),
-                                                style: const TextStyle(
-                                                    color: Colors.green,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            trailing: const Icon(
-                                                Icons.touch_app_outlined),
-                                            onTap: () => controller.selectImage(
-                                                ImageSource.camera, 'camera')),
-                                        ListTile(
-                                            leading: const Icon(Icons.image),
-                                            title: Text(context.tr('Gallery'),
-                                                style: const TextStyle(
-                                                    color: Colors.green,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            trailing: const Icon(
-                                                Icons.touch_app_outlined),
-                                            onTap: () => controller.selectImage(
-                                                ImageSource.gallery,
-                                                'gallery')),
-                                        ListTile(
-                                            leading: const Icon(Icons
-                                                .video_camera_back_outlined),
-                                            title: Text(context.tr('Video'),
-                                                style: const TextStyle(
-                                                    color: Colors.green,
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            trailing: const Icon(
-                                                Icons.video_call_outlined),
-                                            onTap: () => controller.selectImage(
-                                                ImageSource.gallery, 'video'))
-                                      ]));
-                                }),
+                            onTap: () async {
+                              // print('status');
+                              // var status = await Permission.camera.status;
+                              // print(status);
+                              // if (status.isGranted) {
+                              //   print('granted');
+                                showModalBottomSheet(
+                                    barrierColor: Colors.black38,
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                          margin: const EdgeInsets.symmetric(
+                                              vertical: 20),
+                                          child: Wrap(children: <Widget>[
+                                            ListTile(
+                                                leading:
+                                                    const Icon(Icons.camera),
+                                                title: Text(
+                                                    context.tr('Camera'),
+                                                    style: const TextStyle(
+                                                        color: Colors.green,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                trailing: const Icon(
+                                                    Icons.touch_app_outlined),
+                                                onTap: () =>
+                                                    controller.selectImage(
+                                                        ImageSource.camera,
+                                                        'camera')),
+                                            ListTile(
+                                                leading:
+                                                    const Icon(Icons.image),
+                                                title: Text(
+                                                    context.tr('Gallery'),
+                                                    style: const TextStyle(
+                                                        color: Colors.green,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                trailing: const Icon(
+                                                    Icons.touch_app_outlined),
+                                                onTap: () =>
+                                                    controller.selectImage(
+                                                        ImageSource.gallery,
+                                                        'gallery')),
+                                            ListTile(
+                                                leading: const Icon(Icons
+                                                    .video_camera_back_outlined),
+                                                title: Text(context.tr('Video'),
+                                                    style: const TextStyle(
+                                                        color: Colors.green,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                trailing: const Icon(
+                                                    Icons.video_call_outlined),
+                                                onTap: () =>
+                                                    controller.selectImage(
+                                                        ImageSource.gallery,
+                                                        'video'))
+                                          ]));
+                                    });
+                              // } else {
+                              //   print('not granted');
+                              // }
+                            },
                             child: Center(
                                 child: Padding(
                                     padding: const EdgeInsets.all(0.0),
