@@ -113,7 +113,7 @@ class JobHistoryModel {
 
   factory JobHistoryModel.fromJson(Map<String, dynamic> json) => JobHistoryModel(
     id: json["id"],
-    userId: json["user_id"],
+    userId: json["user_id"].toString(),
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
     name: json["name"],
     email: json["email"],
@@ -127,8 +127,8 @@ class JobHistoryModel {
     street: json["street"],
     postCode: json["post_code"],
     message: json["message"],
-    status: json["status"],
-    isNew: json["is_new"],
+    status: json["status"].toString(),
+    isNew: json["is_new"].toString(),
     updatedBy: json["updated_by"],
     createdBy: json["created_by"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
@@ -220,12 +220,12 @@ class Invoice {
 
   factory Invoice.fromJson(Map<String, dynamic> json) => Invoice(
     id: json["id"],
-    workId: json["work_id"],
-    invoiceid: json["invoiceid"],
+    workId: json["work_id"].toString(),
+    invoiceid: json["invoiceid"].toString(),
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
     amount: json["amount"],
     img: json["img"],
-    status: json["status"],
+    status: json["status"].toString(),
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
     updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
   );
@@ -320,15 +320,15 @@ class Transaction {
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
     id: json["id"],
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
-    userId: json["user_id"],
-    workId: json["work_id"],
-    tranid: json["tranid"],
+    userId: json["user_id"].toString(),
+    workId: json["work_id"].toString(),
+    tranid: json["tranid"].toString(),
     amount: json["amount"],
     discount: json["discount"],
     additionalExpense: json["additional_expense"],
     dueAmount: json["due_amount"],
     netAmount: json["net_amount"],
-    status: json["status"],
+    status: json["status"].toString(),
     updatedBy: json["updated_by"],
     createdBy: json["created_by"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
@@ -406,10 +406,10 @@ class Workimage {
 
   factory Workimage.fromJson(Map<String, dynamic> json) => Workimage(
     id: json["id"],
-    workId: json["work_id"],
+    workId: json["work_id"].toString(),
     name: json["name"],
     description: json["description"],
-    status: json["status"],
+    status: json["status"].toString(),
     updatedBy: json["updated_by"],
     createdBy: json["created_by"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
