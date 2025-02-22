@@ -133,7 +133,6 @@ class RegisterController extends GetxController {
   void increment() => count.value++;
 
   Future registerControllerBTN() async {
-
     if (passwordCTL.text != confirmPasswordCTL.text) {
       helloSnack('Alert', 'Password and confirm pasword has not match');
     } else {

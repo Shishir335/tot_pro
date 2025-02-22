@@ -4,7 +4,6 @@ import 'package:tot_pro/models/menu_model.dart';
 import 'package:tot_pro/screens/home/controllers/submit_edge_controller.dart';
 import 'package:tot_pro/screens/settings/controllers/settings_controller.dart';
 import 'package:tot_pro/utils/data/core/values/app_colors.dart';
-import 'package:tot_pro/utils/localization/localization_controller.dart';
 import '../../../main.dart';
 import '../../../models/user_profile_model.dart';
 import '../../../utils/data/api_client.dart';
@@ -24,7 +23,6 @@ class DashboardController extends GetxController {
   @override
   void onInit() {
     Get.put(SubmitEdgeController());
-    Get.put(LocalizationController());
     Get.put(SettingsController());
     menuList.add(MenuModel(
         menuId: 1,

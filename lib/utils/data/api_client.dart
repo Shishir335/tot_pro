@@ -198,8 +198,9 @@ class ApiClient {
       url = apiUrl;
     }
 
-    log(url);
-    log(customheader.toString());
+    log('url: ' + url);
+    log('body: $REQUEST_DATA');
+    log('header: ' + customheader.toString());
 
     Map<String, dynamic> header = customheader ??
         <String, String>{

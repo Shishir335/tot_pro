@@ -78,9 +78,6 @@ class RegisterView extends GetView<RegisterController> {
                             controller: controller.companyCTL,
                             textInputType: TextInputType.text,
                             validator: (value) {
-                              /*if (value == null || value.isEmpty) {
-                                return AppStrings.emptyInputFieldMsg;
-                              }*/
                               return null;
                             },
                           ),
@@ -188,7 +185,6 @@ class RegisterView extends GetView<RegisterController> {
                               header: context.tr('Address Second Line')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
-                            isReadOnly: true,
                             controller: controller.addressLineTwoController,
                             textInputType: TextInputType.text,
                             validator: (value) {
@@ -203,7 +199,6 @@ class RegisterView extends GetView<RegisterController> {
                               header: context.tr('Address Third Line')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
-                            isReadOnly: true,
                             controller: controller.addressLineThreeController,
                             textInputType: TextInputType.text,
                             validator: (value) {
@@ -217,7 +212,6 @@ class RegisterView extends GetView<RegisterController> {
                           CustomInputHeader(header: context.tr('Town')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
-                            isReadOnly: true,
                             controller: controller.countryTextController,
                             textInputType: TextInputType.text,
                             validator: (value) {
@@ -231,13 +225,9 @@ class RegisterView extends GetView<RegisterController> {
                           CustomInputHeader(header: context.tr('Postcode')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
-                            isReadOnly: true,
                             controller: controller.postcodeTextController,
                             textInputType: TextInputType.text,
                             validator: (value) {
-                              /* if (value == null || value.isEmpty) {
-                                return AppStrings.emptyInputFieldMsg;
-                              }*/
                               return null;
                             },
                           ),
@@ -296,23 +286,16 @@ class RegisterView extends GetView<RegisterController> {
                               //  suffixIc:const Icon(Icons.remove_red_eye),
                               textInputType: TextInputType.text,
                               suffix: InkWell(
-                                onTap: () {
-                                  controller.isShowPasswordConfirm.value =
-                                      !controller.isShowPasswordConfirm.value;
-                                },
-                                child: Container(
-                                  child: controller.isShowPasswordConfirm.value
-                                      ? const Icon(Icons.visibility_off)
-                                      : const Icon(Icons.visibility)
-
-                                  /*   CustomImageView(
-                                                  svgPath: controller
-                                                          .isShowPassword.value
-                                                      ? ImageConstant.imgEye
-                                                      : ImageConstant.imgEye)*/
-                                  ,
-                                ),
-                              ),
+                                  onTap: () {
+                                    controller.isShowPasswordConfirm.value =
+                                        !controller.isShowPasswordConfirm.value;
+                                  },
+                                  child: Container(
+                                    child:
+                                        controller.isShowPasswordConfirm.value
+                                            ? const Icon(Icons.visibility_off)
+                                            : const Icon(Icons.visibility),
+                                  )),
                               suffixConstraints:
                                   const BoxConstraints(maxHeight: 36),
 
