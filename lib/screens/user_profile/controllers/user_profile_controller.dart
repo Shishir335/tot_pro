@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:tot_pro/screens/dashboard/controllers/dashboard_controller.dart';
 import 'package:tot_pro/models/user_profile_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:tot_pro/screens/home/controllers/submit_edge_controller.dart';
 import '../../../main.dart';
 import '../../../models/address_model.dart';
 import '../../../utils/data/api_client.dart';
@@ -39,7 +40,7 @@ class UserProfileController extends GetxController {
   void onInit() async {
     _apiClient = ApiClient();
     await getDetailsInfo();
-    addressFirstLineCTL.text = proInfo.value.addressFirstLine.toString();
+    addressFirstLineCTL.text = proInfo.value.addressFirstLine ?? '';
     super.onInit();
   }
 
@@ -206,6 +207,9 @@ class UserProfileController extends GetxController {
           bodyText: 'Profile update has Wrong. Please try again'.tr);
     }
   }
+
+  SubmitEdgeController submitEdgeController = Get.find<SubmitEdgeController>();
+
 
   /// done
   Future getDetailsInfo() async {

@@ -74,103 +74,107 @@ class ApiClient {
       );
     }
 
-    List<ConnectivityResult> connectivityResult =
-        await (Connectivity().checkConnectivity());
+    // List<ConnectivityResult> connectivityResult =
+    //     await (Connectivity().checkConnectivity());
 
-    if (connectivityResult[0] == ConnectivityResult.mobile ||
-        connectivityResult[0] == ConnectivityResult.wifi) {
-      try {
-        //  if (enableLoading) showLoader();
+    // if (connectivityResult[0] == ConnectivityResult.mobile ||
+    //     connectivityResult[0] == ConnectivityResult.wifi) {
+    try {
+      //  if (enableLoading) showLoader();
 
-        if (apiType == 'GET') {
-          print('ApiClient.connection ??? GET ');
+      if (apiType == 'GET') {
+        print('ApiClient.connection ??? GET ');
 
-          response = await _dio.get(
-            url,
-            options: dio.Options(headers: header),
-          );
-          print('ApiClient.connection Header $customheader');
-          print('ApiClient.connection Make ${jsonEncode(REQUEST_DATA)}');
-          print('ApiClient.connection ${response.statusCode}');
-          //  print('ApiClient.connection >>>>> ${response.data}');
-          print('url : $url');
-        } else {
-          print('url : $url');
-          print('ApiClient.connection POST ');
-
-          response = await _dio.post(
-            url,
-            data: REQUEST_DATA, // formData,
-
-            options: dio.Options(headers: header),
-          );
-        }
-
-        print('ApiClient.connection ???? $url');
-        print('ApiClient.connection code ???? ${response.statusCode}');
-        print('ApiClient.connection data ???? ${response.data}');
-
-        //  if (enableLoading) loaderDismiss();
-      } on DioException catch (e) {
-        //  if (enableLoading) loaderDismiss();
-        String errorMessage = '';
-        debugPrint(e.toString());
-        if (e.type == DioExceptionType.connectionTimeout) {
-          errorMessage = e.message ?? 'Connection timeout';
-        }
-        if (e.type == DioExceptionType.sendTimeout) {
-          errorMessage = e.message ?? 'Send timeout';
-        }
-        if (e.type == DioExceptionType.receiveTimeout) {
-          errorMessage = e.message ?? 'Receive timeout';
-        }
-        if (e.type == DioExceptionType.badCertificate) {
-          errorMessage = e.message ?? 'Bad certificate';
-        }
-        if (e.type == DioExceptionType.badResponse) {
-          errorMessage = e.message ?? 'Bad response';
-        }
-        if (e.type == DioExceptionType.cancel) {
-          errorMessage = e.message ?? 'Your request is cancled';
-        }
-        if (e.type == DioExceptionType.connectionError) {
-          errorMessage = e.message ?? 'Connection error';
-        }
-        if (e.type == DioExceptionType.unknown) {
-          errorMessage = e.message ?? 'Unknown error';
-        }
-        debugPrint(errorMessage);
-        //    errorSnack(errorMessage);
-        return null;
-      } on SocketException catch (e) {
-        // if (enableLoading) loaderDismiss();
-        String errorMessage = e.message;
-        debugPrint(errorMessage);
-        // errorSnack(errorMessage);
-        return null;
-      } catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = e.toString();
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-        return null;
-      }
-      final Map<String, dynamic> mapdata = response.data;
-      if (response.statusCode == 200) {
-        return response;
+        response = await _dio.get(
+          url,
+          options: dio.Options(headers: header),
+        );
+        print('ApiClient.connection Header $customheader');
+        print('ApiClient.connection Make ${jsonEncode(REQUEST_DATA)}');
+        print('ApiClient.connection ${response.statusCode}');
+        //  print('ApiClient.connection >>>>> ${response.data}');
+        print('url : $url');
       } else {
-        //Error Response (error provided by REST API)
-        if (errorMessage != null) {
-          //Showing errror provided by error message
-          //  errorSnack(errorMessage);
-        } else {
-          //    errorSnack(mapdata['response']['message']);
-        }
-        return null;
+        print('url : $url');
+        print('ApiClient.connection POST ');
+
+        response = await _dio.post(
+          url,
+          data: REQUEST_DATA, // formData,
+
+          options: dio.Options(headers: header),
+        );
       }
-    } else {
-      //alertSnack('Sorry, You are not connected with mobile/wifi network');
+
+      print('ApiClient.connection ???? $url');
+      print('ApiClient.connection code ???? ${response.statusCode}');
+      print('ApiClient.connection data ???? ${response.data}');
+
+      //  if (enableLoading) loaderDismiss();
+    } on DioException catch (e) {
+      //  if (enableLoading) loaderDismiss();
+      String errorMessage = '';
+
+      debugPrint(e.toString());
+      if (e.type == DioExceptionType.connectionTimeout) {
+        errorMessage = e.message ?? 'Connection timeout';
+      }
+      if (e.type == DioExceptionType.sendTimeout) {
+        errorMessage = e.message ?? 'Send timeout';
+      }
+      if (e.type == DioExceptionType.receiveTimeout) {
+        errorMessage = e.message ?? 'Receive timeout';
+      }
+      if (e.type == DioExceptionType.badCertificate) {
+        errorMessage = e.message ?? 'Bad certificate';
+      }
+      if (e.type == DioExceptionType.badResponse) {
+        errorMessage = e.message ?? 'Bad response';
+      }
+      if (e.type == DioExceptionType.cancel) {
+        errorMessage = e.message ?? 'Your request is cancled';
+      }
+      if (e.type == DioExceptionType.connectionError) {
+        errorMessage = e.message ?? 'Connection error';
+      }
+      if (e.type == DioExceptionType.unknown) {
+        errorMessage = e.message ?? 'Unknown error';
+      }
+      if (e.response != null) {
+        errorMessage = showSnackBar(e.response!.data)!;
+      }
+      debugPrint(errorMessage);
+      errorSnack(errorMessage);
+      return null;
+    } on SocketException catch (e) {
+      // if (enableLoading) loaderDismiss();
+      String errorMessage = e.message;
+      debugPrint(errorMessage);
+      // errorSnack(errorMessage);
+      return null;
+    } catch (e) {
+      if (enableLoading) loaderDismiss();
+      String errorMessage = e.toString();
+      debugPrint(errorMessage);
+      errorSnack(errorMessage);
+      return null;
     }
+    final Map<String, dynamic> mapdata = response.data;
+    if (response.statusCode == 200) {
+      return response;
+    } else {
+      //Error Response (error provided by REST API)
+      if (errorMessage != null) {
+        //Showing errror provided by error message
+        //  errorSnack(errorMessage);
+      } else {
+        //    errorSnack(mapdata['response']['message']);
+      }
+      return null;
+    }
+    // } else {
+    //    alertSnack('Sorry, You are not connected with mobile/wifi network');
+    // }
     return null;
   }
 
@@ -226,118 +230,122 @@ class ApiClient {
       );
     }
 
-    List<ConnectivityResult> connectivityResult =
-        await (Connectivity().checkConnectivity());
+    // List<ConnectivityResult> connectivityResult =
+    //     await (Connectivity().checkConnectivity());
 
-    if (connectivityResult[0] == ConnectivityResult.mobile ||
-        connectivityResult[0] == ConnectivityResult.wifi) {
-      try {
-        if (enableLoading) showLoader();
+    // if (connectivityResult[0] == ConnectivityResult.mobile ||
+    //     connectivityResult[0] == ConnectivityResult.wifi) {
+    try {
+      if (enableLoading) showLoader();
 
-        if (apiType == 'GET') {
-          print('ApiClient.connection ??? GET ');
+      if (apiType == 'GET') {
+        print('ApiClient.connection ??? GET ');
 
-          response = await _dio.get(
-            url,
-            options: dio.Options(headers: header),
-          );
+        response = await _dio.get(
+          url,
+          options: dio.Options(headers: header),
+        );
 
-          print('ApiClient.connection ${response.statusCode}');
-          // print('ApiClient.connection >>>>> ${response.data}');
-        } else if (apiType == 'DELETE') {
-          print('ApiClient.connection DELETE ');
-          response = await _dio.delete(
-            url,
-            // data: REQUEST_DATA, // formData,
-            options: dio.Options(headers: header),
-          );
-        } else if (apiType == 'PUT') {
-          print('ApiClient.connection DELETE ');
-          response = await _dio.put(
-            url,
-            data: REQUEST_DATA, // formData,
-            options: dio.Options(headers: header),
-          );
-        } else {
-          print('ApiClient.connection POST ');
-          response = await _dio.post(
-            url,
-            data: REQUEST_DATA, // formData,
-
-            options: dio.Options(headers: header),
-          );
-        }
-
-        log(response.statusCode.toString());
-        log(response.data.toString());
-
-        print('ApiClient.connection ???? $url');
-
-        if (enableLoading) loaderDismiss();
-      } on DioException catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = '';
-        debugPrint(e.toString());
-        if (e.type == DioExceptionType.connectionTimeout) {
-          errorMessage = e.message ?? 'Connection timeout';
-        }
-        if (e.type == DioExceptionType.sendTimeout) {
-          errorMessage = e.message ?? 'Send timeout';
-        }
-        if (e.type == DioExceptionType.receiveTimeout) {
-          errorMessage = e.message ?? 'Receive timeout';
-        }
-        if (e.type == DioExceptionType.badCertificate) {
-          errorMessage = e.message ?? 'Bad certificate';
-        }
-        if (e.type == DioExceptionType.badResponse) {
-          errorMessage = e.response!.statusMessage.toString() ?? 'Bad response';
-        }
-        if (e.type == DioExceptionType.cancel) {
-          errorMessage = e.message ?? 'Your request is cancel';
-        }
-        if (e.type == DioExceptionType.connectionError) {
-          errorMessage = e.message ?? 'Connection error';
-        }
-        if (e.type == DioExceptionType.unknown) {
-          errorMessage = e.message ?? 'Unknown error';
-        }
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-
-        return null;
-      } on SocketException catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = e.message;
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-        return null;
-      } catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = e.toString();
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-        return null;
-      }
-      print('res status code :: ${response.statusCode.toString()}');
-      // print('res status data :: ${response.data.toString()}');
-      final Map<String, dynamic> mapdata = response.data;
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return response;
+        print('ApiClient.connection ${response.statusCode}');
+        // print('ApiClient.connection >>>>> ${response.data}');
+      } else if (apiType == 'DELETE') {
+        print('ApiClient.connection DELETE ');
+        response = await _dio.delete(
+          url,
+          // data: REQUEST_DATA, // formData,
+          options: dio.Options(headers: header),
+        );
+      } else if (apiType == 'PUT') {
+        print('ApiClient.connection DELETE ');
+        response = await _dio.put(
+          url,
+          data: REQUEST_DATA, // formData,
+          options: dio.Options(headers: header),
+        );
       } else {
-        //Error Response (error provided by REST API)
-        if (errorMessage != null) {
-          //Showing errror provided by error message
-          //   errorSnack(errorMessage);
-        } else {
-          //errorSnack(mapdata['response']['message']);
-        }
-        return response;
+        print('ApiClient.connection POST ');
+        response = await _dio.post(
+          url,
+          data: REQUEST_DATA, // formData,
+
+          options: dio.Options(headers: header),
+        );
       }
-    } else {
-      alertSnack('Sorry, You are not connected with mobile-wifi network');
+
+      log(response.statusCode.toString());
+      log(response.data.toString());
+
+      print('ApiClient.connection ???? $url');
+
+      if (enableLoading) loaderDismiss();
+    } on DioException catch (e) {
+      String errorMessage = '';
+
+      if (enableLoading) loaderDismiss();
+      debugPrint(e.toString());
+      if (e.type == DioExceptionType.connectionTimeout) {
+        errorMessage = e.message ?? 'Connection timeout';
+      }
+      if (e.type == DioExceptionType.sendTimeout) {
+        errorMessage = e.message ?? 'Send timeout';
+      }
+      if (e.type == DioExceptionType.receiveTimeout) {
+        errorMessage = e.message ?? 'Receive timeout';
+      }
+      if (e.type == DioExceptionType.badCertificate) {
+        errorMessage = e.message ?? 'Bad certificate';
+      }
+      if (e.type == DioExceptionType.badResponse) {
+        errorMessage = e.response!.statusMessage.toString() ?? 'Bad response';
+      }
+      if (e.type == DioExceptionType.cancel) {
+        errorMessage = e.message ?? 'Your request is cancel';
+      }
+      if (e.type == DioExceptionType.connectionError) {
+        errorMessage = e.message ?? 'Connection error';
+      }
+      if (e.type == DioExceptionType.unknown) {
+        errorMessage = e.message ?? 'Unknown error';
+      }
+      debugPrint(errorMessage);
+      if (e.response != null) {
+        errorMessage = showSnackBar(e.response!.data)!;
+      }
+      errorSnack(errorMessage);
+
+      return null;
+    } on SocketException catch (e) {
+      if (enableLoading) loaderDismiss();
+      String errorMessage = e.message;
+      debugPrint(errorMessage);
+      errorSnack(errorMessage);
+      return null;
+    } catch (e) {
+      if (enableLoading) loaderDismiss();
+      String errorMessage = e.toString();
+      debugPrint(errorMessage);
+      errorSnack(errorMessage);
+      return null;
     }
+    print('res status code :: ${response.statusCode.toString()}');
+    // print('res status data :: ${response.data.toString()}');
+    final Map<String, dynamic> mapdata = response.data;
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response;
+    } else {
+      //Error Response (error provided by REST API)
+      if (errorMessage != null) {
+        //Showing errror provided by error message
+        //   errorSnack(errorMessage);
+      } else {
+        //errorSnack(mapdata['response']['message']);
+      }
+      return response;
+    }
+    // } else {
+    //   alertSnack('Sorry, You are not connected with mobile-wifi network');
+    // }
     return response;
   }
 
@@ -389,117 +397,121 @@ class ApiClient {
       );
     }
 
-    List<ConnectivityResult> connectivityResult =
-        await (Connectivity().checkConnectivity());
+    // List<ConnectivityResult> connectivityResult =
+    //     await (Connectivity().checkConnectivity());
 
-    if (connectivityResult[0] == ConnectivityResult.mobile ||
-        connectivityResult[0] == ConnectivityResult.wifi) {
-      try {
-        if (enableLoading) showLoader();
+    // if (connectivityResult[0] == ConnectivityResult.mobile ||
+    //     connectivityResult[0] == ConnectivityResult.wifi) {
+    try {
+      if (enableLoading) showLoader();
 
-        if (apiType == 'GET') {
-          print('ApiClient.connection ??? GET ');
+      if (apiType == 'GET') {
+        print('ApiClient.connection ??? GET ');
 
-          response = await _dio.get(
-            url,
-            options: dio.Options(headers: header),
-          );
+        response = await _dio.get(
+          url,
+          options: dio.Options(headers: header),
+        );
 
-          print('ApiClient.connection ${response.statusCode}');
-          // print('ApiClient.connection >>>>> ${response.data}');
-        } else if (apiType == 'DELETE') {
-          print('ApiClient.connection DELETE ');
-          response = await _dio.delete(
-            url,
-            // data: REQUEST_DATA, // formData,
-            options: dio.Options(headers: header),
-          );
-        } else if (apiType == 'PUT') {
-          print('ApiClient.connection DELETE ');
-          response = await _dio.put(
-            url,
-            data: REQUEST_DATA, // formData,
-            options: dio.Options(headers: header),
-          );
-        } else {
-          print('ApiClient.connection POST ');
-          response = await _dio.post(
-            url,
-            data: REQUEST_DATA, // formData,
-
-            options: dio.Options(headers: header),
-          );
-        }
-
-        print('ApiClient.connection ???? $url');
-
-        if (enableLoading) loaderDismiss();
-      } on DioException catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = '';
-        debugPrint(e.toString());
-        if (e.type == DioExceptionType.connectionTimeout) {
-          errorMessage = e.message ?? 'Connection timeout';
-        }
-        if (e.type == DioExceptionType.sendTimeout) {
-          errorMessage = e.message ?? 'Send timeout';
-        }
-        if (e.type == DioExceptionType.receiveTimeout) {
-          errorMessage = e.message ?? 'Receive timeout';
-        }
-        if (e.type == DioExceptionType.badCertificate) {
-          errorMessage = e.message ?? 'Bad certificate';
-        }
-        if (e.type == DioExceptionType.badResponse) {
-          final Map<String, dynamic> mapdata = e.response!.data;
-          errorMessage = mapdata['response']['message'];
-          // errorMessage = 'No Uploads found for the given work Id';
-        }
-        if (e.type == DioExceptionType.cancel) {
-          errorMessage = e.message ?? 'Your request is cancel';
-        }
-        if (e.type == DioExceptionType.connectionError) {
-          errorMessage = e.message ?? 'Connection error';
-        }
-        if (e.type == DioExceptionType.unknown) {
-          errorMessage = e.message ?? 'Unknown error';
-        }
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-
-        return null;
-      } on SocketException catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = e.message;
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-        return null;
-      } catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = e.toString();
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-        return null;
-      }
-      print('res status code :: ${response.statusCode.toString()}');
-      // print('res status data :: ${response.data.toString()}');
-      final Map<String, dynamic> mapdata = response.data;
-
-      if (response.statusCode == 200) {
-        return response;
+        print('ApiClient.connection ${response.statusCode}');
+        // print('ApiClient.connection >>>>> ${response.data}');
+      } else if (apiType == 'DELETE') {
+        print('ApiClient.connection DELETE ');
+        response = await _dio.delete(
+          url,
+          // data: REQUEST_DATA, // formData,
+          options: dio.Options(headers: header),
+        );
+      } else if (apiType == 'PUT') {
+        print('ApiClient.connection DELETE ');
+        response = await _dio.put(
+          url,
+          data: REQUEST_DATA, // formData,
+          options: dio.Options(headers: header),
+        );
       } else {
-        //Error Response (error provided by REST API)
-        if (errorMessage != null) {
-          //Showing errror provided by error message
-          //   errorSnack(errorMessage);
-        } else {
-          //errorSnack(mapdata['response']['message']);
-        }
-        return null;
+        print('ApiClient.connection POST ');
+        response = await _dio.post(
+          url,
+          data: REQUEST_DATA, // formData,
+
+          options: dio.Options(headers: header),
+        );
       }
-    } else {
-      alertSnack('Sorry, You are not connected with mobile-wifi network');
+
+      print('ApiClient.connection ???? $url');
+
+      if (enableLoading) loaderDismiss();
+    } on DioException catch (e) {
+      String errorMessage = '';
+
+      if (enableLoading) loaderDismiss();
+      debugPrint(e.toString());
+      if (e.type == DioExceptionType.connectionTimeout) {
+        errorMessage = e.message ?? 'Connection timeout';
+      }
+      if (e.type == DioExceptionType.sendTimeout) {
+        errorMessage = e.message ?? 'Send timeout';
+      }
+      if (e.type == DioExceptionType.receiveTimeout) {
+        errorMessage = e.message ?? 'Receive timeout';
+      }
+      if (e.type == DioExceptionType.badCertificate) {
+        errorMessage = e.message ?? 'Bad certificate';
+      }
+      if (e.type == DioExceptionType.badResponse) {
+        final Map<String, dynamic> mapdata = e.response!.data;
+        errorMessage = mapdata['response']['message'];
+        // errorMessage = 'No Uploads found for the given work Id';
+      }
+      if (e.type == DioExceptionType.cancel) {
+        errorMessage = e.message ?? 'Your request is cancel';
+      }
+      if (e.type == DioExceptionType.connectionError) {
+        errorMessage = e.message ?? 'Connection error';
+      }
+      if (e.type == DioExceptionType.unknown) {
+        errorMessage = e.message ?? 'Unknown error';
+      }
+      debugPrint(errorMessage);
+      if (e.response != null) {
+        errorMessage = showSnackBar(e.response!.data)!;
+      }
+      errorSnack(errorMessage);
+
+      return null;
+    } on SocketException catch (e) {
+      if (enableLoading) loaderDismiss();
+      String errorMessage = e.message;
+      debugPrint(errorMessage);
+      errorSnack(errorMessage);
+      return null;
+    } catch (e) {
+      if (enableLoading) loaderDismiss();
+      String errorMessage = e.toString();
+      debugPrint(errorMessage);
+      errorSnack(errorMessage);
+      return null;
     }
+    print('res status code :: ${response.statusCode.toString()}');
+    // print('res status data :: ${response.data.toString()}');
+    final Map<String, dynamic> mapdata = response.data;
+
+    if (response.statusCode == 200) {
+      return response;
+    } else {
+      //Error Response (error provided by REST API)
+      if (errorMessage != null) {
+        //Showing errror provided by error message
+        //   errorSnack(errorMessage);
+      } else {
+        //errorSnack(mapdata['response']['message']);
+      }
+      return null;
+    }
+    // } else {
+    //   alertSnack('Sorry, You are not connected with mobile-wifi network');
+    // }
     return null;
   }
 
@@ -536,86 +548,90 @@ class ApiClient {
           'Access-Control-Allow-Origin': '*',
         };
 
-    List<ConnectivityResult> connectivityResult =
-        await (Connectivity().checkConnectivity());
+    // List<ConnectivityResult> connectivityResult =
+    //     await (Connectivity().checkConnectivity());
 
-    if (connectivityResult[0] == ConnectivityResult.mobile ||
-        connectivityResult[0] == ConnectivityResult.wifi) {
-      try {
-        if (enableLoading) showLoader();
+    // if (connectivityResult[0] == ConnectivityResult.mobile ||
+    //     connectivityResult[0] == ConnectivityResult.wifi) {
+    try {
+      if (enableLoading) showLoader();
 
-        log('ApiClient.connection POST >>>>>>>>>>>> $url $REQUEST_DATA $header');
-        response = await _dio.post(
-          url,
-          data: REQUEST_DATA, // formData,
+      log('ApiClient.connection POST >>>>>>>>>>>> $url $REQUEST_DATA $header');
+      response = await _dio.post(
+        url,
+        data: REQUEST_DATA, // formData,
 
-          options: dio.Options(headers: header),
-        );
+        options: dio.Options(headers: header),
+      );
 
-        print('ApiClient.connection ???? $url');
+      print('ApiClient.connection ???? $url');
 
-        if (enableLoading) loaderDismiss();
-      } on DioException catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = '';
-        debugPrint(e.toString());
-        if (e.type == DioExceptionType.connectionTimeout) {
-          errorMessage = e.message ?? 'Connection timeout';
-        }
-        if (e.type == DioExceptionType.sendTimeout) {
-          errorMessage = e.message ?? 'Send timeout';
-        }
-        if (e.type == DioExceptionType.receiveTimeout) {
-          errorMessage = e.message ?? 'Receive timeout';
-        }
-        if (e.type == DioExceptionType.badCertificate) {
-          errorMessage = e.message ?? 'Bad certificate';
-        }
-        if (e.type == DioExceptionType.badResponse) {
-          // errorSnack('Credential Error. You are not authenticate user..');
-          errorMessage = 'Credential Error. You are not authenticate user..';
-        }
-        if (e.type == DioExceptionType.cancel) {
-          errorMessage = e.message ?? 'Your request is cancled';
-        }
-        if (e.type == DioExceptionType.connectionError) {
-          errorMessage = e.message ?? 'Connection error';
-        }
-        if (e.type == DioExceptionType.unknown) {
-          errorMessage = e.message ?? 'Unknown error';
-        }
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-        return null;
-      } on SocketException catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = e.message;
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-        return null;
-      } catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = e.toString();
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-        return null;
+      if (enableLoading) loaderDismiss();
+    } on DioException catch (e) {
+      String errorMessage = '';
+
+      if (enableLoading) loaderDismiss();
+      debugPrint(e.toString());
+      if (e.type == DioExceptionType.connectionTimeout) {
+        errorMessage = e.message ?? 'Connection timeout';
       }
-      final Map<String, dynamic> mapdata = response.data;
-      if (response.statusCode == 200) {
-        return response;
-      } else {
-        //Error Response (error provided by REST API)
-        if (errorMessage != null) {
-          //Showing errror provided by error message
-          errorSnack(errorMessage);
-        } else {
-          errorSnack(mapdata['message']);
-        }
-        return null;
+      if (e.type == DioExceptionType.sendTimeout) {
+        errorMessage = e.message ?? 'Send timeout';
       }
-    } else {
-      alertSnack('Sorry, You are not connected with mobile/wifi network');
+      if (e.type == DioExceptionType.receiveTimeout) {
+        errorMessage = e.message ?? 'Receive timeout';
+      }
+      if (e.type == DioExceptionType.badCertificate) {
+        errorMessage = e.message ?? 'Bad certificate';
+      }
+      if (e.type == DioExceptionType.badResponse) {
+        // errorSnack('Credential Error. You are not authenticate user..');
+        errorMessage = 'Credential Error. You are not authenticate user..';
+      }
+      if (e.type == DioExceptionType.cancel) {
+        errorMessage = e.message ?? 'Your request is cancled';
+      }
+      if (e.type == DioExceptionType.connectionError) {
+        errorMessage = e.message ?? 'Connection error';
+      }
+      if (e.type == DioExceptionType.unknown) {
+        errorMessage = e.message ?? 'Unknown error';
+      }
+      debugPrint(errorMessage);
+      if (e.response != null) {
+        errorMessage = showSnackBar(e.response!.data)!;
+      }
+      errorSnack(errorMessage);
+      return null;
+    } on SocketException catch (e) {
+      if (enableLoading) loaderDismiss();
+      String errorMessage = e.message;
+      debugPrint(errorMessage);
+      errorSnack(errorMessage);
+      return null;
+    } catch (e) {
+      if (enableLoading) loaderDismiss();
+      String errorMessage = e.toString();
+      debugPrint(errorMessage);
+      errorSnack(errorMessage);
+      return null;
     }
+    final Map<String, dynamic> mapdata = response.data;
+    if (response.statusCode == 200) {
+      return response;
+    } else {
+      //Error Response (error provided by REST API)
+      if (errorMessage != null) {
+        //Showing errror provided by error message
+        errorSnack(errorMessage);
+      } else {
+        errorSnack(mapdata['message']);
+      }
+      return null;
+    }
+    // } else {
+    //   alertSnack('Sorry, You are not connected with mobile/wifi network');
+    // }
     return null;
   }
 
@@ -642,84 +658,104 @@ class ApiClient {
       url = apiUrl;
     }
 
-    List<ConnectivityResult> connectivityResult =
-        await (Connectivity().checkConnectivity());
+    // List<ConnectivityResult> connectivityResult =
+    //     await (Connectivity().checkConnectivity());
 
-    if (connectivityResult[0] == ConnectivityResult.mobile ||
-        connectivityResult[0] == ConnectivityResult.wifi) {
-      try {
-        Map<String, dynamic> headToken = {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $tokenValue'
-        };
+    // if (connectivityResult[0] == ConnectivityResult.mobile ||
+    //     connectivityResult[0] == ConnectivityResult.wifi) {
+    try {
+      Map<String, dynamic> headToken = {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $tokenValue'
+      };
 
-        if (enableLoading) showLoader();
+      if (enableLoading) showLoader();
 
-        print('ApiClient.connection POST >>>>>>>>>>>> ');
-        FormData formData = FormData.fromMap({
-          "image": await MultipartFile.fromFile(profileImagePath),
-        });
+      print('ApiClient.connection POST >>>>>>>>>>>> ');
+      FormData formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(profileImagePath),
+      });
 
-        var res = await _dio.post(
-          url,
-          data: formData,
-          options: dio.Options(headers: headToken),
-        );
-        print('res :${res.statusCode}');
-        print('res :${res.statusMessage}');
-        print('res :${res.data}');
+      var res = await _dio.post(
+        url,
+        data: formData,
+        options: dio.Options(headers: headToken),
+      );
+      print('res :${res.statusCode}');
+      print('res :${res.statusMessage}');
+      print('res :${res.data}');
 
-        print('ApiClient.connection ???? $url');
+      print('ApiClient.connection ???? $url');
 
-        if (enableLoading) loaderDismiss();
-      } on DioException catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = '';
-        debugPrint(e.toString());
-        if (e.type == DioExceptionType.connectionTimeout) {
-          errorMessage = e.message ?? 'Connection timeout';
-        }
-        if (e.type == DioExceptionType.sendTimeout) {
-          errorMessage = e.message ?? 'Send timeout';
-        }
-        if (e.type == DioExceptionType.receiveTimeout) {
-          errorMessage = e.message ?? 'Receive timeout';
-        }
-        if (e.type == DioExceptionType.badCertificate) {
-          errorMessage = e.message ?? 'Bad certificate';
-        }
-        if (e.type == DioExceptionType.badResponse) {
-          errorSnack('Credential Error. You are not authenticate user..');
-          errorMessage = '';
-        }
-        if (e.type == DioExceptionType.cancel) {
-          errorMessage = e.message ?? 'Your request is cancled';
-        }
-        if (e.type == DioExceptionType.connectionError) {
-          errorMessage = e.message ?? 'Connection error';
-        }
-        if (e.type == DioExceptionType.unknown) {
-          errorMessage = e.message ?? 'Unknown error';
-        }
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-        return null;
-      } on SocketException catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = e.message;
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-        return null;
-      } catch (e) {
-        if (enableLoading) loaderDismiss();
-        String errorMessage = e.toString();
-        debugPrint(errorMessage);
-        errorSnack(errorMessage);
-        return null;
+      if (enableLoading) loaderDismiss();
+    } on DioException catch (e) {
+      String errorMessage = '';
+
+      if (enableLoading) loaderDismiss();
+      debugPrint(e.toString());
+      if (e.type == DioExceptionType.connectionTimeout) {
+        errorMessage = e.message ?? 'Connection timeout';
       }
-    } else {
-      alertSnack('Sorry, You are not connected with mobile/wifi network');
+      if (e.type == DioExceptionType.sendTimeout) {
+        errorMessage = e.message ?? 'Send timeout';
+      }
+      if (e.type == DioExceptionType.receiveTimeout) {
+        errorMessage = e.message ?? 'Receive timeout';
+      }
+      if (e.type == DioExceptionType.badCertificate) {
+        errorMessage = e.message ?? 'Bad certificate';
+      }
+      if (e.type == DioExceptionType.badResponse) {
+        errorSnack('Credential Error. You are not authenticate user..');
+        errorMessage = '';
+      }
+      if (e.type == DioExceptionType.cancel) {
+        errorMessage = e.message ?? 'Your request is cancled';
+      }
+      if (e.type == DioExceptionType.connectionError) {
+        errorMessage = e.message ?? 'Connection error';
+      }
+      if (e.type == DioExceptionType.unknown) {
+        errorMessage = e.message ?? 'Unknown error';
+      }
+      if (e.response != null) {
+        errorMessage = showSnackBar(e.response!.data)!;
+      }
+      debugPrint(errorMessage);
+      errorSnack(errorMessage);
+      return null;
+    } on SocketException catch (e) {
+      if (enableLoading) loaderDismiss();
+      String errorMessage = e.message;
+      debugPrint(errorMessage);
+      errorSnack(errorMessage);
+      return null;
+    } catch (e) {
+      if (enableLoading) loaderDismiss();
+      String errorMessage = e.toString();
+      debugPrint(errorMessage);
+      errorSnack(errorMessage);
+      return null;
     }
+    // } else {
+    //   alertSnack('Sorry, You are not connected with mobile/wifi network');
+    // }
     return null;
+  }
+
+  String? showSnackBar(dynamic response) {
+    log('Show Response');
+    log(response.toString());
+    List<String> errors = [];
+
+    response['errors'].forEach((key, value) {
+      errors.add(value[0]);
+    });
+
+    if (errors.isNotEmpty) {
+      return errors[0];
+    } else {
+      return null;
+    }
   }
 }

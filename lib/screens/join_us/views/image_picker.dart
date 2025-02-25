@@ -22,6 +22,7 @@ class CVPicker extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                         color: Colors.white,
+                        border: Border.all(),
                         borderRadius: BorderRadius.circular(10)),
                     child: Column(children: [
                       const Icon(Icons.file_open_outlined, size: 60),
@@ -36,6 +37,7 @@ class CVPicker extends StatelessWidget {
                       child: Container(
                           decoration: BoxDecoration(
                               color: Colors.grey.shade300,
+                              border: Border.all(),
                               borderRadius: BorderRadius.circular(10)),
                           margin: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 2),

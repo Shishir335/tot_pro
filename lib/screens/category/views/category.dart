@@ -31,6 +31,7 @@ class CategoryView extends StatelessWidget {
                         SubmitEdgeController submitEdgeController =
                             Get.put(SubmitEdgeController());
 
+                        submitEdgeController.selectedCategories.clear();
                         submitEdgeController.changeSelectedCategory([data]);
                         Get.toNamed(Routes.HOME);
                       },

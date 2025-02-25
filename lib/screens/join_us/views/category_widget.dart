@@ -33,9 +33,12 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   Widget build(BuildContext context) {
     return GetBuilder<CategoryController>(builder: (controller) {
       return Container(
-        padding: const EdgeInsets.all(10),
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: Colors.white),
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

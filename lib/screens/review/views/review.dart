@@ -10,7 +10,9 @@ import 'package:tot_pro/screens/review/controllers/review_controller.dart';
 import 'package:tot_pro/components/floating_button.dart';
 
 class ReviewView extends GetView<ReviewController> {
-  const ReviewView({super.key});
+  ReviewView({super.key});
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -24,64 +26,82 @@ class ReviewView extends GetView<ReviewController> {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: SingleChildScrollView(
-                  child: Column(children: [
-                    CustomTextFormField(
-                        title: context.tr('Name'),
-                        controller: controller.name,
-                        textInputType: TextInputType.text,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.tr('Please enter your name');
-                          }
-                          return null;
-                        }),
-                    CustomTextFormField(
-                        title: context.tr('Email'),
-                        controller: controller.email,
-                        textInputType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.tr('Please enter your email');
-                          }
-                          return null;
-                        }),
-                    CustomTextFormField(
-                        title: context.tr('Phone'),
-                        controller: controller.phone,
-                        textInputType: TextInputType.phone,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.tr('Please enter your phone');
-                          }
-                          return null;
-                        }),
-                    CustomTextFormField(
-                        title: context.tr('Review'),
-                        controller: controller.review,
-                        textInputType: TextInputType.text,
-                        maxLines: 5,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.tr('Please enter your review');
-                          }
-                          return null;
-                        }),
-                    AppSpace.spaceH20,
-                    Row(children: [
-                      CustomInputHeader(header: context.tr('Rate Us: ')),
-                      for (int i = 0; i < 5; i++)
-                        InkWell(
-                            onTap: () {
-                              controller.changeStar(i);
-                            },
-                            child: Icon(Icons.star_rounded,
-                                color: i < controller.stars
-                                    ? Colors.amber
-                                    : Colors.grey,
-                                size: 40))
-                    ]),
-                    const SizedBox(height: 100)
-                  ]),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Form(
+                          key: formKey,
+                          child: Column(children: [
+                            CustomTextFormField(
+                                title: context.tr('Name'),
+                                controller: controller.name,
+                                textInputType: TextInputType.text,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context.tr('Please enter your name');
+                                  }
+                                  return null;
+                                }),
+                            CustomTextFormField(
+                                title: context.tr('Email'),
+                                controller: controller.email,
+                                textInputType: TextInputType.emailAddress,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context
+                                        .tr('Please enter your email');
+                                  }
+                                  return null;
+                                }),
+                            CustomTextFormField(
+                                title: context.tr('Phone'),
+                                controller: controller.phone,
+                                textInputType: TextInputType.phone,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context
+                                        .tr('Please enter your phone');
+                                  }
+                                  return null;
+                                }),
+                            CustomTextFormField(
+                                title: context.tr('Review'),
+                                controller: controller.review,
+                                textInputType: TextInputType.text,
+                                maxLines: 5,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context
+                                        .tr('Please enter your review');
+                                  }
+                                  return null;
+                                }),
+                            AppSpace.spaceH20,
+                            Row(children: [
+                              CustomInputHeader(
+                                  header: context.tr('Rate Us: ')),
+                              for (int i = 0; i < 5; i++)
+                                InkWell(
+                                    onTap: () {
+                                      controller.changeStar(i);
+                                    },
+                                    child: Icon(Icons.star_rounded,
+                                        color: i < controller.stars
+                                            ? Colors.amber
+                                            : Colors.grey,
+                                        size: 40))
+                            ]),
+                            const SizedBox(height: 20)
+                          ]),
+                        ),
+                      ),
+                      const SizedBox(height: 40)
+                    ],
+                  ),
                 ),
               )),
           floatingActionButtonLocation:
@@ -89,7 +109,9 @@ class ReviewView extends GetView<ReviewController> {
           floatingActionButton: FloatingButton(
               title: 'SUBMIT',
               onTap: () {
-                controller.submitReview();
+                if (formKey.currentState!.validate()) {
+                  controller.submitReview();
+                }
               })),
       if (controller.isLoading) showLoader(msg: context.tr('Please wait'))
     ]);

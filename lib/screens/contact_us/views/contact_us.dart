@@ -8,7 +8,9 @@ import 'package:tot_pro/components/app_bar.dart';
 import 'package:tot_pro/components/floating_button.dart';
 
 class ContactUsView extends GetView<ContactUsController> {
-  const ContactUsView({super.key});
+  ContactUsView({super.key});
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,50 +24,68 @@ class ContactUsView extends GetView<ContactUsController> {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: SingleChildScrollView(
-                  child: Column(children: [
-                    CustomTextFormField(
-                        title: context.tr('First name'),
-                        controller: controller.firstName,
-                        textInputType: TextInputType.text,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.tr('Please enter your first name');
-                          }
-                          return null;
-                        }),
-                    CustomTextFormField(
-                        title: context.tr('Last name'),
-                        controller: controller.lastName,
-                        textInputType: TextInputType.phone,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.tr('Please enter your last name');
-                          }
-                          return null;
-                        }),
-                    CustomTextFormField(
-                        title: context.tr('Email'),
-                        controller: controller.email,
-                        textInputType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.tr('Please enter your email');
-                          }
-                          return null;
-                        }),
-                    CustomTextFormField(
-                        title: context.tr('Message'),
-                        controller: controller.message,
-                        textInputType: TextInputType.text,
-                        maxLines: 5,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return context.tr('Please enter your review');
-                          }
-                          return null;
-                        }),
-                    const SizedBox(height: 100)
-                  ]),
+                  child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Column(children: [
+                            CustomTextFormField(
+                                title: context.tr('First name'),
+                                controller: controller.firstName,
+                                textInputType: TextInputType.text,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context
+                                        .tr('Please enter your first name');
+                                  }
+                                  return null;
+                                }),
+                            CustomTextFormField(
+                                title: context.tr('Last name'),
+                                controller: controller.lastName,
+                                textInputType: TextInputType.phone,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context
+                                        .tr('Please enter your last name');
+                                  }
+                                  return null;
+                                }),
+                            CustomTextFormField(
+                                title: context.tr('Email'),
+                                controller: controller.email,
+                                textInputType: TextInputType.emailAddress,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context
+                                        .tr('Please enter your email');
+                                  }
+                                  return null;
+                                }),
+                            CustomTextFormField(
+                                title: context.tr('Message'),
+                                controller: controller.message,
+                                textInputType: TextInputType.text,
+                                maxLines: 5,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return context
+                                        .tr('Please enter your review');
+                                  }
+                                  return null;
+                                }),
+                            const SizedBox(height: 20)
+                          ]),
+                        ),
+                        const SizedBox(height: 40)
+                      ],
+                    ),
+                  ),
                 ),
               )),
           floatingActionButtonLocation:
@@ -73,7 +93,9 @@ class ContactUsView extends GetView<ContactUsController> {
           floatingActionButton: FloatingButton(
               title: context.tr('SUBMIT'),
               onTap: () {
-                controller.contactUs();
+                if (formKey.currentState!.validate()) {
+                  controller.contactUs();
+                }
               })),
       if (controller.isLoading) showLoader(msg: context.tr('Please wait'))
     ]);

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -47,44 +49,47 @@ class SettingsView extends GetView<SettingsController> {
         physics: const ScrollPhysics(),
         child: Column(
           children: [
-            AppSpace.spaceH8,
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), color: Colors.white),
-              child: Padding(
+            if (Platform.isAndroid) AppSpace.spaceH8,
+            if (Platform.isAndroid)
+              Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                child: Form(
-                    key: controller.changePasswordFormKey,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomInputHeader(
-                                  header: context.tr('Is Face ID use?')),
-                              SizedBox(
-                                height: 10,
-                                child: CupertinoSwitch(
-                                  activeColor: Colors.teal,
-                                  value: controller.isFaceId,
-                                  onChanged: (value) {
-                                    controller.changeFaceIdUse(value);
-                                  },
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 10.0, vertical: 5.0),
+                  child: Form(
+                      key: controller.changePasswordFormKey,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomInputHeader(
+                                    header: context.tr('Is Face ID use?')),
+                                SizedBox(
+                                  height: 10,
+                                  child: CupertinoSwitch(
+                                    activeColor: Colors.teal,
+                                    value: controller.isFaceId,
+                                    onChanged: (value) {
+                                      controller.changeFaceIdUse(value);
+                                    },
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )),
+                ),
               ),
-            ),
             AppSpace.spaceH20,
             Container(
               padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),

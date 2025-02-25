@@ -89,9 +89,6 @@ class RegisterView extends GetView<RegisterController> {
                               controller: controller.mobileCTL,
                               textInputType: TextInputType.number),
                           AppSpace.spaceH10,
-                          CustomInputHeader(
-                              header: context.tr('Address First Line')),
-                          AppSpace.spaceH6,
 
                           ///------------ finder Address ------
 
@@ -167,71 +164,74 @@ class RegisterView extends GetView<RegisterController> {
                           //     );
                           //   },
                           // ),
-                          CustomTextFormField(
-                            controller: controller.addressLineOneController,
-                            textInputType: TextInputType.text,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return AppStrings.emptyInputFieldMsg;
-                              }
-                              return null;
-                            },
-                          ),
-                          AppSpace.spaceH10,
+                          // CustomInputHeader(
+                          //     header: context.tr('Address First Line')),
+                          // AppSpace.spaceH6,
+                          // CustomTextFormField(
+                          //   controller: controller.addressLineOneController,
+                          //   textInputType: TextInputType.text,
+                          //   validator: (value) {
+                          //     // if (value == null || value.isEmpty) {
+                          //     //   return AppStrings.emptyInputFieldMsg;
+                          //     // }
+                          //     return null;
+                          //   },
+                          // ),
+                          // AppSpace.spaceH10,
 
-                          ///--------- End -------------
+                          // ///--------- End -------------
 
-                          CustomInputHeader(
-                              header: context.tr('Address Second Line')),
-                          AppSpace.spaceH6,
-                          CustomTextFormField(
-                            controller: controller.addressLineTwoController,
-                            textInputType: TextInputType.text,
-                            validator: (value) {
-                              /* if (value == null || value.isEmpty) {
-                                return AppStrings.emptyInputFieldMsg;
-                              }*/
-                              return null;
-                            },
-                          ),
-                          AppSpace.spaceH10,
-                          CustomInputHeader(
-                              header: context.tr('Address Third Line')),
-                          AppSpace.spaceH6,
-                          CustomTextFormField(
-                            controller: controller.addressLineThreeController,
-                            textInputType: TextInputType.text,
-                            validator: (value) {
-                              /* if (value == null || value.isEmpty) {
-                                return AppStrings.emptyInputFieldMsg;
-                              }*/
-                              return null;
-                            },
-                          ),
-                          AppSpace.spaceH10,
-                          CustomInputHeader(header: context.tr('Town')),
-                          AppSpace.spaceH6,
-                          CustomTextFormField(
-                            controller: controller.countryTextController,
-                            textInputType: TextInputType.text,
-                            validator: (value) {
-                              /* if (value == null || value.isEmpty) {
-                                return AppStrings.emptyInputFieldMsg;
-                              }*/
-                              return null;
-                            },
-                          ),
-                          AppSpace.spaceH10,
-                          CustomInputHeader(header: context.tr('Postcode')),
-                          AppSpace.spaceH6,
-                          CustomTextFormField(
-                            controller: controller.postcodeTextController,
-                            textInputType: TextInputType.text,
-                            validator: (value) {
-                              return null;
-                            },
-                          ),
-                          AppSpace.spaceH10,
+                          // CustomInputHeader(
+                          //     header: context.tr('Address Second Line')),
+                          // AppSpace.spaceH6,
+                          // CustomTextFormField(
+                          //   controller: controller.addressLineTwoController,
+                          //   textInputType: TextInputType.text,
+                          //   validator: (value) {
+                          //     /* if (value == null || value.isEmpty) {
+                          //       return AppStrings.emptyInputFieldMsg;
+                          //     }*/
+                          //     return null;
+                          //   },
+                          // ),
+                          // AppSpace.spaceH10,
+                          // CustomInputHeader(
+                          //     header: context.tr('Address Third Line')),
+                          // AppSpace.spaceH6,
+                          // CustomTextFormField(
+                          //   controller: controller.addressLineThreeController,
+                          //   textInputType: TextInputType.text,
+                          //   validator: (value) {
+                          //     /* if (value == null || value.isEmpty) {
+                          //       return AppStrings.emptyInputFieldMsg;
+                          //     }*/
+                          //     return null;
+                          //   },
+                          // ),
+                          // AppSpace.spaceH10,
+                          // CustomInputHeader(header: context.tr('Town')),
+                          // AppSpace.spaceH6,
+                          // CustomTextFormField(
+                          //   controller: controller.countryTextController,
+                          //   textInputType: TextInputType.text,
+                          //   validator: (value) {
+                          //     /* if (value == null || value.isEmpty) {
+                          //       return AppStrings.emptyInputFieldMsg;
+                          //     }*/
+                          //     return null;
+                          //   },
+                          // ),
+                          // AppSpace.spaceH10,
+                          // CustomInputHeader(header: context.tr('Postcode')),
+                          // AppSpace.spaceH6,
+                          // CustomTextFormField(
+                          //   controller: controller.postcodeTextController,
+                          //   textInputType: TextInputType.text,
+                          //   validator: (value) {
+                          //     return null;
+                          //   },
+                          // ),
+                          // AppSpace.spaceH10,
                           CustomInputHeader(header: context.tr('Email')),
                           AppSpace.spaceH6,
                           CustomTextFormField(

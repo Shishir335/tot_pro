@@ -159,22 +159,20 @@ class AppPages {
 
     GetPage(
         name: _Paths.review,
-        page: () => const ReviewView(),
+        page: () => ReviewView(),
         binding: ReviewBinding()),
 
     GetPage(
         name: _Paths.joinUs,
-        page: () => const JoinUsView(),
+        page: () => JoinUsView(),
         binding: JoinUsBinding()),
 
     GetPage(
-        name: _Paths.quote,
-        page: () => const QuoteView(),
-        binding: QuoteBinding()),
+        name: _Paths.quote, page: () => QuoteView(), binding: QuoteBinding()),
 
     GetPage(
         name: _Paths.contactUs,
-        page: () => const ContactUsView(),
+        page: () => ContactUsView(),
         binding: ContactUsBinding()),
 
     GetPage(

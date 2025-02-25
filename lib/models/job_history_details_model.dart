@@ -100,7 +100,7 @@ class JobHistoryDetailsModel {
 
   factory JobHistoryDetailsModel.fromJson(Map<String, dynamic> json) => JobHistoryDetailsModel(
     id: json["id"],
-    userId: json["user_id"],
+    userId: json["user_id"].toString(),
     date: json["date"] == null ? null : DateTime.parse(json["date"]),
     name: json["name"],
     email: json["email"],
@@ -114,7 +114,7 @@ class JobHistoryDetailsModel {
     street: json["street"],
     postCode: json["post_code"],
     message: json["message"],
-    status: json["status"],
+    status: json["status"].toString(),
     updatedBy: json["updated_by"],
     createdBy: json["created_by"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
@@ -199,10 +199,10 @@ class Workimage {
 
   factory Workimage.fromJson(Map<String, dynamic> json) => Workimage(
     id: json["id"],
-    workId: json["work_id"],
+    workId: json["work_id"].toString(),
     name: json["name"],
     description: json["description"],
-    status: json["status"],
+    status: json["status"].toString(),
     updatedBy: json["updated_by"],
     createdBy: json["created_by"],
     createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),

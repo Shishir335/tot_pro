@@ -111,112 +111,121 @@ class UserProfileView extends GetView<UserProfileController> {
                           CustomInputHeader(
                               header: context.tr('Address First Line')),
                           AppSpace.spaceH6,
+                          CustomTextFormField(
+                              controller: controller.addressFirstLineCTL,
+                              textInputType: TextInputType.text,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return AppStrings.emptyInputFieldMsg;
+                                }
+                                return null;
+                              }),
 
                           ///----------- Finder Address --------
                           /*        FinderAddress(controller:controller,
                               address:controller.addressFirstLineCTL.text),
                           */
-                          Obx(
-                            () => FieldSuggestion<AddressModel>.network(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              inputDecoration: InputDecoration(
-                                fillColor: controller.isReadOnly.value
-                                    ? Colors.red.shade50
-                                    : Colors.white10,
+                          // Obx(
+                          //   () => FieldSuggestion<AddressModel>.network(
+                          //     padding:
+                          //         const EdgeInsets.symmetric(horizontal: 10),
+                          //     inputDecoration: InputDecoration(
+                          //       fillColor: controller.isReadOnly.value
+                          //           ? Colors.red.shade50
+                          //           : Colors.white10,
 
-                                filled: true,
-                                hintText: controller.firstAddress.value,
-                                //controller.addressFirstLineCTL.text,
-                                isDense: true,
-                                contentPadding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    //color: theme.colorScheme.onPrimaryContainer,
-                                    width: 1,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    // color: theme.colorScheme.onPrimaryContainer,
-                                    width: 1,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: const BorderSide(
-                                    //color: theme.colorScheme.onPrimaryContainer,
-                                    width: 1,
-                                  ),
-                                ),
-                                errorStyle: const TextStyle(color: Colors.red),
-                              ),
-                              future: (input) => controller.shouldSearch
-                                  ? controller.addressLineOneController.text
-                                              .length >
-                                          1
-                                      ? controller.searchAddress(input)
-                                      : controller.returnEmptyFutureData()
-                                  : controller.returnEmptyFutureData(),
-                              textController:
-                                  controller.addressLineOneController,
-                              boxController: controller.boxController,
-                              sizeByItem: 10,
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return context.tr('Please enter address!');
-                                }
-                                return null;
-                              },
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState !=
-                                    ConnectionState.done) {
-                                  return const Center(
-                                      child: CircularProgressIndicator());
-                                }
-                                final result = snapshot.data ?? [];
-                                return ListView.builder(
-                                  itemCount: result.length,
-                                  itemBuilder: (context, index) {
-                                    //  print('result lng : ${snapshot.data}');
-                                    return GestureDetector(
-                                      onTap: () {
-                                        controller.shouldSearch = false;
-                                        controller.addressLineOneController
-                                            .text = result[index].suggestion!;
+                          //       filled: true,
+                          //       hintText: controller.firstAddress.value,
+                          //       //controller.addressFirstLineCTL.text,
+                          //       isDense: true,
+                          //       contentPadding:
+                          //           const EdgeInsets.symmetric(horizontal: 10),
+                          //       border: OutlineInputBorder(
+                          //         borderRadius: BorderRadius.circular(10),
+                          //         borderSide: const BorderSide(
+                          //           //color: theme.colorScheme.onPrimaryContainer,
+                          //           width: 1,
+                          //         ),
+                          //       ),
+                          //       enabledBorder: OutlineInputBorder(
+                          //         borderRadius: BorderRadius.circular(10),
+                          //         borderSide: const BorderSide(
+                          //           // color: theme.colorScheme.onPrimaryContainer,
+                          //           width: 1,
+                          //         ),
+                          //       ),
+                          //       focusedBorder: OutlineInputBorder(
+                          //         borderRadius: BorderRadius.circular(10),
+                          //         borderSide: const BorderSide(
+                          //           //color: theme.colorScheme.onPrimaryContainer,
+                          //           width: 1,
+                          //         ),
+                          //       ),
+                          //       errorStyle: const TextStyle(color: Colors.red),
+                          //     ),
+                          //     future: (input) => controller.shouldSearch
+                          //         ? controller.addressLineOneController.text
+                          //                     .length >
+                          //                 1
+                          //             ? controller.searchAddress(input)
+                          //             : controller.returnEmptyFutureData()
+                          //         : controller.returnEmptyFutureData(),
+                          //     textController:
+                          //         controller.addressLineOneController,
+                          //     boxController: controller.boxController,
+                          //     sizeByItem: 10,
+                          //     validator: (value) {
+                          //       if (value!.isEmpty) {
+                          //         return context.tr('Please enter address!');
+                          //       }
+                          //       return null;
+                          //     },
+                          //     builder: (context, snapshot) {
+                          //       if (snapshot.connectionState !=
+                          //           ConnectionState.done) {
+                          //         return const Center(
+                          //             child: CircularProgressIndicator());
+                          //       }
+                          //       final result = snapshot.data ?? [];
+                          //       return ListView.builder(
+                          //         itemCount: result.length,
+                          //         itemBuilder: (context, index) {
+                          //           //  print('result lng : ${snapshot.data}');
+                          //           return GestureDetector(
+                          //             onTap: () {
+                          //               controller.shouldSearch = false;
+                          //               controller.addressLineOneController
+                          //                   .text = result[index].suggestion!;
 
-                                        FocusScope.of(context).unfocus();
-                                        controller.boxController.close?.call();
-                                        controller.shouldSearch = true;
+                          //               FocusScope.of(context).unfocus();
+                          //               controller.boxController.close?.call();
+                          //               controller.shouldSearch = true;
 
-                                        /// get address details and set data to text fields
-                                        if (result[index].urls != null &&
-                                            result[index].urls!.udprn != null) {
-                                          controller.getAndSetAddressDetails(
-                                              result[index].urls!.udprn!);
-                                        }
-                                      },
-                                      child: Card(
-                                          elevation: 0.2,
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 5, horizontal: 5),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Text(
-                                              result[index].suggestion!,
-                                              style: const TextStyle(
-                                                  color: Colors.black),
-                                            ),
-                                          )),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ),
+                          //               /// get address details and set data to text fields
+                          //               if (result[index].urls != null &&
+                          //                   result[index].urls!.udprn != null) {
+                          //                 controller.getAndSetAddressDetails(
+                          //                     result[index].urls!.udprn!);
+                          //               }
+                          //             },
+                          //             child: Card(
+                          //                 elevation: 0.2,
+                          //                 margin: const EdgeInsets.symmetric(
+                          //                     vertical: 5, horizontal: 5),
+                          //                 child: Padding(
+                          //                   padding: const EdgeInsets.all(5.0),
+                          //                   child: Text(
+                          //                     result[index].suggestion!,
+                          //                     style: const TextStyle(
+                          //                         color: Colors.black),
+                          //                   ),
+                          //                 )),
+                          //           );
+                          //         },
+                          //       );
+                          //     },
+                          //   ),
+                          // ),
 
                           ///------------- End Finder address -------
                           AppSpace.spaceH10,
@@ -225,12 +234,11 @@ class UserProfileView extends GetView<UserProfileController> {
                           AppSpace.spaceH6,
                           CustomTextFormField(
                             // fillColor: controller.isReadOnly.value ?Colors.teal.shade50:Colors.white10,
-                            isReadOnly: true,
+                            // isReadOnly: true,
                             //controller.isReadOnly.value,
 
                             // width: 185,
                             controller: controller.addressSecondLineCTL,
-                            hintText: context.tr("Address Second Line"),
                             textInputType: TextInputType.text,
                             validator: (value) {
                               return null;
@@ -244,18 +252,17 @@ class UserProfileView extends GetView<UserProfileController> {
                             fillColor: controller.isReadOnly.value
                                 ? Colors.teal.shade50
                                 : Colors.white10,
-                            isReadOnly: true,
+                            // isReadOnly: true,
                             //controller.isReadOnly.value,
 
                             //  width: 185,
                             controller: controller.addressThirdLineCTL,
-                            hintText: context.tr("Address Third Line"),
                           ),
                           AppSpace.spaceH10,
                           CustomInputHeader(header: context.tr('Town')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
-                            isReadOnly: true,
+                            // isReadOnly: true,
                             controller: controller.townCTL,
                             textInputType: TextInputType.text,
                             fillColor: controller.isReadOnly.value
@@ -272,7 +279,7 @@ class UserProfileView extends GetView<UserProfileController> {
                           CustomInputHeader(header: context.tr('Postcode')),
                           AppSpace.spaceH6,
                           CustomTextFormField(
-                            isReadOnly: true,
+                            // isReadOnly: true,
                             controller: controller.postCodeCTL,
                             textInputType: TextInputType.text,
                             validator: (value) {

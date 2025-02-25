@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:field_suggestion/box_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -141,8 +142,6 @@ class SubmitEdgeController extends GetxController {
     _apiClient = ApiClient();
     getDetailsInfo();
     getAboutUs();
-    nameCon.text = proInfo.value.name ?? '';
-    mailCon.text = proInfo.value.email ?? '';
     super.onInit();
   }
 
@@ -270,7 +269,10 @@ class SubmitEdgeController extends GetxController {
       };
 
       final url = Uri.parse(
-          "https://www.totpro.net/api/work-store/${selectedCategories[0]}");
+          "https://www.totpro.net/api/work-store/${selectedCategories[0].id}");
+
+      log("https://www.totpro.net/api/work-store/${selectedCategories[0].id}");
+
       var request = http.MultipartRequest('POST', url);
 
       for (int i = 0; i < imageFiles.length; i++) {
@@ -436,18 +438,17 @@ class SubmitEdgeController extends GetxController {
         "Authorization": "Bearer $token"
       };
 
-      final url = Uri.parse("https://www.edgeemg.co.uk/api/work");
+      final url = Uri.parse("https://www.totpro.net/api/work");
+      log("https://www.totpro.net/api/work");
       var request = http.MultipartRequest('POST', url);
 
       for (int i = 0; i < imageFiles.length; i++) {
         request.fields['descriptions[$i]'] = descriptionCont[i].text;
-        multipartFileList.add(
-          http.MultipartFile(
-              'images[]',
-              File(imageFiles[i].path).readAsBytes().asStream(),
-              File(imageFiles[i].path).lengthSync(),
-              filename: targetPath),
-        );
+        multipartFileList.add(http.MultipartFile(
+            'images[]',
+            File(imageFiles[i].path).readAsBytes().asStream(),
+            File(imageFiles[i].path).lengthSync(),
+            filename: targetPath));
       }
 
       request.files.addAll(multipartFileList);
@@ -583,6 +584,11 @@ class SubmitEdgeController extends GetxController {
       final Map<String, dynamic> mapdata = response.data;
       var info = mapdata['response']['data'];
       proInfo.value = UserProfileModel.fromJson(info);
+
+      nameCon.text = proInfo.value.name ?? '';
+      mailCon.text = proInfo.value.email ?? '';
+
+      update();
     }
   }
 }

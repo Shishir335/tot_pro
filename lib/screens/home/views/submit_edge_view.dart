@@ -1,7 +1,6 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:field_suggestion/field_suggestion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -13,7 +12,6 @@ import 'package:tot_pro/screens/home/controllers/submit_edge_controller.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 import 'package:widget_zoom/widget_zoom.dart';
-import '../../../models/address_model.dart';
 import '../../../utils/data/core/values/app_assets.dart';
 import '../../../utils/data/core/values/app_strings.dart';
 import '../../../utils/data/customIntputHeader.dart';
@@ -32,6 +30,15 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
   final inputTextStyle = TextStyle(fontSize: 14, color: Colors.grey.shade700);
 
   @override
+  void initState() {
+    SubmitEdgeController submitEdgeController =
+        Get.find<SubmitEdgeController>();
+        
+    submitEdgeController.getDetailsInfo();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GetBuilder<SubmitEdgeController>(builder: (controller) {
       return Scaffold(
@@ -43,7 +50,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
               child: Stack(children: [
                 Container(
-                    height: 160,
+                    // height: 160,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
                     decoration: BoxDecoration(
@@ -131,16 +138,14 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                       Expanded(
                         child: Obx(
                           () => CustomCheckboxButton(
-                            value: controller.isUseRegisterAddress.value,
+                            value: controller.isUseRegisterNumber.value,
                             onChange: (value) async {
-                              if (controller.isUseRegisterAddress.value ==
-                                  true) {
-                                controller.isUseRegisterAddress.value = false;
-                                controller.phoneCon.text = '';
-                              } else {
-                                controller.isUseRegisterAddress.value = true;
+                              controller.isUseRegisterNumber.value = value;
+                              if (value) {
                                 controller.phoneCon.text =
-                                    controller.proInfo.value.phone.toString();
+                                    controller.proInfo.value.phone ?? '';
+                              } else {
+                                controller.phoneCon.text = '';
                               }
                             },
                           ),
@@ -153,7 +158,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(context.tr("Use registered phone number."),
+                                Text(context.tr("Use my phone number."),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold))
                               ]))
@@ -167,19 +172,11 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                       Expanded(
                         child: Obx(
                           () => CustomCheckboxButton(
-                            value: controller.isUseRegisterNumber.value,
+                            value: controller.isUseRegisterAddress.value,
                             onChange: (value) async {
-                              if (controller.isUseRegisterNumber.value ==
-                                  true) {
-                                controller.isUseRegisterNumber.value = false;
-                                controller.firstAddress.value = '';
-                                controller.addressLineTwoController.text = '';
-                                controller.addressLineThreeController.text = '';
-                                controller.countryTextController.text = '';
-                                controller.postcodeTextController.text = '';
-                              } else {
-                                controller.isUseRegisterNumber.value = true;
-                                controller.firstAddress.value =
+                              controller.isUseRegisterAddress.value = value;
+                              if (value) {
+                                controller.addressLineOneController.text =
                                     controller.proInfo.value.addressFirstLine ??
                                         '';
                                 controller.addressLineTwoController.text =
@@ -192,8 +189,13 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                                 controller.countryTextController.text =
                                     controller.proInfo.value.town ?? '';
                                 controller.postcodeTextController.text =
-                                    controller.proInfo.value.postcode
-                                        .toString();
+                                    controller.proInfo.value.postcode ?? '';
+                              } else {
+                                controller.addressLineOneController.text = '';
+                                controller.addressLineTwoController.text = '';
+                                controller.addressLineThreeController.text = '';
+                                controller.countryTextController.text = '';
+                                controller.postcodeTextController.text = '';
                               }
                             },
                           ),
@@ -206,7 +208,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(context.tr("Use registered address."),
+                                Text(context.tr("Use my address."),
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold))
                               ]))
@@ -257,84 +259,95 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
 
                 CustomInputHeader(header: context.tr('Address First Line')),
                 AppSpace.spaceH6,
+                CustomTextFormField(
+                  textInputType: TextInputType.text,
+                  textStyle: const TextStyle(fontSize: 10),
+                  controller: controller.addressLineOneController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return AppStrings.emptyInputFieldMsg;
+                    }
+                    return null;
+                  },
+                ),
 
                 ///------------ finder Address  ------
 
-                Obx(
-                  () => FieldSuggestion<AddressModel>.network(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    inputDecoration: InputDecoration(
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 10),
-                      hintText: controller.firstAddress.value,
-                      filled: true,
-                      fillColor: AppColors.primaryColor.withOpacity(0.8),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Colors.greenAccent),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: Colors.red),
-                      ),
-                    ),
-                    future: (input) => controller.shouldSearch
-                        ? controller.addressLineOneController.text.length > 0
-                            ? controller.searchAddress(input)
-                            : controller.returnEmptyFutureData()
-                        : controller.returnEmptyFutureData(),
-                    textController: controller.addressLineOneController,
-                    boxController: controller.boxController,
-                    validator: (value) {
-                      return null;
-                    },
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState != ConnectionState.done) {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-                      final result = snapshot.data ?? [];
-                      return ListView.builder(
-                        itemCount: result.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              controller.shouldSearch = false;
-                              controller.addressLineOneController.text =
-                                  result[index].suggestion!;
+                // Obx(
+                //   () => FieldSuggestion<AddressModel>.network(
+                //     padding: const EdgeInsets.symmetric(horizontal: 10),
+                //     inputDecoration: InputDecoration(
+                //       contentPadding:
+                //           const EdgeInsets.symmetric(horizontal: 10),
+                //       hintText: controller.firstAddress.value,
+                //       filled: true,
+                //       fillColor: AppColors.primaryColor.withOpacity(0.8),
+                //       border: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(10),
+                //       ),
+                //       enabledBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(10),
+                //         borderSide: BorderSide.none,
+                //       ),
+                //       focusedBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(10),
+                //         borderSide: const BorderSide(color: Colors.greenAccent),
+                //       ),
+                //       errorBorder: OutlineInputBorder(
+                //         borderRadius: BorderRadius.circular(10),
+                //         borderSide: const BorderSide(color: Colors.red),
+                //       ),
+                //     ),
+                //     future: (input) => controller.shouldSearch
+                //         ? controller.addressLineOneController.text.length > 0
+                //             ? controller.searchAddress(input)
+                //             : controller.returnEmptyFutureData()
+                //         : controller.returnEmptyFutureData(),
+                //     textController: controller.addressLineOneController,
+                //     boxController: controller.boxController,
+                //     validator: (value) {
+                //       return null;
+                //     },
+                //     builder: (context, snapshot) {
+                //       if (snapshot.connectionState != ConnectionState.done) {
+                //         return const Center(child: CircularProgressIndicator());
+                //       }
+                //       final result = snapshot.data ?? [];
+                //       return ListView.builder(
+                //         itemCount: result.length,
+                //         itemBuilder: (context, index) {
+                //           return GestureDetector(
+                //             onTap: () {
+                //               controller.shouldSearch = false;
+                //               controller.addressLineOneController.text =
+                //                   result[index].suggestion!;
 
-                              FocusScope.of(context).unfocus();
-                              controller.boxController.close?.call();
-                              controller.shouldSearch = true;
+                //               FocusScope.of(context).unfocus();
+                //               controller.boxController.close?.call();
+                //               controller.shouldSearch = true;
 
-                              /// get address details and set data to text fields
-                              if (result[index].urls != null &&
-                                  result[index].urls!.udprn != null) {
-                                controller.getAndSetAddressDetails(
-                                    result[index].urls!.udprn!);
-                              }
-                            },
-                            child: ListTile(
-                                title: Text(result[index].suggestion!)),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
+                //               /// get address details and set data to text fields
+                //               if (result[index].urls != null &&
+                //                   result[index].urls!.udprn != null) {
+                //                 controller.getAndSetAddressDetails(
+                //                     result[index].urls!.udprn!);
+                //               }
+                //             },
+                //             child: ListTile(
+                //                 title: Text(result[index].suggestion!)),
+                //           );
+                //         },
+                //       );
+                //     },
+                //   ),
+                // ),
 
                 ///--------- End  ---------
 
                 CustomInputHeader(header: context.tr('Address  Second Line')),
                 AppSpace.spaceH6,
                 CustomTextFormField(
-                  isReadOnly: true,
+                  // isReadOnly: true,
                   textInputType: TextInputType.text,
                   textStyle: const TextStyle(fontSize: 10),
                   controller: controller.addressLineTwoController,
@@ -349,7 +362,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                 CustomInputHeader(header: context.tr('Address  Third Line')),
                 AppSpace.spaceH6,
                 CustomTextFormField(
-                  isReadOnly: true,
+                  // isReadOnly: true,
                   textInputType: TextInputType.text,
                   textStyle: const TextStyle(fontSize: 10),
                   controller: controller.addressLineThreeController,
@@ -364,7 +377,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                 CustomInputHeader(header: context.tr('Town')),
                 AppSpace.spaceH6,
                 CustomTextFormField(
-                  isReadOnly: true,
+                  // isReadOnly: true,
                   textStyle: const TextStyle(fontSize: 10),
                   controller: controller.countryTextController,
                   validator: (value) {
@@ -378,7 +391,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                 CustomInputHeader(header: context.tr('Post Code')),
                 AppSpace.spaceH6,
                 CustomTextFormField(
-                  isReadOnly: true,
+                  // isReadOnly: true,
                   textStyle: const TextStyle(fontSize: 10),
                   controller: controller.postcodeTextController,
                   validator: (value) {
@@ -388,6 +401,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                     return null;
                   },
                 ),
+                AppSpace.spaceH20,
                 // categories
                 CategoryWidget(
                     selectedCategories: controller.selectedCategories,
@@ -399,7 +413,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                 ///todo list
                 /// -------- Image With Comments  ---------
 
-                AppSpace.spaceH6,
+                AppSpace.spaceH20,
                 SizedBox(
                   //   height: 120,
                   child: Obx(
@@ -411,60 +425,56 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
                               // print(status);
                               // if (status.isGranted) {
                               //   print('granted');
-                                showModalBottomSheet(
-                                    barrierColor: Colors.black38,
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return Container(
-                                          margin: const EdgeInsets.symmetric(
-                                              vertical: 20),
-                                          child: Wrap(children: <Widget>[
-                                            ListTile(
-                                                leading:
-                                                    const Icon(Icons.camera),
-                                                title: Text(
-                                                    context.tr('Camera'),
-                                                    style: const TextStyle(
-                                                        color: Colors.green,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                trailing: const Icon(
-                                                    Icons.touch_app_outlined),
-                                                onTap: () =>
-                                                    controller.selectImage(
-                                                        ImageSource.camera,
-                                                        'camera')),
-                                            ListTile(
-                                                leading:
-                                                    const Icon(Icons.image),
-                                                title: Text(
-                                                    context.tr('Gallery'),
-                                                    style: const TextStyle(
-                                                        color: Colors.green,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                trailing: const Icon(
-                                                    Icons.touch_app_outlined),
-                                                onTap: () =>
-                                                    controller.selectImage(
-                                                        ImageSource.gallery,
-                                                        'gallery')),
-                                            ListTile(
-                                                leading: const Icon(Icons
-                                                    .video_camera_back_outlined),
-                                                title: Text(context.tr('Video'),
-                                                    style: const TextStyle(
-                                                        color: Colors.green,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                trailing: const Icon(
-                                                    Icons.video_call_outlined),
-                                                onTap: () =>
-                                                    controller.selectImage(
-                                                        ImageSource.gallery,
-                                                        'video'))
-                                          ]));
-                                    });
+                              showModalBottomSheet(
+                                  barrierColor: Colors.black38,
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            vertical: 20),
+                                        child: Wrap(children: <Widget>[
+                                          ListTile(
+                                              leading: const Icon(Icons.camera),
+                                              title: Text(context.tr('Camera'),
+                                                  style: const TextStyle(
+                                                      color: Colors.green,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              trailing: const Icon(
+                                                  Icons.touch_app_outlined),
+                                              onTap: () =>
+                                                  controller.selectImage(
+                                                      ImageSource.camera,
+                                                      'camera')),
+                                          ListTile(
+                                              leading: const Icon(Icons.image),
+                                              title: Text(context.tr('Gallery'),
+                                                  style: const TextStyle(
+                                                      color: Colors.green,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              trailing: const Icon(
+                                                  Icons.touch_app_outlined),
+                                              onTap: () =>
+                                                  controller.selectImage(
+                                                      ImageSource.gallery,
+                                                      'gallery')),
+                                          ListTile(
+                                              leading: const Icon(Icons
+                                                  .video_camera_back_outlined),
+                                              title: Text(context.tr('Video'),
+                                                  style: const TextStyle(
+                                                      color: Colors.green,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              trailing: const Icon(
+                                                  Icons.video_call_outlined),
+                                              onTap: () =>
+                                                  controller.selectImage(
+                                                      ImageSource.gallery,
+                                                      'video'))
+                                        ]));
+                                  });
                               // } else {
                               //   print('not granted');
                               // }
