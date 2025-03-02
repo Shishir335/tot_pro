@@ -24,6 +24,7 @@ class DashboardController extends GetxController {
   void onInit() {
     Get.put(SubmitEdgeController());
     Get.put(SettingsController());
+
     menuList.add(MenuModel(
         menuId: 1,
         menuTitle: 'Submit an TOT PRO',

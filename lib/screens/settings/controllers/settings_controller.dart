@@ -35,7 +35,7 @@ class SettingsController extends GetxController {
   void increment() => count.value++;
 
   // Language settings
-  String language = 'en';
+  String language = 'ro';
 
   setLanguage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

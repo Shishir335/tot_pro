@@ -258,23 +258,23 @@ class SubmitEdgeController extends GetxController {
   /// Work Submit  done Image
   Future<void> workSubmit(BuildContext context) async {
     final Directory tempDir = await getTemporaryDirectory();
+    DBHelper.loadingDialog(Get.overlayContext!);
+    List<http.MultipartFile> multipartFileList = [];
+    loading.value = true;
+    String? token = localStoreSRF.getString('token');
+    Map<String, String> customHeader = {
+      "Accept": "application/json",
+      "Authorization": "Bearer $token"
+    };
+
+    final url = Uri.parse(
+        "https://www.totpro.net/api/work-store/${selectedCategories[0].id}");
+
+    log("https://www.totpro.net/api/work-store/${selectedCategories[0].id}");
+
+    var request = http.MultipartRequest('POST', url);
+
     if (imageFiles.isNotEmpty) {
-      DBHelper.loadingDialog(Get.overlayContext!);
-      List<http.MultipartFile> multipartFileList = [];
-      loading.value = true;
-      String? token = localStoreSRF.getString('token');
-      Map<String, String> customHeader = {
-        "Accept": "application/json",
-        "Authorization": "Bearer $token"
-      };
-
-      final url = Uri.parse(
-          "https://www.totpro.net/api/work-store/${selectedCategories[0].id}");
-
-      log("https://www.totpro.net/api/work-store/${selectedCategories[0].id}");
-
-      var request = http.MultipartRequest('POST', url);
-
       for (int i = 0; i < imageFiles.length; i++) {
         String extendFile = imageFiles[i].path.split('.').last;
 
@@ -308,194 +308,57 @@ class SubmitEdgeController extends GetxController {
             : descriptionCont[i].text;
       }
       request.files.addAll(multipartFileList);
-
-      Map<String, String> workSubmitMap = {
-        "name": nameCon.text.toString(),
-        "email": mailCon.text.toString(),
-        "address_first_line": firstAddress.value == ''
-            ? addressLineOneController.text.toString()
-            : firstAddress.value,
-        "address_second_line": addressLineTwoController.text.toString(),
-        "address_third_line": addressLineThreeController.text.toString(),
-        "phone": phoneCon.text.toString(),
-        "town": countryTextController.text.toString(),
-        "post_code": postcodeTextController.text,
-
-        // 'descriptions[]': 'This is first description u13@gmail.com',
-      };
-
-      print(workSubmitMap);
-      request.fields.addAll(workSubmitMap);
-      request.headers.addAll(customHeader);
-
-      try {
-        var response = await request.send();
-        var responseStream = await response.stream.bytesToString();
-        //  pDialog.hide();
-
-        debugPrint(' status code : ${response.statusCode}');
-        debugPrint('responseStream  : $responseStream');
-
-        if (response.statusCode == 200) {
-          // pDialog.hide();
-          return showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Container(
-                  width: 390,
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Work Order is added successfully!'.tr,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.green)),
-                      Image.asset('assets/images/successful.png'),
-                      AppSpace.spaceH10,
-                      ElevatedButton(
-                          onPressed: () {
-                            phoneCon.clear();
-                            streetCon.clear();
-                            townCon.clear();
-                            postCon.clear();
-                            houseCon.clear();
-                            countryTextController.clear();
-                            commentCon.clear();
-                            addressLineThreeController.clear();
-                            addressLineOneController.clear();
-                            addressLineTwoController.clear();
-                            descriptionCont.clear();
-                            postcodeTextController.clear();
-                            postCodeStatusMsg.value = '';
-                            postCodeStatus.value = '';
-                            imageFiles.clear();
-                            isUseRegisterAddress.value = false;
-                            isUseRegisterNumber.value = false;
-                            isVideoCapture.value = false;
-                            DBHelper.loadingClose();
-                            Get.back();
-                          },
-                          style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              minimumSize: const Size(150, 40)),
-                          child: const Text('Ok')),
-                      const SizedBox(height: 10),
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        } else if (response.statusCode.toString() == '302') {
-          DBHelper.loadingClose();
-          loading.value = false;
-        } else {
-          // pDialog.hide();
-          loading.value = false;
-          DBHelper.loadingClose();
-          Get.snackbar(
-            'Error'.tr,
-            'Status code :  ${response.statusCode.toString()}\n work order has Failed ',
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
-        }
-      } catch (e) {
-        DBHelper.loadingClose();
-        //  pDialog.hide();
-        Get.snackbar(
-          'Failed'.tr,
-          e.toString(),
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
-        print('Error occurred: $e');
-      }
-      loading.value = false;
-    } else {
-      Helpers.snackbarForErorr(
-          titleText: 'Alert Message'.tr, bodyText: 'Image field required.'.tr);
     }
-  }
 
-  /// Work Submit  done Video
-  Future<void> workSubmitVideo(BuildContext context) async {
-    final Directory tempDir = await getTemporaryDirectory();
-    final targetPath = '${tempDir.absolute.path}/temp.mp4';
-    if (imageFiles.isNotEmpty) {
-      DBHelper.loadingDialog(Get.overlayContext!);
-      List<http.MultipartFile> multipartFileList = [];
-      loading.value = true;
-      String? token = localStoreSRF.getString('token');
-      Map<String, String> customHeader = {
-        "Accept": "application/json",
-        "Authorization": "Bearer $token"
-      };
+    Map<String, String> workSubmitMap = {
+      "name": nameCon.text.toString(),
+      "email": mailCon.text.toString(),
+      "address_first_line": firstAddress.value == ''
+          ? addressLineOneController.text.toString()
+          : firstAddress.value,
+      "address_second_line": addressLineTwoController.text.toString(),
+      "address_third_line": addressLineThreeController.text.toString(),
+      "phone": phoneCon.text.toString(),
+      "town": countryTextController.text.toString(),
+      "post_code": postcodeTextController.text,
 
-      final url = Uri.parse("https://www.totpro.net/api/work");
-      log("https://www.totpro.net/api/work");
-      var request = http.MultipartRequest('POST', url);
+      // 'descriptions[]': 'This is first description u13@gmail.com',
+    };
 
-      for (int i = 0; i < imageFiles.length; i++) {
-        request.fields['descriptions[$i]'] = descriptionCont[i].text;
-        multipartFileList.add(http.MultipartFile(
-            'images[]',
-            File(imageFiles[i].path).readAsBytes().asStream(),
-            File(imageFiles[i].path).lengthSync(),
-            filename: targetPath));
-      }
+    print(workSubmitMap);
+    request.fields.addAll(workSubmitMap);
+    request.headers.addAll(customHeader);
 
-      request.files.addAll(multipartFileList);
-      Map<String, String> workSubmitMap = {
-        "name": nameCon.text.toString(),
-        "email": mailCon.text.toString(),
-        "address_first_line": firstAddress.value == ''
-            ? addressLineOneController.text.toString()
-            : firstAddress.value,
-        "address_second_line": addressLineTwoController.text.toString(),
-        "address_third_line": addressLineThreeController.text.toString(),
-        "phone": phoneCon.text.toString(),
-        "town": countryTextController.text.toString(),
-        "post_code": postcodeTextController.text,
-      };
+    try {
+      var response = await request.send();
+      var responseStream = await response.stream.bytesToString();
+      //  pDialog.hide();
 
-      print(workSubmitMap);
-      request.fields.addAll(workSubmitMap);
-      request.headers.addAll(customHeader);
+      debugPrint(' status code : ${response.statusCode}');
+      debugPrint('responseStream  : $responseStream');
 
-      try {
-        var response = await request.send();
-        var responseStream = await response.stream.bytesToString();
-
-        debugPrint(' status code : ${response.statusCode}');
-        debugPrint('responseStream  : $responseStream');
-
-        if (response.statusCode == 200) {
-          return showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Container(
-                  width: 390,
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(mainAxisSize: MainAxisSize.min, children: [
-                    const Text('Work Order is added successfully!',
-                        style: TextStyle(
+      if (response.statusCode == 200) {
+        // pDialog.hide();
+        return showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              child: Container(
+                width: 390,
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Work Order is added successfully!'.tr,
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold, color: Colors.green)),
                     Image.asset('assets/images/successful.png'),
                     AppSpace.spaceH10,
-                    InkWell(
-                        onTap: () {
+                    ElevatedButton(
+                        onPressed: () {
                           phoneCon.clear();
                           streetCon.clear();
                           townCon.clear();
@@ -517,51 +380,192 @@ class SubmitEdgeController extends GetxController {
                           DBHelper.loadingClose();
                           Get.back();
                         },
-                        child: Container(
-                            width: double.maxFinite,
-                            height: 50,
-                            decoration: BoxDecoration(
-                                color: AppColors.primaryColor,
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
-                            child: Center(
-                                child: Text("OK".toUpperCase(),
-                                    style: const TextStyle(
-                                        fontSize: 18, color: Colors.white))))),
-                    const SizedBox(height: 10)
-                  ]),
+                            minimumSize: const Size(150, 40)),
+                        child: const Text('Ok')),
+                    const SizedBox(height: 10),
+                  ],
                 ),
-              );
-            },
-          );
-        } else if (response.statusCode.toString() == '302') {
-          DBHelper.loadingClose();
-          loading.value = false;
-        } else {
-          loading.value = false;
-          DBHelper.loadingClose();
-          Get.snackbar(
-            'Error',
-            'Status code :  ${response.statusCode.toString()}\n work order has Failed ',
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-          );
-        }
-      } catch (e) {
+              ),
+            );
+          },
+        );
+      } else if (response.statusCode.toString() == '302') {
+        DBHelper.loadingClose();
+        loading.value = false;
+      } else {
+        // pDialog.hide();
+        loading.value = false;
         DBHelper.loadingClose();
         Get.snackbar(
-          'Failed'.tr,
-          e.toString(),
+          'Error'.tr,
+          'Status code :  ${response.statusCode.toString()}\n work order has Failed ',
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-        print('Error occurred: $e');
       }
-      loading.value = false;
-      // pDialog.hide();
-    } else {
-      Helpers.snackbarForErorr(
-          titleText: 'Alert Message'.tr, bodyText: 'Image field required.'.tr);
+    } catch (e) {
+      DBHelper.loadingClose();
+      //  pDialog.hide();
+      Get.snackbar(
+        'Failed'.tr,
+        e.toString(),
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      print('Error occurred: $e');
     }
+    loading.value = false;
+  }
+
+  /// Work Submit  done Video
+  Future<void> workSubmitVideo(BuildContext context) async {
+    final Directory tempDir = await getTemporaryDirectory();
+    final targetPath = '${tempDir.absolute.path}/temp.mp4';
+
+    DBHelper.loadingDialog(Get.overlayContext!);
+    List<http.MultipartFile> multipartFileList = [];
+    loading.value = true;
+
+    String? token = localStoreSRF.getString('token');
+
+    Map<String, String> customHeader = {
+      "Accept": "application/json",
+      "Authorization": "Bearer $token"
+    };
+
+    final url = Uri.parse("https://www.totpro.net/api/work");
+
+    log("https://www.totpro.net/api/work");
+
+    var request = http.MultipartRequest('POST', url);
+
+    if (imageFiles.isNotEmpty) {
+      for (int i = 0; i < imageFiles.length; i++) {
+        request.fields['descriptions[$i]'] = descriptionCont[i].text;
+        multipartFileList.add(http.MultipartFile(
+            'images[]',
+            File(imageFiles[i].path).readAsBytes().asStream(),
+            File(imageFiles[i].path).lengthSync(),
+            filename: targetPath));
+      }
+
+      request.files.addAll(multipartFileList);
+    }
+    // else {
+    //   Helpers.snackbarForErorr(
+    //       titleText: 'Alert Message'.tr, bodyText: 'Image field required.'.tr);
+    // }
+
+    Map<String, String> workSubmitMap = {
+      "name": nameCon.text.toString(),
+      "email": mailCon.text.toString(),
+      "address_first_line": firstAddress.value == ''
+          ? addressLineOneController.text.toString()
+          : firstAddress.value,
+      "address_second_line": addressLineTwoController.text.toString(),
+      "address_third_line": addressLineThreeController.text.toString(),
+      "phone": phoneCon.text.toString(),
+      "town": countryTextController.text.toString(),
+      "post_code": postcodeTextController.text,
+    };
+
+    print(workSubmitMap);
+
+    request.fields.addAll(workSubmitMap);
+    request.headers.addAll(customHeader);
+
+    try {
+      var response = await request.send();
+      var responseStream = await response.stream.bytesToString();
+
+      debugPrint(' status code : ${response.statusCode}');
+      debugPrint('responseStream  : $responseStream');
+
+      if (response.statusCode == 200) {
+        return showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Container(
+                width: 390,
+                padding: const EdgeInsets.all(16.0),
+                child: Column(mainAxisSize: MainAxisSize.min, children: [
+                  const Text('Work Order is added successfully!',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.green)),
+                  Image.asset('assets/images/successful.png'),
+                  AppSpace.spaceH10,
+                  InkWell(
+                      onTap: () {
+                        phoneCon.clear();
+                        streetCon.clear();
+                        townCon.clear();
+                        postCon.clear();
+                        houseCon.clear();
+                        countryTextController.clear();
+                        commentCon.clear();
+                        addressLineThreeController.clear();
+                        addressLineOneController.clear();
+                        addressLineTwoController.clear();
+                        descriptionCont.clear();
+                        postcodeTextController.clear();
+                        postCodeStatusMsg.value = '';
+                        postCodeStatus.value = '';
+                        imageFiles.clear();
+                        isUseRegisterAddress.value = false;
+                        isUseRegisterNumber.value = false;
+                        isVideoCapture.value = false;
+                        DBHelper.loadingClose();
+                        Get.back();
+                      },
+                      child: Container(
+                          width: double.maxFinite,
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                              child: Text("OK".toUpperCase(),
+                                  style: const TextStyle(
+                                      fontSize: 18, color: Colors.white))))),
+                  const SizedBox(height: 10)
+                ]),
+              ),
+            );
+          },
+        );
+      } else if (response.statusCode.toString() == '302') {
+        DBHelper.loadingClose();
+        loading.value = false;
+      } else {
+        loading.value = false;
+        DBHelper.loadingClose();
+        Get.snackbar(
+          'Error',
+          'Status code :  ${response.statusCode.toString()}\n work order has Failed ',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+    } catch (e) {
+      DBHelper.loadingClose();
+      Get.snackbar(
+        'Failed'.tr,
+        e.toString(),
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      print('Error occurred: $e');
+    }
+    loading.value = false;
+    // pDialog.hide();
   }
 
   /// done

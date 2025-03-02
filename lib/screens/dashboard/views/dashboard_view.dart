@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:tot_pro/models/menu_model.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tot_pro/screens/user_profile/controllers/user_profile_controller.dart';
 import 'package:tot_pro/utils/data/core/values/app_assets.dart';
 import 'package:tot_pro/utils/data/core/values/app_colors.dart';
 export 'package:get/get.dart';
@@ -11,100 +12,127 @@ import '../../../main.dart';
 import '../../../utils/routes/app_pages.dart';
 import '../controllers/dashboard_controller.dart';
 
-class DashboardView extends GetView<DashboardController> {
+class DashboardView extends StatefulWidget {
   const DashboardView({super.key});
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-            backgroundColor: Colors.black,
-            actions: [
-              Obx(() {
-                return controller.checkAccountFlag.value == true
-                    ? PopupMenuButton<String>(
-                        iconColor: Colors.white,
-                        iconSize: 20,
-                        onSelected: choiceAction,
-                        itemBuilder: (BuildContext context) {
-                          return Constants.choices.map((String choice) {
-                            return PopupMenuItem<String>(
-                              value: choice,
-                              child: choice == context.tr('LogOut')
-                                  ? Text(context.tr('Logout'))
-                                  : Text(context.tr(choice)),
-                            );
-                          }).toList();
-                        })
-                    : Container();
-              })
-            ],
-            title: Text(context.tr('Dashboard'),
-                style: const TextStyle(color: Colors.white)),
-            centerTitle: true),
-        body: Obx(() {
-          if (controller.checkAccountFlag.value == false) {
-            return Container(
-                color: Colors.white,
-                child: Card(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                      Center(
-                          child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Text(controller.checkAccountMessage.value,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors.primaryColor,
-                                      fontSize: 20)))),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 20, horizontal: 20),
-                              textStyle: const TextStyle(fontSize: 30),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8.0))),
-                          onPressed: () {
-                            localStoreSRF.clear();
-                            Get.offAllNamed(Routes.LOGIN);
-                          },
-                          child: const Text('Retry'))
-                    ])));
-          } else {
-            return Container(
-                color: Colors.grey.shade300,
-                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                child: Stack(children: [
-                  Container(
-                      height: 150,
-                      padding: const EdgeInsets.only(top: 0, bottom: 40),
-                      decoration: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(20.0),
-                              bottom: Radius.circular(5.0))),
-                      width: double.infinity,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(context.tr('Welcome to TOT PRO'),
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 20)),
-                          ])),
-                  menuCartFetchData(context)
-                ]));
-          }
-        }));
+  State<DashboardView> createState() => _DashboardViewState();
+}
+
+class _DashboardViewState extends State<DashboardView> {
+  @override
+  void initState() {
+    Get.put(UserProfileController());
+    super.initState();
   }
 
-  Widget menuCartFetchData(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<DashboardController>(builder: (controller) {
+      return Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+              backgroundColor: Colors.black,
+              actions: [
+                Obx(() {
+                  return controller.checkAccountFlag.value == true
+                      ? PopupMenuButton<String>(
+                          iconColor: Colors.white,
+                          iconSize: 20,
+                          onSelected: choiceAction,
+                          itemBuilder: (BuildContext context) {
+                            return Constants.choices.map((String choice) {
+                              return PopupMenuItem<String>(
+                                value: choice,
+                                child: choice == context.tr('LogOut')
+                                    ? Text(context.tr('Logout'))
+                                    : Text(context.tr(choice)),
+                              );
+                            }).toList();
+                          })
+                      : Container();
+                })
+              ],
+              title: Text(context.tr('Dashboard'),
+                  style: const TextStyle(color: Colors.white)),
+              centerTitle: true),
+          body: Obx(() {
+            if (controller.checkAccountFlag.value == false) {
+              return Container(
+                  color: Colors.white,
+                  child: Card(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                        Center(
+                            child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Text(
+                                    controller.checkAccountMessage.value,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.primaryColor,
+                                        fontSize: 20)))),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 20, horizontal: 20),
+                                textStyle: const TextStyle(fontSize: 30),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8.0))),
+                            onPressed: () {
+                              localStoreSRF.clear();
+                              Get.offAllNamed(Routes.LOGIN);
+                            },
+                            child: const Text('Retry'))
+                      ])));
+            } else {
+              return Container(
+                  color: Colors.grey.shade300,
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  child: Stack(children: [
+                    Container(
+                        height: 150,
+                        padding: const EdgeInsets.only(top: 0, bottom: 40),
+                        decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(20.0),
+                                bottom: Radius.circular(5.0))),
+                        width: double.infinity,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(context.tr('Welcome to TOT PRO'),
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 20)),
+                              const SizedBox(height: 5),
+                              Container(
+                                  height: 40,
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white),
+                                  child: Image.asset(
+                                    AppAssets.appLogo,
+                                  ))
+                            ])),
+                    menuCartFetchData(context, controller)
+                  ]));
+            }
+          }));
+    });
+  }
+
+  Widget menuCartFetchData(
+      BuildContext context, DashboardController controller) {
     return Obx(() => SingleChildScrollView(
           child: Column(children: [
             AnimationLimiter(

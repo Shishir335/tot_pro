@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tot_pro/screens/user_profile/controllers/user_profile_controller.dart';
 import 'package:tot_pro/utils/data/api_client.dart';
 import 'package:tot_pro/utils/data/core/values/app_url.dart';
 import 'package:tot_pro/main.dart';
@@ -71,6 +72,20 @@ class QuoteController extends GetxController {
   @override
   void onInit() {
     resetControllers();
+    populateData();
     super.onInit();
+  }
+
+  populateData() async {
+    UserProfileController userProfileController =
+        Get.find<UserProfileController>();
+
+    name.text = userProfileController.proInfo.value.name ?? '';
+    email.text = userProfileController.proInfo.value.email ?? '';
+    phone.text = userProfileController.proInfo.value.phone ?? '';
+    city.text = userProfileController.proInfo.value.country ?? '';
+    address.text = userProfileController.proInfo.value.addressFirstLine ?? '';
+
+    update();
   }
 }

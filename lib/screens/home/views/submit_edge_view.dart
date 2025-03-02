@@ -15,7 +15,6 @@ import 'package:widget_zoom/widget_zoom.dart';
 import '../../../utils/data/core/values/app_assets.dart';
 import '../../../utils/data/core/values/app_strings.dart';
 import '../../../utils/data/customIntputHeader.dart';
-import '../../../utils/data/custom_checkbox_button.dart';
 import '../../../utils/data/custom_text_form_field.dart';
 import 'dart:io';
 
@@ -33,7 +32,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
   void initState() {
     SubmitEdgeController submitEdgeController =
         Get.find<SubmitEdgeController>();
-        
+
     submitEdgeController.getDetailsInfo();
     super.initState();
   }
@@ -94,6 +93,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
         physics: const ScrollPhysics(),
         child: Column(
           children: [
+            AppSpace.spaceH10,
             edgeSubmitForm(context, controller),
             controller.aboutUs == null
                 ? const SizedBox()
@@ -126,96 +126,96 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppSpace.spaceH10,
+                // AppSpace.spaceH10,
 
                 /// -------- Ck Box ---------
 
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: Obx(
-                          () => CustomCheckboxButton(
-                            value: controller.isUseRegisterNumber.value,
-                            onChange: (value) async {
-                              controller.isUseRegisterNumber.value = value;
-                              if (value) {
-                                controller.phoneCon.text =
-                                    controller.proInfo.value.phone ?? '';
-                              } else {
-                                controller.phoneCon.text = '';
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                          flex: 8,
-                          child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(context.tr("Use my phone number."),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold))
-                              ]))
-                    ]),
-                AppSpace.spaceH20,
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Expanded(
-                        child: Obx(
-                          () => CustomCheckboxButton(
-                            value: controller.isUseRegisterAddress.value,
-                            onChange: (value) async {
-                              controller.isUseRegisterAddress.value = value;
-                              if (value) {
-                                controller.addressLineOneController.text =
-                                    controller.proInfo.value.addressFirstLine ??
-                                        '';
-                                controller.addressLineTwoController.text =
-                                    controller
-                                            .proInfo.value.addressSecondLine ??
-                                        '';
-                                controller.addressLineThreeController.text =
-                                    controller.proInfo.value.addressThirdLine ??
-                                        '';
-                                controller.countryTextController.text =
-                                    controller.proInfo.value.town ?? '';
-                                controller.postcodeTextController.text =
-                                    controller.proInfo.value.postcode ?? '';
-                              } else {
-                                controller.addressLineOneController.text = '';
-                                controller.addressLineTwoController.text = '';
-                                controller.addressLineThreeController.text = '';
-                                controller.countryTextController.text = '';
-                                controller.postcodeTextController.text = '';
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                          flex: 8,
-                          child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(context.tr("Use my address."),
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold))
-                              ]))
-                    ]),
+                // Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     crossAxisAlignment: CrossAxisAlignment.end,
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       Expanded(
+                //         child: Obx(
+                //           () => CustomCheckboxButton(
+                //             value: controller.isUseRegisterNumber.value,
+                //             onChange: (value) async {
+                //               controller.isUseRegisterNumber.value = value;
+                //               if (value) {
+                //                 controller.phoneCon.text =
+                //                     controller.proInfo.value.phone ?? '';
+                //               } else {
+                //                 controller.phoneCon.text = '';
+                //               }
+                //             },
+                //           ),
+                //         ),
+                //       ),
+                //       Expanded(
+                //           flex: 8,
+                //           child: Column(
+                //               mainAxisSize: MainAxisSize.max,
+                //               mainAxisAlignment: MainAxisAlignment.start,
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               children: [
+                //                 Text(context.tr("Use my phone number."),
+                //                     style: const TextStyle(
+                //                         fontWeight: FontWeight.bold))
+                //               ]))
+                //     ]),
+                // AppSpace.spaceH20,
+                // Row(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     crossAxisAlignment: CrossAxisAlignment.end,
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       Expanded(
+                //         child: Obx(
+                //           () => CustomCheckboxButton(
+                //             value: controller.isUseRegisterAddress.value,
+                //             onChange: (value) async {
+                //               controller.isUseRegisterAddress.value = value;
+                //               if (value) {
+                //                 controller.addressLineOneController.text =
+                //                     controller.proInfo.value.addressFirstLine ??
+                //                         '';
+                //                 controller.addressLineTwoController.text =
+                //                     controller
+                //                             .proInfo.value.addressSecondLine ??
+                //                         '';
+                //                 controller.addressLineThreeController.text =
+                //                     controller.proInfo.value.addressThirdLine ??
+                //                         '';
+                //                 controller.countryTextController.text =
+                //                     controller.proInfo.value.town ?? '';
+                //                 controller.postcodeTextController.text =
+                //                     controller.proInfo.value.postcode ?? '';
+                //               } else {
+                //                 controller.addressLineOneController.text = '';
+                //                 controller.addressLineTwoController.text = '';
+                //                 controller.addressLineThreeController.text = '';
+                //                 controller.countryTextController.text = '';
+                //                 controller.postcodeTextController.text = '';
+                //               }
+                //             },
+                //           ),
+                //         ),
+                //       ),
+                //       Expanded(
+                //           flex: 8,
+                //           child: Column(
+                //               mainAxisSize: MainAxisSize.max,
+                //               mainAxisAlignment: MainAxisAlignment.start,
+                //               crossAxisAlignment: CrossAxisAlignment.start,
+                //               children: [
+                //                 Text(context.tr("Use my address."),
+                //                     style: const TextStyle(
+                //                         fontWeight: FontWeight.bold))
+                //               ]))
+                //     ]),
 
                 ///-------- Input field
-                AppSpace.spaceH20,
+                // AppSpace.spaceH20,
                 CustomInputHeader(header: context.tr('Name')),
                 AppSpace.spaceH6,
                 CustomTextFormField(

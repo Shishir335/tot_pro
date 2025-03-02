@@ -107,7 +107,7 @@ class SettingsView extends GetView<SettingsController> {
                       children: [
                         CustomInputHeader(
                             header:
-                                '${context.tr('Change Language to ')}${controller.language == 'ro' ? 'English' : 'Roman'}'),
+                                '${context.tr('Change Language to ')}${controller.language == 'ro' ? 'English' : 'Romanian'}'),
                         SizedBox(
                           height: 10,
                           child: CupertinoSwitch(

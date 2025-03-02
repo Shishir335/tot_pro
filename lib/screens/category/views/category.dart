@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:tot_pro/screens/home/controllers/submit_edge_controller.dart';
 import 'package:tot_pro/utils/data/core/values/app_url.dart';
 import 'package:tot_pro/screens/category/controllers/category_controller.dart';
@@ -46,10 +47,11 @@ class CategoryView extends StatelessWidget {
                                     ApiURL.categoryImageUrl + data.image!),
                                 const SizedBox(height: 5),
                                 Text(data.name!,
+                                    maxLines: 2,
                                     textAlign: TextAlign.center,
-                                    style: const TextStyle(
+                                    style: GoogleFonts.asar(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 18))
+                                        fontSize: 14)),
                               ])),
                     );
                   })));

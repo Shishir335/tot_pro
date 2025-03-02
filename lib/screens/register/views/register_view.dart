@@ -87,7 +87,14 @@ class RegisterView extends GetView<RegisterController> {
                           AppSpace.spaceH6,
                           CustomTextFormField(
                               controller: controller.mobileCTL,
-                              textInputType: TextInputType.number),
+                              textInputType: TextInputType.number,
+                              validator: (value) {
+                                if (value!.length < 10 || value.length > 10) {
+                                  return 'Mobile number must be 10 digit';
+                                } else {
+                                  return null;
+                                }
+                              }),
                           AppSpace.spaceH10,
 
                           ///------------ finder Address ------
