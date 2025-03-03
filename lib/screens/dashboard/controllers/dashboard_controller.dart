@@ -29,7 +29,7 @@ class DashboardController extends GetxController {
         menuId: 1,
         menuTitle: 'Submit an TOT PRO',
         icon:
-            Icon(Icons.add_a_photo, size: 40, color: AppColors.primaryColor)));
+            Icon(Icons.work_outline, size: 40, color: AppColors.primaryColor)));
     menuList.add(MenuModel(
         menuId: 2,
         menuTitle: 'Job History',
@@ -39,15 +39,15 @@ class DashboardController extends GetxController {
         menuTitle: 'Request a call back',
         icon: Icon(Icons.call_outlined,
             size: 40, color: AppColors.primaryColor)));
-    menuList.add(MenuModel(
-        menuId: 4,
-        menuTitle: 'Payment & Transactions',
-        icon: Icon(Icons.payments_outlined,
-            size: 40, color: AppColors.primaryColor)));
+    // menuList.add(MenuModel(
+    //     menuId: 4,
+    //     menuTitle: 'Payment & Transactions',
+    //     icon: Icon(Icons.payments_outlined,
+    //         size: 40, color: AppColors.primaryColor)));
     menuList.add(MenuModel(
         menuId: 5,
         menuTitle: 'Categories',
-        icon: Icon(Icons.category, size: 40, color: AppColors.primaryColor)));
+        icon: Icon(Icons.checklist, size: 40, color: AppColors.primaryColor)));
     menuList.add(MenuModel(
         menuId: 6,
         menuTitle: 'Request a Quote',

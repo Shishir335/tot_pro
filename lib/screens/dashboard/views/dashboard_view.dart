@@ -173,17 +173,19 @@ class _DashboardViewState extends State<DashboardView> {
           Get.toNamed(Routes.JOBHISTORY);
         } else if (menu.menuId == 3) {
           Get.toNamed(Routes.REQUESTCALL);
-        } else if (menu.menuId == 4) {
-          Get.toNamed(Routes.PAYMENTTRANSACTION);
-        } else if (menu.menuId == 5) {
+        }
+        //  else if (menu.menuId == 4) {
+        //   Get.toNamed(Routes.PAYMENTTRANSACTION);
+        // }
+        else if (menu.menuId == 4) {
           Get.toNamed(Routes.Category);
-        } else if (menu.menuId == 6) {
+        } else if (menu.menuId == 5) {
           Get.toNamed(Routes.Quote);
-        } else if (menu.menuId == 7) {
+        } else if (menu.menuId == 6) {
           Get.toNamed(Routes.Review);
-        } else if (menu.menuId == 8) {
+        } else if (menu.menuId == 7) {
           Get.toNamed(Routes.JoinUs);
-        } else if (menu.menuId == 9) {
+        } else if (menu.menuId == 8) {
           Get.toNamed(Routes.ContactUs);
         }
       },
@@ -224,6 +226,8 @@ class _DashboardViewState extends State<DashboardView> {
     } else if (choice == 'LogOut') {
       localStoreSRF.clear();
       Get.offAllNamed(Routes.LOGIN);
+    } else if (choice == 'Payment & Transactions') {
+      Get.toNamed(Routes.PAYMENTTRANSACTION);
     } else if (choice == 'Account Delete Request') {
       Get.toNamed(Routes.accountDeleteRequest);
     } else if (choice == 'Settings') {
@@ -241,6 +245,7 @@ class Constants {
 
   static List<String> choices = <String>[
     'Profile',
+    'Payment & Transactions',
     'Account Delete Request',
     'Change Password',
     'Settings',

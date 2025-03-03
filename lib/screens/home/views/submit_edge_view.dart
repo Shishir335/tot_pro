@@ -32,7 +32,7 @@ class _SubmitEdgeViewState extends State<SubmitEdgeView> {
   void initState() {
     SubmitEdgeController submitEdgeController =
         Get.find<SubmitEdgeController>();
-
+ 
     submitEdgeController.getDetailsInfo();
     super.initState();
   }

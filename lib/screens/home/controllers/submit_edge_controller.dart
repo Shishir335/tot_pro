@@ -591,6 +591,11 @@ class SubmitEdgeController extends GetxController {
 
       nameCon.text = proInfo.value.name ?? '';
       mailCon.text = proInfo.value.email ?? '';
+      phoneCon.text = proInfo.value.phone ?? '';
+      houseCon.text = proInfo.value.addressFirstLine ?? '';
+      townCon.text = proInfo.value.addressSecondLine ?? '';
+      streetCon.text = proInfo.value.addressThirdLine ?? '';
+      postCon.text = proInfo.value.postcode ?? '';
 
       update();
     }
